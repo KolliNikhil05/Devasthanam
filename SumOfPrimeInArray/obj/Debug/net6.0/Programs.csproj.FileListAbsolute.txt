@@ -1,0 +1,4 @@
+E:\SumOfPrimeInArray\obj\Debug\net6.0\Programs.GeneratedMSBuildEditorConfig.editorconfig
+E:\SumOfPrimeInArray\obj\Debug\net6.0\Programs.AssemblyInfoInputs.cache
+E:\SumOfPrimeInArray\obj\Debug\net6.0\Programs.AssemblyInfo.cs
+E:\SumOfPrimeInArray\obj\Debug\net6.0\Programs.csproj.CoreCompileInputs.cache

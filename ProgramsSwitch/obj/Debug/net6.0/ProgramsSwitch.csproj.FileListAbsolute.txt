@@ -1,0 +1,14 @@
+E:\ProgramsSwitch\obj\Debug\net6.0\ProgramsSwitch.GeneratedMSBuildEditorConfig.editorconfig
+E:\ProgramsSwitch\obj\Debug\net6.0\ProgramsSwitch.AssemblyInfoInputs.cache
+E:\ProgramsSwitch\obj\Debug\net6.0\ProgramsSwitch.AssemblyInfo.cs
+E:\ProgramsSwitch\obj\Debug\net6.0\ProgramsSwitch.csproj.CoreCompileInputs.cache
+E:\ProgramsSwitch\bin\Debug\net6.0\ProgramsSwitch.exe
+E:\ProgramsSwitch\bin\Debug\net6.0\ProgramsSwitch.deps.json
+E:\ProgramsSwitch\bin\Debug\net6.0\ProgramsSwitch.runtimeconfig.json
+E:\ProgramsSwitch\bin\Debug\net6.0\ProgramsSwitch.dll
+E:\ProgramsSwitch\bin\Debug\net6.0\ProgramsSwitch.pdb
+E:\ProgramsSwitch\obj\Debug\net6.0\ProgramsSwitch.dll
+E:\ProgramsSwitch\obj\Debug\net6.0\refint\ProgramsSwitch.dll
+E:\ProgramsSwitch\obj\Debug\net6.0\ProgramsSwitch.pdb
+E:\ProgramsSwitch\obj\Debug\net6.0\ProgramsSwitch.genruntimeconfig.cache
+E:\ProgramsSwitch\obj\Debug\net6.0\ref\ProgramsSwitch.dll

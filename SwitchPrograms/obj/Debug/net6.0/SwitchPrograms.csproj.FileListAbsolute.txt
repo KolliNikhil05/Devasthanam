@@ -1,0 +1,4 @@
+E:\SwitchPrograms\obj\Debug\net6.0\SwitchPrograms.GeneratedMSBuildEditorConfig.editorconfig
+E:\SwitchPrograms\obj\Debug\net6.0\SwitchPrograms.AssemblyInfoInputs.cache
+E:\SwitchPrograms\obj\Debug\net6.0\SwitchPrograms.AssemblyInfo.cs
+E:\SwitchPrograms\obj\Debug\net6.0\SwitchPrograms.csproj.CoreCompileInputs.cache

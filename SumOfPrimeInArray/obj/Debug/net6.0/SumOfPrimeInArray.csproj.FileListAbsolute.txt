@@ -1,0 +1,14 @@
+E:\SumOfPrimeInArray\bin\Debug\net6.0\SumOfPrimeInArray.exe
+E:\SumOfPrimeInArray\bin\Debug\net6.0\SumOfPrimeInArray.deps.json
+E:\SumOfPrimeInArray\bin\Debug\net6.0\SumOfPrimeInArray.runtimeconfig.json
+E:\SumOfPrimeInArray\bin\Debug\net6.0\SumOfPrimeInArray.dll
+E:\SumOfPrimeInArray\bin\Debug\net6.0\SumOfPrimeInArray.pdb
+E:\SumOfPrimeInArray\obj\Debug\net6.0\SumOfPrimeInArray.GeneratedMSBuildEditorConfig.editorconfig
+E:\SumOfPrimeInArray\obj\Debug\net6.0\SumOfPrimeInArray.AssemblyInfoInputs.cache
+E:\SumOfPrimeInArray\obj\Debug\net6.0\SumOfPrimeInArray.AssemblyInfo.cs
+E:\SumOfPrimeInArray\obj\Debug\net6.0\SumOfPrimeInArray.csproj.CoreCompileInputs.cache
+E:\SumOfPrimeInArray\obj\Debug\net6.0\SumOfPrimeInArray.dll
+E:\SumOfPrimeInArray\obj\Debug\net6.0\refint\SumOfPrimeInArray.dll
+E:\SumOfPrimeInArray\obj\Debug\net6.0\SumOfPrimeInArray.pdb
+E:\SumOfPrimeInArray\obj\Debug\net6.0\SumOfPrimeInArray.genruntimeconfig.cache
+E:\SumOfPrimeInArray\obj\Debug\net6.0\ref\SumOfPrimeInArray.dll
