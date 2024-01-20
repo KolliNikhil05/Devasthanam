@@ -1,0 +1,7 @@
+E:\ConsumeWebService\bin\Debug\ConsumeWebService.exe.config
+E:\ConsumeWebService\bin\Debug\ConsumeWebService.exe
+E:\ConsumeWebService\bin\Debug\ConsumeWebService.pdb
+E:\ConsumeWebService\obj\Debug\ConsumeWebService.csproj.AssemblyReference.cache
+E:\ConsumeWebService\obj\Debug\ConsumeWebService.csproj.CoreCompileInputs.cache
+E:\ConsumeWebService\obj\Debug\ConsumeWebService.exe
+E:\ConsumeWebService\obj\Debug\ConsumeWebService.pdb
