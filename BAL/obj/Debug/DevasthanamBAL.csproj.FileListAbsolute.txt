@@ -1,0 +1,9 @@
+E:\BAL\bin\Debug\BAL.dll
+E:\BAL\bin\Debug\BAL.pdb
+E:\BAL\bin\Debug\DAL.dll
+E:\BAL\bin\Debug\DAL.pdb
+E:\BAL\obj\Debug\DevasthanamBAL.csproj.AssemblyReference.cache
+E:\BAL\obj\Debug\DevasthanamBAL.csproj.CoreCompileInputs.cache
+E:\BAL\obj\Debug\DevasthanamBAL.csproj.CopyComplete
+E:\BAL\obj\Debug\BAL.dll
+E:\BAL\obj\Debug\BAL.pdb
