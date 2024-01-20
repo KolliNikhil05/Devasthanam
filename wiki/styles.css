@@ -1,0 +1,186 @@
+/*********************************header**************************************/
+header
+{
+background:white;
+color:Black;
+text-align:center;
+padding:2px;
+border-bottom: -10px;
+font-weight: 100;
+}
+
+/*******************************nav******************************************/
+a
+{
+  text-decoration: none;
+}
+nav
+{
+    margin-top: -10px;
+}
+ul
+{
+list-style-type:none;
+background:White;
+color:Black;
+padding:8px;
+}
+li
+{
+display:inline;
+text-align:center;
+padding-left:190px;
+list-style: none;
+}
+li a:hover
+{
+background-color:rgb(194, 179, 179);
+padding:10px;
+}
+li a 
+{
+    text-decoration: none;
+}
+
+/******************************body******************************************/
+
+body
+{
+background: linear-gradient(to right, #3264f5 4%,#7004bc 75%);
+color:White;
+background-image:url(images/s.png);
+background-size: 100%;
+background-attachment: fixed;
+}
+h1{
+    text-align: center;
+    font-size: 30px;
+}
+.container
+{
+    width: 80%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    opacity: 0.90;
+    padding: 30 px;
+}
+    
+.slide img
+{
+    width: 100%;
+}
+.slide1
+{
+    opacity:0.99;
+}
+.text
+{
+    color: black;
+    font-size: 25px;
+}
+
+
+/*****************************text move+ blink********************************/
+
+@keyframes colorChange {
+  0% {
+    color: rgb(245, 243, 243);
+  }
+  100% {
+    color: green;
+  }
+}
+
+.textcolorblink {
+  animation: colorChange 0.25s infinite;
+}
+
+/****************************table*******************************************/
+
+table,tr,td
+{
+    border: 2px solid rgb(15, 15, 15);
+    color: rgb(54, 51, 51);
+    padding: 10px;
+    font-size: 20px;
+    
+
+}
+table{
+    width: 80%;
+    margin: auto;
+    text-align: center;
+    background-color:rgb(252, 252, 252);
+    opacity: 0.90;
+}
+/**********************************text color blink*********************************/
+@keyframes colorChange {
+    0% {
+      color: red;
+    }
+    50% {
+      color: green;
+    }
+    100% {
+      color: purple;
+    }
+  }
+  
+  .color-changing-text {
+    animation: colorChange 0.5s infinite;
+  }
+  .color-changing-text a
+  {
+    animation: colorChange 0.5s infinite;
+  }
+
+/****************************text mover***************************************/
+
+.textmove
+{
+  
+  color:rgb(26, 26, 25);
+  font-size: 20px;
+  margin: auto;
+  width: 80%;
+}
+@keyframes marquee {
+  0% {
+      transform: translateX(100%);
+  }
+  100% {
+      transform: translateX(-100%);
+  }
+}
+.textmove{
+    display: inline-block;
+    animation: marquee 10s linear infinite;
+    overflow: hidden;
+    margin: auto;
+}
+
+/****************************footer******************************************/
+
+footer
+{
+background:white;
+color:Black;
+display: flex;
+position: relative;
+}
+.nikki 
+{
+    position: absolute;
+    right: 0;
+}
+
+
+
+/**********************************/
+
+
+  
+  

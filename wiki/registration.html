@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recruitment</title>
+    <link rel="stylesheet" href="registration.css">
+</head>
+<body>
+<p class="textmove">* * * Welcome to Registration * * *</p>
+<div class="container">
+    <h3>REGISTRATION</h3>
+    <form name="registrationform" id="form" onsubmit="return validateForm()" action="login.html" method="post">
+    <div class="textname">
+        <label for="txt_names" id="lbl_txt_name">Name:</label>
+        <input type="text"  id="txt_names" placeholder="Enter Your Name" maxlength="15">
+        <label for="txt_surname" id="lbl_txt_surname">Surname:</label>
+        <input type="text"  id="txt_surname" placeholder="Enter Your Surname" maxlength="15">
+    </div>
+    <div class="txtmob">
+        <label id="lbltxtmob" for="tel">Mobile:</label>
+        <input type="tel" id="tel" placeholder="Enter Mobile Number" maxlength="10">
+        <label id="lbltxtemail" for="email">E-mail:</label>
+        <input type="email" id="email" placeholder="Enter Your Email">
+    </div>
+    <div class="rdbgender">
+        <label id="lbl_rdb_gender" >Gender:</label>
+        <input type="radio" name="gender">  
+        <label id="rdbmale" for="rdbmale">Male</label>
+        <input type="radio" name="gender"> 
+        <label id="rdbfemale" for="rdbfemale">Female</label> 
+        <input type="radio" name="gender">
+        <label id="rdbother" for="rdbother">Prefer Not to Say</label>
+    </div>
+
+    <div class="datecity">
+        <label id="lbl_ddl_city" for="selectcity">City:</label>
+        <select id="selectcity">
+            <option id="opt1"  value="">Select Your Area</option>
+            <option id="opt2" value="Simhachalam">Simhachalam</option>
+            <option id="opt3" value="Asilmetta">Asilmetta</option>
+            <option id="opt4" value="Pendurthi">Pendurthi</option>
+            <option id="opt5" value="Gajuwaka">Gajuwaka</option>
+            <option id="opt6" value="Bheemili">Bheemili</option>
+            <option id="opt7" value="Chodavaram">Chodavaram</option>
+            <option id="opt8" value="Anakapalli">Anakapalli</option>
+        </select>
+        <label id="lbl_dob" for="dob">Date Of Birth:</label>
+        <input type="date" id="dob">
+    </div>
+    
+    <div class="textareaAddress">
+        <label id="lbl_txtarea" for="txtarea">Address:</label>
+        <textarea rows="6" colS="58" placeholder="Enter Your Address" id="txtarea"></textarea></textarea> 
+    </div>
+    <div class="password">
+        <label id="lbl_pswd" for="pswd">Password:</label>
+        <input type="password" id="pswd" placeholder="Enter Your password">
+        <label id="lbl_cpswd" for="cpswd">Confirm Password:</label>
+        <input type="password" id="cpswd" placeholder="Confirm Password">
+    </div>
+    <div class="btnsubmit">
+        <input type="submit" id="btn_sbt" value="Submit" >
+    </div> 
+    <div class="btnclear">
+        <input type="button" id="btn_clr" onclick="clearform()" value="clear">
+    </div>
+    </form>
+</div>
+<script src="validation.js"></script>
+</body>
+</html>

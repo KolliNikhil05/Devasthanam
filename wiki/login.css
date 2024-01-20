@@ -1,0 +1,68 @@
+body
+{
+    text-align: center;
+    background-image: url(images/s.png);
+   
+
+}
+.container
+{
+    background-color:aliceblue;
+    text-align: center;
+    font-size: 20px;
+    padding: 50px;
+    opacity: 0.85;
+    width:60%;
+    margin-left: 200px;
+}
+.username
+{
+    padding: 20px;
+}
+.password
+{
+    padding: 20px;
+}
+.confirmpassword
+{
+    padding: 5px;
+    padding-bottom: 10px;
+}
+.button
+{
+    padding: 20PX;
+
+}
+/************************id***********************/
+#txtname
+{
+    padding: 10px;
+}
+#txtpswd
+{
+    padding: 10px;
+    margin-left: 10px;
+}
+#txtcpswd
+{
+    padding: 10px;
+    margin-right: 55px;
+}
+#btn
+{
+    background-color: dodgerblue;
+    padding: 8px;
+}
+/****************lbl*****************/
+#lblName
+{
+    margin-right: 10px;
+}
+#lblPassword
+{
+    margin-right: 10px;
+}
+#lblConfirmPassword
+{
+    margin-right: 10px;
+}

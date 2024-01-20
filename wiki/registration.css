@@ -1,0 +1,169 @@
+body
+{
+    text-align: center;
+    padding-top: 40px;
+    position: relative;
+    background-image: url(images/s.png);
+    ::placeholder
+    {
+        font-size: 15px;
+    }
+}
+
+.container
+{
+   background-color:aliceblue;
+   text-align: center;
+   font-size:20px;
+   width: 67%;
+   position: relative;
+   left: 200px;
+   border-radius:10px;
+   opacity: 0.85;
+}
+.textname
+{
+    padding: 10px;
+    size:50;
+}
+.txtmob
+{
+    padding: 10px;
+    size: 50;
+}
+.rdbgender
+{
+    padding: 15px;
+    margin-right: 10px;
+}
+.datecity
+{
+    padding: 10px;
+    size:50;
+}
+.caldob
+{
+    padding: 10px;
+}
+.txtareaAddress
+{
+    padding: 10px;
+}
+.password
+{
+    padding: 10px;
+}
+.btnsubmit
+{
+    padding: 10px;
+}
+/*****************************label****************************/
+#lbl_txt_name
+{
+    margin-right: 10px;
+}
+#lbl_txt_surname
+{
+    margin-right: 10px;
+}
+#lbltxtmob
+{
+    margin-right: 10px;
+}
+#lbltxtemail
+{
+    margin-right: 10px;
+}
+#lbl_rdb_gender
+{
+    margin-right: 40px;
+}
+#lbl_ddl_city
+{
+    margin-right: 20PX;
+}
+#lbl_dob
+{
+    margin-right: 10px;
+}
+#lbl_txtarea
+{   
+    margin-right: 10px;
+}
+#lbl_pswd
+{
+    margin-right: 10px;
+}
+#lbl_cpswd
+{
+    margin-right: 10px;
+}
+/*******************************************************************/
+#txt_names
+{
+    padding: 10px;
+}
+#txt_surname
+{
+    padding: 10px;
+}
+#selectcity
+{
+    padding: 10px;
+    padding-left: 30px;
+    margin-left: 10px;
+}
+#dob
+{
+    padding: 10px;
+    margin-left: 10px;
+}
+#tel
+{
+    padding: 10px;
+    margin-right: 15px;
+}
+#email
+{   
+    padding:10px; 
+    margin-right: 15px;
+}
+#pswd
+{
+    padding: 10px;
+}
+#cpswd
+{
+    padding: 10px;
+}
+#btn_sbt
+{
+    padding: 8px;
+    background-color: dodgerblue;
+}
+#btn_clr
+{
+    padding: 8px;
+    background-color: dodgerblue;
+}
+/**********************blinkmove***************/
+@keyframes moveAndBlink 
+{
+    0% {
+        transform: translateX(-20%);
+        color:red;
+    }
+    
+    100% {
+        transform: translateX(20%);
+        color: green;
+    }
+}
+
+.textmove 
+{
+    font-size: 20px;
+    animation: moveAndBlink 5s linear infinite;
+}
+
+
