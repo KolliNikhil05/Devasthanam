@@ -1,0 +1,32 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MainMaster.master.cs" Inherits="Devasthanam.views.MasterPages.MainMaster" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title>main master</title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <link href="../../StyleSheets/MainMaster.css" rel="stylesheet" />
+    <script src="../../Scripts/Js_Page/CDNJavaScript.js"></script>
+    <script src="../../Scripts/Js_Page/jqueryCdn.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+            <div class="logo">
+                <img src="../../Image/Master.jpg" id="masterpage"/>
+            </div>
+            <div class="nav"></div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+            <div class="footer">
+                <p id="footer1">Copyright © 2023-2025 Simhachala Devasthanams, All Rights Reserved</p>
+                <p id="footer2">Devoloped by Nikhil</p>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
