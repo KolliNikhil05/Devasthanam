@@ -1,0 +1,111 @@
+function GetCandidates() {
+    $.ajax({
+        type: "POST",
+        url: "JqueryDataTable.aspx/GetData",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response) {
+            var data = JSON.parse(response.d);
+            var table = $('#Data1').DataTable({
+                data: data,
+                columns: [
+                    { "data": "Name" },
+                    { "data": "Gender" },
+                    { "data": "DOB" },
+                    { "data": "City" },
+                    {
+                        "render": function (data, type, row) {
+                            return '<div class="btn-group">' +
+                                '<button class="btnedit">Edit</button>' +
+                                '<button class="btnupdate" style="display:none;">Update</button>' +
+                                '<button class="btncancel" style="display:none;">Cancel</button>' +
+                                '</div>';
+                        },
+                    }
+                ]
+            });
+
+            $('#Data1 tbody').on('click', '.btnedit', function (e) {
+                e.preventDefault();
+                var tr = $(this).closest('tr');
+                var row = table.row(tr);
+                tr.find('td:not(:last-child)').each(function () {
+                    var cell = $(this);
+                    var originalContent = cell.text();
+                    cell.html('<input type="text" class="form-control" value="' + originalContent + '">');
+                });
+                table.$('.btnedit').show();
+                tr.find('.btnedit').hide();
+                tr.find('.btnupdate').show();
+                tr.find('.btncancel').show();
+            });
+
+            $('#Data1 tbody').on('click', '.btncancel', function (e) {
+                e.preventDefault();
+                var tr = $(this).closest('tr');
+                var row = table.row(tr);
+                tr.find('td').each(function () {
+                    var cell = $(this);
+                    var inputVal = cell.find('input').val();
+                    cell.html(inputVal);
+                });
+                tr.find('.btnedit').show();
+                tr.find('.btnupdate').hide();
+                tr.find('.btncancel').hide();
+            });
+
+            $('#Data1 tbody').on('click', '.btnupdate', function (e) {
+                e.preventDefault();
+                var tr = $(this).closest('tr');
+                var row = table.row(tr);
+                tr.find('td').each(function () {
+                    var cell = $(this);
+                    var inputVal = cell.find('input').val();
+                    cell.html(inputVal);
+                });
+                tr.find('.btnedit').show();
+                tr.find('.btnupdate').hide();
+                tr.find('.btncancel').hide();
+            });
+        },
+        error: function () {
+            alert("Error fetching data.");
+        }
+    });
+}
+
+
+
+
+var table = $('#Data1').DataTable({
+    dom: 'Bfrtip',
+    data: data,
+    columns: [
+
+        { "data": "Student_Name" },
+        { "data": "Email" },
+        { "data": "Mobile_Number" },
+        { "data": "Regd_Number" },
+
+        {
+            data: null,
+            render: function (data, type, row, meta) {
+                return meta.row + meta.settings.displaystart + 1;
+            }
+        },
+        {
+            render: function (data, type, row) {
+                return CreateButton('edit', row.id);
+            }
+        },
+        {
+            render: function (data, type, row) {
+                return CreateButton('delete', row.id);
+            }
+        },
+
+    ],
+    "fnrow": function (nrow, adata, displayindex) {
+        $("td:first", nrow).html(displayindex + 1);
+    },
+});
