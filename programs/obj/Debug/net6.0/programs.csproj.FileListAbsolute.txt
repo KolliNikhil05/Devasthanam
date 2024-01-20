@@ -1,0 +1,9 @@
+E:\programs\bin\Debug\net6.0\programs.exe
+E:\programs\bin\Debug\net6.0\programs.dll
+E:\programs\obj\Debug\net6.0\programs.GeneratedMSBuildEditorConfig.editorconfig
+E:\programs\obj\Debug\net6.0\programs.AssemblyInfoInputs.cache
+E:\programs\obj\Debug\net6.0\programs.AssemblyInfo.cs
+E:\programs\obj\Debug\net6.0\programs.csproj.CoreCompileInputs.cache
+E:\programs\obj\Debug\net6.0\programs.dll
+E:\programs\obj\Debug\net6.0\refint\programs.dll
+E:\programs\obj\Debug\net6.0\programs.pdb

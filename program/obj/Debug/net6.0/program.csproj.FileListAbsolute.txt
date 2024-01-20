@@ -1,0 +1,17 @@
+E:\program\obj\Debug\net6.0\program.GeneratedMSBuildEditorConfig.editorconfig
+E:\program\obj\Debug\net6.0\program.AssemblyInfoInputs.cache
+E:\program\obj\Debug\net6.0\program.AssemblyInfo.cs
+E:\program\obj\Debug\net6.0\program.csproj.CoreCompileInputs.cache
+E:\program\bin\Debug\net6.0\program.exe
+E:\program\bin\Debug\net6.0\program.deps.json
+E:\program\bin\Debug\net6.0\program.runtimeconfig.json
+E:\program\bin\Debug\net6.0\program.dll
+E:\program\bin\Debug\net6.0\program.pdb
+E:\program\obj\Debug\net6.0\program.dll
+E:\program\obj\Debug\net6.0\refint\program.dll
+E:\program\obj\Debug\net6.0\program.pdb
+E:\program\obj\Debug\net6.0\program.genruntimeconfig.cache
+E:\program\obj\Debug\net6.0\ref\program.dll
+E:\program\bin\Debug\net6.0\Newtonsoft.Json.dll
+E:\program\obj\Debug\net6.0\program.csproj.AssemblyReference.cache
+E:\program\obj\Debug\net6.0\program.csproj.CopyComplete
