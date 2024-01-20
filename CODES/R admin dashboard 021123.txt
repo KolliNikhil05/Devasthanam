@@ -1,0 +1,192 @@
+ $(document).ready(function () {
+    $.ajax({
+        type: "POST",
+        url: "AdminDashboard.aspx/GetCount",
+        dataType: "JSON",
+        contentType: "application/json",
+        success: function (response) {
+            var data = JSON.parse(response.d);
+            if (data != null && data != "") {
+                $("#txtstudent").text(data['Table'][0].student_count);
+                $("#txtstaff").text(data['Table1'][0].staff_count);
+            }
+            else {
+                alert("no data found");
+            }
+
+        },
+        error: function () {
+            alert("error");
+        }
+    });
+})
+
+
+
+
+
+
+
+
+
+
+
+using System;
+using System.Data;
+using System.Data.SqlClient;
+
+
+namespace AMSDAL
+{
+    public class AdminDashBoardDAL
+    {
+        public DataSet GetCount()
+        {
+            SqlConnection con = new SqlConnection(Connection.con_to_DAL);
+            DataSet dataset = new DataSet();
+            SqlCommand cmd;
+            try
+            {
+                if (con.State == ConnectionState.Closed)
+                {
+                    con.Open();
+                }
+                cmd = con.CreateCommand();
+                cmd.CommandText = "GetCount";
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(dataset);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return dataset;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+using AMSDAL;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace AMSBAL
+{
+    public class AdminDashboardBAL
+    {
+        public DataSet GetCount()
+        {
+            AdminDashBoardDAL dashBoardDAL = new AdminDashBoardDAL();
+            DataSet ds=dashBoardDAL.GetCount();
+            return ds;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="all_Records">
+    <div class="side1">
+        <h1 class="s1">Registered students</h1>
+        <h1 class="s2" id="txtstudent"></h1>
+        <a class="mi1" href="DashBoardMaster.Master">More info</a>
+        <p class="l1"><i class='bx bxs-right-arrow-circle'></i></p>
+    
+    </div>
+    <div class="side2">
+      
+        <h1 class="s1">Registered staff</h1>
+        <h1 class="s2" id="txtstaff"></h1>
+        <a class="mi1" href="#">More info</a>
+        <p class="l1"><i class='bx bxs-right-arrow-circle'></i></p>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+select * from Student_info where Role_Id='2'
+
+-----sp-----
+
+alter proc GetCount
+as begin
+select count(*) as student_count from Student_info where Role_Id='2';
+select count(*) as staff_count from Student_info where Role_Id='1';
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,199 @@
+function Login() {
+    var Login_details = {
+        mobilenumber : $("#txtMobi").val(),
+        password:$("#txtPasswordi").val()
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "login.aspx/Check_Login_Details",
+        data: JSON.stringify({ LoginValues: Login_details }),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        //success: function (response) {
+        //    var obj = response.d;
+
+        //},
+        //error: function (error) {
+        //    alert(error);
+        //},
+        success: function (response) {
+            var data = JSON.parse(response.d);
+            if (data != null) {
+                if (data["Table"][0].FLAG == 1) {
+                    alert(data["Table"][0].MSG);
+                    if (data["Table1"][0].ROLE_ID == "1") {
+                      
+                        window.location.href = "/Views/Home/HomePage.aspx";
+                    }
+                    else if (data["Table1"][0].ROLE_ID == "0") {
+
+                        window.location.href = "/Views/Products/Products.aspx";
+                    }
+                    
+                }
+                else {
+                    alert(data["Table"][0].MSG);
+                }
+            }
+            
+            //if (response.d.success) {
+                
+
+            //    if (ROLE_ID1 == "0") {
+            //        window.location.href = "/Views/Products/Products.aspx";
+            //    }
+            //    else if (ROLE_ID1 == "1") {
+            //        window.location.href = "/Views/Home/HomePage.aspx";
+            //    }
+            //    else
+            //    {
+            //        alert("Invalid credentials");
+            //    }
+            //}
+        },
+        error: function (error) {
+            alert(error);
+        },
+
+    });
+    
+}
+
+
+
+
+
+
+using EcommerceBal;
+using EcommerceDal;
+using Newtonsoft.Json;
+using System;
+using System.Data;
+using System.Web;
+using System.Web.Services;
+using System.Web.UI;
+namespace ecommerce.design
+
+{
+    public partial class login : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+           
+
+        }
+        [WebMethod]
+        public static string Check_Login_Details(LoginString LoginValues)
+        {
+            LoginBal objLoginBal = new LoginBal();
+            DataSet ds = objLoginBal.Check_Login_Details(LoginValues);
+            string jsonresult = "";
+            if (ds.Tables.Count > 1)
+            {
+                jsonresult = JsonConvert.SerializeObject(ds);
+            }
+            else
+            {
+                jsonresult = JsonConvert.SerializeObject(ds);
+            }
+
+            return jsonresult;
+
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using EcommerceDal;
+using System.Data;
+
+namespace EcommerceBal
+{
+    public class LoginBal
+    {
+        public DataSet Check_Login_Details(LoginString LoginValues)
+        {
+            LoginDal objLoginDal = new LoginDal();
+            return objLoginDal.Check_Login_Details(LoginValues);
+
+        }
+
+
+    }
+}
+
+
+
+
+
+
+using System;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+using System.Web;
+
+namespace EcommerceDal
+{
+    public class LoginDal
+    {
+        
+        public DataSet Check_Login_Details(LoginString LoginValues)
+        {
+            HttpContext context = HttpContext.Current;
+            DataSet dt = new DataSet();
+            try
+            {
+                SqlConnection objsqlConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["ecommercedb"].ConnectionString);
+                objsqlConnection.Open();
+                SqlCommand cmd = objsqlConnection.CreateCommand();
+                cmd.CommandText = "SP_LOGIN_GET";
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@MOBILE_NUMBER", LoginValues.mobilenumber);
+                cmd.Parameters.AddWithValue("@PASSWORD_C", LoginValues.password);
+                context.Session["userid"] = LoginValues.mobilenumber;
+                context.Session["password"] = LoginValues.password;
+                SqlDataAdapter objSqlDataAdapter = new SqlDataAdapter(cmd);
+                objSqlDataAdapter.Fill(dt);
+                objsqlConnection.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+            }
+            return dt;
+        }
+        
+
+    }
+    public class LoginString
+    {
+        public string mobilenumber { get; set; }
+        public string password { get; set; }
+    }
+}
+

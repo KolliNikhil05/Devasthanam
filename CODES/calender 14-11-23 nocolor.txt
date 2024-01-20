@@ -1,0 +1,396 @@
+$.ajax({
+    type: "POST",
+    url: "SlotBookings.aspx/SlotsGet",
+    data: "{}",
+    async: true,
+    contentType: "application/json",
+    success: function (res) {
+        try {
+            if (res.d === "") {
+                alert("No data found");
+            } else {
+                // Handle the data received from the server, e.g., change month colors
+                var releaseDataList = JSON.parse(res.d);
+
+                if (!Array.isArray(releaseDataList)) {
+                    console.error("Data is not an array:", releaseDataList);
+                    return;
+                }
+
+                // Iterate over the months and change the color if IsReleased is 'Y'
+                releaseDataList.forEach(function (releaseData) {
+                    try {
+                        // Check if necessary fields are present in the object
+                        if (!releaseData.Month || !releaseData.Year || !releaseData.IsReleased) {
+                            console.error("Incomplete data for releaseData:", releaseData);
+                            return;
+                        }
+
+                        // Check if IsReleased is 'Y' before changing the color
+                        if (releaseData.IsReleased === "Y") {
+                            // Modify the month color using JavaScript/jQuery
+                            var monthId = "#currentMonth";
+                            var calendarMonth = currentMonthView.getMonth() + 1; // Adjust for 0-based index
+                            var calendarYear = currentMonthView.getFullYear();
+
+                            if (releaseData.Month === calendarMonth && releaseData.Year === calendarYear) {
+                                // Match month and year before changing the color
+                                $(monthId).css("background-color", "lightgreen");
+                            }
+                        }
+                    } catch (error) {
+                        console.error("Error processing releaseData:", error, releaseData);
+                    }
+                });
+            }
+        } catch (error) {
+            console.error("Error handling response:", error, res);
+        }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+        console.error("Ajax request failed:", textStatus, errorThrown);
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using BAL;
+using Newtonsoft.Json;
+using System;
+using System.Data;
+using System.Linq;
+using System.Web.Services;
+
+namespace Devasthanam.views.SlotBooking
+{
+    public partial class SlotBookings : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+             
+        }
+        [WebMethod]
+        public static string SlotsGet()
+        {
+            string jsonResult = "";
+            try
+            {
+                SlotBookingsBAL objSlots = new SlotBookingsBAL();
+                DataTable dtResult = objSlots.GetSlots();
+                if (dtResult.Rows.Count > 0)
+                {
+                    // Convert the DataTable to a list of objects for easier manipulation
+                    var releaseDataList = dtResult.AsEnumerable().Select(row =>
+                        new
+                        {
+                            Month = row.Field<int>("Month"),
+                            Year = row.Field<int>("Year"),
+                            IsReleased = row.Field<string>("IsReleased")
+                        }).ToList();
+
+                    // Iterate over the months and change the color if IsReleased is 'Y'
+                    foreach (var releaseData in releaseDataList)
+                    {
+                        if (releaseData.IsReleased == "Y")
+                        {
+                            // Modify the month color using JavaScript/jQuery
+                            // Example: $("#Month" + releaseData.Month + releaseData.Year).css("background-color", "lightgreen");
+                        }
+                    }
+
+                    jsonResult = JsonConvert.SerializeObject(dtResult);
+                    jsonResult.Replace(@"\", string.Empty);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return (jsonResult);
+        }
+
+         
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using DAL;
+using System.Data;
+
+namespace BAL
+{
+    public class SlotBookingsBAL
+    {
+        SlotBookingsDAL objDal = new SlotBookingsDAL();
+  
+        public DataTable GetSlots()
+        {
+            return objDal.GetSlots();
+        }
+
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using DevasthanamDAL;
+using System;
+using System.Data;
+using System.Data.SqlClient;
+
+namespace DAL
+{
+    public class SlotBookingsDAL
+    {
+
+        public DataTable GetSlots()
+        {
+            SqlConnection con = new SqlConnection(Connection.connectionString_Devasthanam);
+            DataTable dtSlots = new DataTable();
+            try
+            {
+                using (SqlCommand cmd = new SqlCommand("SlotReleaseData_Get", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    da.Fill(dtSlots);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                if (con.State == ConnectionState.Open)
+                {
+                    con.Close();
+                }
+            }
+            return dtSlots;
+        }
+
+
+        //public DataTable GetSlots()
+        //{
+        //    SqlConnection con = new SqlConnection(Connection.connectionString_Devasthanam);
+        //    {
+        //        con.Open();
+        //        DataTable dtSlots = new DataTable();
+        //        SqlCommand cmd = null;
+        //        try
+        //        {
+        //            if (con.State == ConnectionState.Closed)
+        //            {
+        //                con.Open();
+        //            }
+        //            cmd = con.CreateCommand();
+        //            cmd.CommandType = CommandType.StoredProcedure;
+        //            cmd.CommandText = "SlotReleaseData_Get";
+        //            SqlDataAdapter da = new SqlDataAdapter(cmd);
+        //            da.Fill(dtSlots);
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            throw new Exception(ex.Message);
+        //        }
+        //        finally
+        //        {
+        //            if (con.State == ConnectionState.Open)
+        //            {
+        //                con.Close();
+        //            }
+        //        }
+        //        return dtSlots;
+        //    }
+        //}
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+$(document).ready(function () {
+    const now = new Date();
+    let currentMonthView = new Date();
+
+    $("#prevMonth").click(function () {
+        if (currentMonthView.getMonth() === now.getMonth()) {
+            // If the current month is viewed, do not allow going to past months
+            return;
+        }
+        currentMonthView.setMonth(currentMonthView.getMonth() - 1);
+        renderCalendar(currentMonthView);
+    });
+
+    $("#nextMonth").click(function () {
+        currentMonthView.setMonth(currentMonthView.getMonth() + 1);
+        renderCalendar(currentMonthView);
+    });
+
+    renderCalendar(currentMonthView);
+
+    function renderCalendar(date) {
+        const calendarDays = $("#calendarDays");
+        calendarDays.empty();
+        const currentMonth = date.toLocaleString("default", { month: "long" });
+        const currentYear = date.getFullYear();
+        $("#currentMonth").text(currentMonth + " " + currentYear);
+        const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+        const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+        const daysInMonth = lastDay.getDate();
+        const startingDay = firstDay.getDay();
+
+        for (let i = 0; i < startingDay; i++) {
+            calendarDays.append('<div class="day"></div>');
+        }
+
+        for (let day = 1; day <= daysInMonth; day++) {
+            const dayElement = $('<div class="day">' + day + '</div>');
+            calendarDays.append(dayElement);
+        }
+        // Call changeDayColor here
+        // changeDayColor('lightgreen', startingDay);
+    }
+
+
+
+    $.ajax({
+        type: "POST",
+        url: "SlotBookings.aspx/SlotsGet",
+        data: "{}",
+        async: true,
+        contentType: "application/json",
+        success: function (res) {
+            try {
+                if (res.d === "") {
+                    alert("No data found");
+                } else {
+                    // Handle the data received from the server, e.g., change month colors
+                    var releaseDataList = JSON.parse(res.d);
+
+                    if (!Array.isArray(releaseDataList)) {
+                        console.error("Data is not an array:", releaseDataList);
+                        return;
+                    }
+
+                    // Iterate over the months and change the color if IsReleased is 'Y'
+                    releaseDataList.forEach(function (releaseData) {
+                        try {
+                            // Check if necessary fields are present in the object
+                            if (!releaseData.Month || !releaseData.Year || !releaseData.IsReleased) {
+                                console.error("Incomplete data for releaseData:", releaseData);
+                                return;
+                            }
+
+                            // Check if IsReleased is 'Y' before changing the color
+                            if (releaseData.IsReleased === "Y") {
+                                // Modify the month color using JavaScript/jQuery
+                                var monthId = "#Month";
+                                var calendarMonth = currentMonthView.getMonth() + 1; // Adjust for 0-based index
+                                var calendarYear = currentMonthView.getFullYear();
+
+                                if (releaseData.Month === calendarMonth && releaseData.Year === calendarYear) {
+                                    // Match month and year before changing the color
+                                    $(monthId).css("background-color", "lightgreen");
+                                }
+                            }
+                        } catch (error) {
+                            console.error("Error processing releaseData:", error, releaseData);
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error("Error handling response:", error, res);
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.error("Ajax request failed:", textStatus, errorThrown);
+        }
+    });
+
+
+
+});

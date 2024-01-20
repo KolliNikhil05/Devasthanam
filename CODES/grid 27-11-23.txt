@@ -1,0 +1,141 @@
+using BAL;
+using DAL;
+using DevasthanamDAL;
+using System;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace Devasthanam.views.Admin
+{
+    public partial class RecruiteePaymentDetails : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+                LoadCityDropDown();
+                BindGridView();
+            }
+        }
+        public void LoadCityDropDown()
+        {
+            RecruiteePaymentDetailsBAL bal = new RecruiteePaymentDetailsBAL();
+            ddlCity.DataSource = bal.GetCity();
+            ddlCity.DataTextField = "City";
+            ddlCity.DataValueField = "id";
+            ddlCity.DataBind();
+            ddlCity.Items.Insert(8, new ListItem("All", "All"));
+            ddlCity.Items.Insert(0, new ListItem("Select City", "0"));
+        }
+        public void ddlCity_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            BindGridView();
+        }
+        public void BindGridView()
+        {
+            RecruiteePaymentDetailsBAL obj = new RecruiteePaymentDetailsBAL();
+            string selectedCity = ddlCity.SelectedValue;
+            DataTable dataTable;
+            dataTable = obj.GetRecruiteePaymentData(selectedCity);
+            GridView1.DataSource = dataTable;
+            GridView1.DataBind();
+            ViewState["DataTable"] = dataTable;
+        }
+        //public void GridView1_RowEditing(object sender, GridViewEditEventArgs e)
+        //{
+        //    GridView1.EditIndex = e.NewEditIndex;
+        //    BindGridView();
+        //}
+        public void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+            try
+            {
+                string uName = e.NewValues["uName"].ToString();
+                string surName = e.NewValues["SurName"].ToString();
+                string phone = GridView1.DataKeys[e.RowIndex]["Phone"].ToString();
+                string email = e.NewValues["Email"].ToString();
+                string gender = e.NewValues["Gender"].ToString();
+                string dob = e.NewValues["DOB"].ToString();
+                //string city = e.NewValues["City"].ToString();
+                string city;
+                DropDownList ddlEditCity = (DropDownList)GridView1.Rows[e.RowIndex].FindControl("ddlEditCity");
+                if (ddlEditCity != null)
+                {
+                    city = ddlEditCity.SelectedValue;
+                }
+                else
+                {
+                    // Handle the case when the dropdown is not found
+                    city = e.NewValues["City"].ToString();
+                }
+                string address = e.NewValues["UAddress"].ToString();
+                string qualification = e.NewValues["Qualification"].ToString();
+                string percentage = e.NewValues["UPercentage"].ToString();
+                string payment = e.NewValues["Payment"].ToString();
+
+                RecruiteePaymentDetailsBAL objUpdate = new RecruiteePaymentDetailsBAL();
+                objUpdate.UpdateUser(phone, uName, surName, email, gender, dob, city, address, qualification, percentage, payment);
+
+                GridView1.EditIndex = -1;
+                BindGridView();
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "UpdateSuccess", "alert('Updation done Successfully.');", true);
+            }
+            catch (Exception ex)
+            {
+                 
+            }
+        }
+        public void GridView1_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            GridView1.EditIndex = -1;
+            BindGridView();
+        }
+        protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            try
+            {
+                int rowIndex = e.RowIndex;
+                if (GridView1.DataKeys.Count > rowIndex && GridView1.DataKeys[rowIndex] != null)
+                {
+                    string phone = GridView1.DataKeys[rowIndex]["Phone"].ToString();
+                    RecruiteePaymentDetailsBAL objDelete = new RecruiteePaymentDetailsBAL();
+                    objDelete.DeleteRecord(phone);
+                    BindGridView();
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "deleteSuccess", "alert('Record deleted successfully.');", true);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exception or log it
+            }
+        }
+        public void GridView1_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            GridView1.PageIndex = e.NewPageIndex;
+            BindGridView();
+        }
+
+        public void GridView1_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            GridView1.EditIndex = e.NewEditIndex;
+            BindGridView();
+
+            // Populate the City dropdown list with data
+            DropDownList ddlEditCity = (DropDownList)GridView1.Rows[e.NewEditIndex].FindControl("ddlEditCity");
+            LoadCityDropDownForEditing(ddlEditCity);
+        }
+        public void LoadCityDropDownForEditing(DropDownList ddlEditCity)
+        {
+            RecruiteePaymentDetailsBAL bal = new RecruiteePaymentDetailsBAL();
+            ddlEditCity.DataSource = bal.GetCity();
+            ddlEditCity.DataTextField = "City";
+            ddlEditCity.DataValueField = "id";
+            ddlEditCity.DataBind();
+        }
+
+    }
+
+}

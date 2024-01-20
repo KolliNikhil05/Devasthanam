@@ -1,0 +1,468 @@
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Signup.aspx.cs" Inherits="Devasthanam.Signup" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Sign Up</title>
+    <link href="../../StyleSheets/Signup.css" rel="stylesheet" />
+    <script src="../../Scripts/Js_Page/CDNJavaScript.js"></script>
+    <script src="../../Scripts/Js_Page/jqueryCdn.js"></script>
+    <script src="../../Scripts/Js_Page/Signup.js"></script>
+    <%--<script src="../../Scripts/Js_Page/RecruiteeRegistration.js"></script>--%>
+</head>
+    <%--<script>
+    $(document).ready(function () {
+        SignupValidation();
+    });
+    </script>--%>
+
+<body>
+    <form id="form1"   method="post" >
+         <div class="logo">
+             <img src="../../Image/Master.jpg" id="masterpage"/>             
+         </div>
+         <div class="main">
+         <div class="slideshow">
+         <div class="slide">
+             <img src="../../Image/main.jpg" alt="Image 1" />
+         </div>
+         <div class="slide">
+             <img src="../../Image/archi.png" alt="Image 2" />
+         </div>
+         <div class="slide">
+             <img src="../../Image/main.jpg" alt="Image 3" />
+         </div>
+         </div>
+         <div class="container">
+             <h2 id="conName">Sign Up</h2>
+             <div class="userid">
+             <label for="txtPhone" id="lblLoginPhone">Mobile:
+             <span style="color : red">*</span>
+             </label><br />
+             <input type="tel"  id="txtPhone" placeholder="Enter Mobile Number" maxlength="10" onkeypress="return onlyNumbers(event);"/><br />
+         </div>
+         <div class="password">
+             <label id="lbl_pswd" for="loginPswd">Password:
+             <span style="color : red">*</span>
+             </label><br />
+             <input type="password"  id="loginPswd" placeholder="Enter Your password" maxlength="15"/><br />  
+         </div>
+         <div class="confirmpassword">
+             <label id="lbl_cpswd" for="loginCPswd">Confirm Password:
+             <span style="color : red">*</span>
+             </label><br />
+             <input type="password"   id="loginCPswd" placeholder="Confirm password" maxlength="15" /><br />  
+         </div>
+         <div class="button">       
+             <button id="Signupbutton"  onclick="SignupValidation();" type="submit">Sign up</button>
+            <%-- <asp:Button runat="server" Text="sign up" id="Signupbutton" OnClick="buttonClick"/>--%>
+         </div>   
+         <a href="LoginPage.aspx" id="anchor">Already Have Account ?, Login</a>
+         </div>
+         </div>
+<div class="footer">
+    <p id="footer1">Copyright © 2023-2025 Simhachala Devasthanams, All Rights Reserved</p>    
+    <p id="footer2">Devoloped by Nikhil</p>           
+</div>
+    </form>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using DevasthanamBAL;
+using DevasthanamDAL;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Web;
+using System.Web.Services;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace Devasthanam
+{
+    public partial class Signup : System.Web.UI.Page
+    {
+        protected void pageLoad()
+        {
+        }
+        [WebMethod(EnableSession = true)] 
+        public static string  InsertSignUpData(string phone, string password, string confirmPassword)
+        {
+            string jsonResult = "";
+            try
+            {
+                SignupBAL objbal = new SignupBAL();
+                DataTable dt = objbal.InsertSignUpData(phone, password, confirmPassword);
+                if(dt != null )
+                {
+                    jsonResult = JsonConvert.SerializeObject(dt);
+                    jsonResult.Replace(@"\", string.Empty);
+                }
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            
+            return(jsonResult);
+            
+           
+        }
+     
+    }
+}
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using DevasthanamDAL;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DevasthanamBAL
+{
+    public class SignupBAL
+    {
+        SignupDAL objdal = new SignupDAL();
+        public DataTable InsertSignUpData(string phone, string password, string confirmPassword)
+        {
+            return objdal.InsertSignUpData(phone, password, confirmPassword);
+        }
+        //public DataTable SignupData(string phone)
+        //{
+        //    return obj.SignupData(phone);
+        //}
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web.UI;
+
+namespace DevasthanamDAL
+{
+    public class SignupDAL
+    {
+        public DataTable InsertSignUpData(string phone, string password, string confirmPassword)
+        {
+            SqlConnection conn = new SqlConnection(Connection.connectionString_Devasthanam);
+            DataTable dt = new DataTable();
+            SqlCommand cmd = null;
+            try 
+            {
+                if (conn.State == ConnectionState.Closed)
+                {
+                    conn.Open();
+                }
+                    cmd=conn.CreateCommand();
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandText = "InsertSignUpData";
+                    cmd.Parameters.AddWithValue("@userId", phone);
+                    cmd.Parameters.AddWithValue("@Password", password);
+                    cmd.Parameters.AddWithValue("@cPassword", confirmPassword);
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    da.Fill(dt);
+                    
+              
+            }
+            catch(Exception e)  
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                if(conn.State == ConnectionState.Open)
+                {
+                    conn.Close();
+                }
+               
+            }
+            return dt;
+        }
+        // public DataTable SignupData(string phone)
+        //{
+        //    //SqlConnection conn = new SqlConnection(Connection.connection_data);
+        //    string connectionString = ConfigurationManager.ConnectionStrings["connection_data"].ConnectionString;
+        //    using (SqlConnection con = new SqlConnection(connectionString))
+        //    {
+        //        con.Open();
+        //        //SqlCommand checkCmd = new SqlCommand("CheckUserIdExists", con);
+        //        DataTable dtDetails = new DataTable();
+        //        SqlCommand cmd = null;
+        //        try
+        //        {
+        //            if (con.State == ConnectionState.Closed)
+        //            {
+        //                con.Open();
+        //            }
+        //            cmd = con.CreateCommand();
+        //            cmd.CommandType = CommandType.StoredProcedure;
+        //            cmd.CommandText = "CheckUserIdExists";
+        //            cmd.Parameters.AddWithValue("@userId", phone);
+        //            SqlDataAdapter da = new SqlDataAdapter(cmd);
+        //            da.Fill(dtDetails);
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            throw new Exception(ex.Message);
+        //        }
+        //        finally
+        //        {
+        //            if (con.State == ConnectionState.Open)
+        //            {
+        //                con.Close();
+        //            }
+        //        }
+        //        return dtDetails;
+        //    }
+        //}
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function SignupValidation() {
+    var phone = $("#txtPhone").val();
+    var password = $("#loginPswd").val();
+    var confirmPassword = $("#loginCPswd").val();
+
+    // Phone number validation
+    if (phone === null || phone === "") {
+        alert("Please enter your Phone number.");
+        $("#txtPhone").focus();
+        return false;
+    } else if (phone.length !== 10) {
+        alert("Mobile Number should be exactly 10 digits.");
+        $("#txtPhone").focus();
+        return false;
+    } else if (!phone.match(/^[6-9]\d/)) {
+        alert("Phone number should start with 6, 7, 8, or 9.");
+        $("#txtPhone").focus();
+        return false;
+    } else if (!phone.match(/^\d+$/)) {
+        alert("Mobile number should only contain digits.");
+        $("#txtPhone").focus();
+        return false;
+    }
+
+    // Password validation
+    if (password === null || password === "") {
+        alert("Please enter a password.");
+        $("#loginPswd").focus();
+        return false;
+    } else if (password.length < 8) {
+        alert("Password should contain at least 8 characters.");
+        $("#loginPswd").focus();
+        return false;
+    } else if (!password.match(/[A-Z]/)) {
+        alert("Password must contain an uppercase character.");
+        $("#loginPswd").focus();
+        return false;
+    } else if (!password.match(/[a-z]/)) {
+        alert("Password must contain a lowercase character.");
+        $("#loginPswd").focus();
+        return false;
+    } else if (!password.match(/\d/)) {
+        alert("Password must contain a digit.");
+        $("#loginPswd").focus();
+        return false;
+    } else if (!password.match(/[!@#$%^&*]/)) {
+        alert("Password must contain a special character.");
+        $("#loginPswd").focus();
+        return false;
+    }
+
+    // Confirm password validation
+    if (confirmPassword === null || confirmPassword === "") {
+        alert("Please enter Confirm password.");
+        $("#loginCPswd").focus();
+        return false;
+    } else if (password !== confirmPassword) {
+        alert("Password and confirm password do not match.");
+        $("#loginCPswd").focus();
+        return false;
+    }
+
+    $.ajax({
+        type: "POST",
+        dataType: "json",
+        url: "Signup.aspx/InsertSignUpData",
+        async: false,
+        data: "{'phone':'" + phone + "','password':'" + password + "','confirmPassword':'" + confirmPassword + "'}",
+        contentType: "application/json",
+       
+        success: function (res) {
+            var obj = JSON.parse(res.d);
+            if (obj[0].FLAG == 0)
+            {
+                alert("Already Registered");
+            }
+            else if (obj[0].FLAG == 1) {
+                alert("INSERTED SUCCESSFULLY");
+                window.location.href = "LoginPage.aspx";
+            }
+        },
+        error: function (err) {
+            alert("Something went wrong! please Try Again Later");
+        }
+    });
+}
+
+
+
+
+
+
+
+function onlyNumbers(evt) {
+    var charcode = (evt.which) ? evt.which : evt.keyCode;
+    if (charcode > 31 && (charcode < 48 || charcode > 57)) {
+        evt.preventDefault();
+    }
+    return true;
+}
+
+ 

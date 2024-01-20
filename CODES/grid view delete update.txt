@@ -1,0 +1,81 @@
+        //public void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        //{
+        //    try
+        //    {              
+        //        string uName = e.NewValues["uName"].ToString();
+        //        string surName = e.NewValues["SurName"].ToString();
+        //        string phone = GridView1.DataKeys[e.RowIndex]["Phone"].ToString();
+        //        string email = e.NewValues["Email"].ToString();
+        //        string gender = e.NewValues["Gender"].ToString();
+        //        string dob = e.NewValues["DOB"].ToString();
+        //        string city = e.NewValues["City"].ToString();
+        //        string address = e.NewValues["UAddress"].ToString();
+        //        string qualification = e.NewValues["Qualification"].ToString();
+        //        string percentage = e.NewValues["UPercentage"].ToString();
+        //        string payment = e.NewValues["Payment"].ToString();                
+        //        UpdateUserData(phone, uName, surName, email, gender,dob,city, address, qualification, percentage,payment);
+        //        GridView1.EditIndex = -1;
+        //        BindGridView();
+        //        ScriptManager.RegisterStartupScript(this, this.GetType(), "UpdateSuccess", "alert('Updation done Successfully.');", true);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //    }
+        //}
+        //public void UpdateUserData(string phone, string uName, string surName, string email ,string gender, string dob,string city, string address, string qualification, string percentage,string payment)
+        //{
+        //    using (SqlConnection connection = new SqlConnection(Connection.connectionString_Devasthanam))
+        //    {
+        //        connection.Open();
+        //        string updateQuery = "UPDATE registration SET uName = @uName, SurName = @surName, Email = @email , Gender = @gender ,DOB = @dob , City=@city ,UAddress = @address,Qualification=@qualification,UPercentage=@percentage,Payment = @payment WHERE Phone = @phone";
+        //        using (SqlCommand cmd = new SqlCommand(updateQuery, connection))
+        //        {
+        //            cmd.Parameters.AddWithValue("@uName", uName);
+        //            cmd.Parameters.AddWithValue("@surName", surName);
+        //            cmd.Parameters.AddWithValue("@phone", phone);
+        //            cmd.Parameters.AddWithValue("@email", email);
+        //            cmd.Parameters.AddWithValue("@gender", gender);
+        //            cmd.Parameters.AddWithValue("@dob", dob);
+        //            cmd.Parameters.AddWithValue("@city", city);
+        //            cmd.Parameters.AddWithValue("@address", address);
+        //            cmd.Parameters.AddWithValue("@qualification", qualification);
+        //            cmd.Parameters.AddWithValue("@percentage", percentage);
+        //            cmd.Parameters.AddWithValue("@payment", payment);
+        //            cmd.ExecuteNonQuery();
+        //        }
+        //    }
+        //} //public void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
+ //{
+ //    try
+ //    {
+ //        int rowIndex = e.RowIndex;
+ //        if (GridView1.DataKeys.Count > rowIndex && GridView1.DataKeys[rowIndex] != null)
+ //        {
+ //            string phone = GridView1.DataKeys[rowIndex]["Phone"].ToString();
+ //            DeleteRecord(phone);
+ //            BindGridView();
+ //            ScriptManager.RegisterStartupScript(this, this.GetType(), "deleteSuccess", "alert('Record deleted successfully.');", true);
+ //        }
+ //    }
+ //    catch (Exception ex)
+ //    {               
+ //    }
+ //}
+ //public void DeleteRecord(string phone)
+ //{
+ //    try
+ //    {
+ //        using (SqlConnection connection = new SqlConnection(Connection.connectionString_Devasthanam))
+ //        {
+ //            connection.Open();
+ //            using (SqlCommand cmd = new SqlCommand("DELETE FROM registration WHERE phone = @Phone", connection))
+ //            {
+ //                cmd.Parameters.AddWithValue("@Phone", phone);
+ //                cmd.ExecuteNonQuery();
+ //            }
+ //        }
+ //    }
+ //    catch (Exception ex)
+ //    {              
+ //    }
+ //}

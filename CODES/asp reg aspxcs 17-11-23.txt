@@ -1,0 +1,340 @@
+using BAL;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.IO;
+using System.Web.UI.WebControls;
+namespace Devasthanam.views.UserHome
+{
+    public partial class RoleOptions : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+                RoleOptionsBAL bal = new RoleOptionsBAL();
+                ddlDistrict.DataSource = bal.GetDistricts();
+                ddlDistrict.DataTextField = "District";
+                ddlDistrict.DataValueField = "DistrictId";
+                ddlDistrict.DataBind();
+                ddlDistrict.Items.Insert(0, new ListItem("Select District", "0"));
+
+
+
+                RoleOptionsBAL skillsTable = new RoleOptionsBAL();
+                lstSkills.DataSource = skillsTable.GetSkills();
+                lstSkills.DataTextField = "Skill";
+                lstSkills.DataValueField = "SkillId";
+                lstSkills.DataBind();
+
+                
+            }
+        }
+        public void ddlDistrict_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selectedDistrictId = ddlDistrict.SelectedValue;
+
+            if (selectedDistrictId != "0")
+            {
+                RoleOptionsBAL bal = new RoleOptionsBAL();
+                ddlMandal.DataSource = bal.GetMandals(selectedDistrictId);
+                ddlMandal.DataTextField = "Mandal";
+                ddlMandal.DataValueField = "MandalId";
+                ddlMandal.DataBind();
+            }
+            else
+            {
+                ddlMandal.Items.Clear();
+            }
+            ddlMandal.Items.Insert(0, new ListItem("Select Mandal", "0"));
+        }
+
+        public void lstSkills_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            List<string> selectedSkillIds = new List<string>();
+            foreach (ListItem item in lstSkills.Items)
+            {
+                if (item.Selected)
+                {
+                    selectedSkillIds.Add(item.Value);
+                }
+            }
+            DataTable rolesTable = new DataTable();
+            foreach (string skillId in selectedSkillIds)
+            {
+                DataTable rolesForSkill = new RoleOptionsBAL().GetRoles(skillId);
+                rolesTable.Merge(rolesForSkill);
+            }
+            lstRoles.DataSource = rolesTable;
+            lstRoles.DataTextField = "Role";
+            lstRoles.DataValueField = "RoleId";
+            lstRoles.DataBind();
+        }
+            
+        public void Insert_Click(object sender, EventArgs e)
+        {
+            if (lstRoles.SelectedIndex >= 0)
+            {
+                string selectedRoleId = lstRoles.SelectedValue;
+                RoleOptionsBAL roleBAL = new RoleOptionsBAL();
+                DataTable roleData = roleBAL.GetRoleById(selectedRoleId);
+                if (roleData.Rows.Count > 0)
+                {
+                    lstEditRoles.DataSource = roleData;
+                    lstEditRoles.DataTextField = "Role";
+                    lstEditRoles.DataValueField = "RoleId";
+                    lstEditRoles.DataBind();
+                }
+            }
+        }
+
+
+        public void Reset_Click(object sender, EventArgs e)
+        {
+            lstEditRoles.Items.Clear();
+        }
+
+        public void SelectAll_Click(object sender, EventArgs e)
+        {
+            foreach (ListItem item in lstRoles.Items)
+            {
+                item.Selected = true;
+            }
+            List<ListItem> selectedItems = new List<ListItem>();
+            foreach (ListItem item in lstRoles.Items)
+            {
+                if (item.Selected)
+                {
+                    selectedItems.Add(item);
+                }
+            }
+            lstEditRoles.DataSource = selectedItems;
+            lstEditRoles.DataTextField = "Text";
+            lstEditRoles.DataValueField = "Value";
+            lstEditRoles.DataBind();
+        }
+
+        public void Delete_Click(object sender, EventArgs e)
+        {
+            // Iterate through selected items and remove them from the ListBox
+            for (int i = lstEditRoles.Items.Count - 1; i >= 0; i--)
+            {
+                if (lstEditRoles.Items[i].Selected)
+                {
+                    lstEditRoles.Items.RemoveAt(i);
+                }
+            }
+        }
+
+
+        public void btnSubmit_Click(object sender, EventArgs e)
+        {
+            string virtualPath = ConfigurationManager.AppSettings["uploads"].ToString();
+            if (Upload.HasFile)
+            {
+                string fileName = Path.GetFileName(Upload.FileName);
+                string fileExtension = Path.GetExtension(fileName);
+                string file = virtualPath + fileName;
+                Upload.SaveAs(file);
+            }
+
+        }
+
+        //public void cal_SelectionChanged(object sender, EventArgs e)
+        //{
+        //    var DateID = calDOB.SelectedDate.ToString();
+        //    txtHidden.Value = DateID;
+        //}
+
+        public void cal_SelectionChanged(object sender, EventArgs e)
+        {
+            DateTime selectedDate = calDOB.SelectedDate;
+            if (selectedDate < DateTime.Today)
+            {
+                calDOB.SelectedDate = DateTime.Today;
+            }
+            txtHidden.Value = calDOB.SelectedDate.ToString();
+        }
+ 
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<%@ Page Title="" Language="C#" MasterPageFile="~/views/MasterPages/MainMaster.Master" AutoEventWireup="true" CodeBehind="RoleOptions.aspx.cs" Inherits="Devasthanam.views.UserHome.RoleOptions" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <link href="../../StyleSheets/RoleOptions.css" rel="stylesheet" />
+    <script src="../../Scripts/Js_Page/RoleOptions.js"></script>
+    <script src="../../Scripts/Js_Page/CDNJavaScript.js"></script>
+    <script src="../../Scripts/Js_Page/jqueryCdn.js"></script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
+    <div class="container">
+
+        <div class="container1">
+            <div class="name">
+                <asp:Label AssociatedControlID="txtName" ID="lblName" runat="server">Name:</asp:Label><br />
+                <asp:TextBox ID="txtName" runat="server" MaxLength="15" MinLength="3" placeholder="Enter Your Name"></asp:TextBox><br />
+                <asp:RequiredFieldValidator ID="rfvName" runat="server" ControlToValidate="txtName"
+                    ForeColor="Red" ErrorMessage="Please Enter Your Name" Display="Dynamic" SetFocusOnError="true" />
+                <asp:RegularExpressionValidator ID="revName" runat="server" ControlToValidate="txtName"
+                    ValidationExpression="^.{3,}$" ForeColor="Red" ErrorMessage="Name should be more than 2 characters" Display="Dynamic" SetFocusOnError="true" />
+                <asp:RegularExpressionValidator ID="revNoNumbers" runat="server" ControlToValidate="txtName"
+                    ValidationExpression="^[^\d]+$" ForeColor="Red" ErrorMessage="Name should not contain any numbers" Display="Dynamic" SetFocusOnError="true" />
+                <br />
+            </div>
+            <div class="surname">
+                <asp:Label AssociatedControlID="txtSurName" ID="lblSurName" runat="server">SurName:</asp:Label><br />
+                <asp:TextBox ID="txtSurName" runat="server" MaxLength="15" MinLength="3" placeholder="Enter Your SurName"></asp:TextBox><br />
+                <asp:RequiredFieldValidator ID="RfvSurName" runat="server" ControlToValidate="txtSurName"
+                    ForeColor="Red" ErrorMessage="Please Enter Your SurName" Display="Dynamic" SetFocusOnError="true" />
+                <asp:RegularExpressionValidator ID="revSurName" runat="server" ControlToValidate="txtSurName"
+                    ValidationExpression="^.{3,}$" ForeColor="Red" ErrorMessage="SurName should be more than 2 characters" Display="Dynamic" SetFocusOnError="true" />
+                <asp:RegularExpressionValidator ID="revSurnameNumbers" runat="server" ControlToValidate="txtSurName"
+                    ValidationExpression="^[^\d]+$" ForeColor="Red" ErrorMessage="SurName should not contain any numbers" Display="Dynamic" SetFocusOnError="true" />
+                <br />
+            </div>
+        </div>
+        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+        <asp:UpdatePanel runat="server" UpdateMode="Conditional">
+            <Triggers>
+                <asp:AsyncPostBackTrigger ControlID="ddlDistrict" EventName="SelectedIndexChanged" />
+
+            </Triggers>
+            <ContentTemplate>
+                <div class="container2">
+                    <div class="district">
+                        <asp:Label AssociatedControlID="ddlDistrict" ID="lblDistrict" runat="server">District:</asp:Label><br />
+                        <asp:DropDownList ID="ddlDistrict" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlDistrict_SelectedIndexChanged">
+                        </asp:DropDownList>
+                        <br />
+                        <asp:RequiredFieldValidator ID="rfvddlDistrict" runat="server" ControlToValidate="ddlDistrict"
+                            ForeColor="Red" ErrorMessage="Select a District" InitialValue="0" Display="Dynamic" SetFocusOnError="true" />
+                    </div>
+                    <div class="mandal">
+                        <asp:Label AssociatedControlID="ddlMandal" ID="lblMandal" runat="server">Mandal:</asp:Label><br />
+                        <asp:DropDownList ID="ddlMandal" runat="server">
+                            <asp:ListItem Text="Select Your Mandal" Value="0" />
+                        </asp:DropDownList><br />
+                        <asp:RequiredFieldValidator ID="rfvddlMandal" runat="server" ControlToValidate="ddlMandal"
+                            ForeColor="Red" ErrorMessage="Please Select a Mandal" InitialValue="0" Display="Dynamic" SetFocusOnError="true" />
+                    </div>
+                </div>
+            </ContentTemplate>
+        </asp:UpdatePanel>
+        <%-- <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+        <asp:UpdatePanel runat="server">
+            <ContentTemplate>
+
+                <div class="container2">
+                    <div class="district">
+                        <asp:Label AssociatedControlID="ddlDistrict" ID="lblDistrict" runat="server">District:</asp:Label><br />
+                        <asp:DropDownList ID="ddlDistrict" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlDistrict_SelectedIndexChanged">
+                        </asp:DropDownList>
+                        <br />
+                        <asp:RequiredFieldValidator ID="rfvddlDistrict" runat="server" ControlToValidate="ddlDistrict"
+                            ForeColor="Red" ErrorMessage="Selcet a District" InitialValue="0" Display="Dynamic" SetFocusOnError="true" />
+                    </div>
+                    <div class="mandal">
+                        <asp:Label AssociatedControlID="ddlMandal" ID="lblMandal" runat="server">Mandal:</asp:Label><br />
+                        <asp:DropDownList ID="ddlMandal" runat="server">
+                            <asp:ListItem Text="Select Your Mandal" Value="0" />
+                        </asp:DropDownList><br />
+                        <asp:RequiredFieldValidator ID="rfvddlMandal" runat="server" ControlToValidate="ddlMandal"
+                            ForeColor="Red" ErrorMessage="Please Selcet a Mandal" InitialValue="0" Display="Dynamic" SetFocusOnError="true" />
+                    </div>
+                </div>--%>
+
+
+        <div class="container3">
+            <div class="gender">
+                <asp:Label AssociatedControlID="rdbGender" ID="lblGender" runat="server">Gender:</asp:Label>
+                <asp:RadioButtonList ID="rdbGender" runat="server" RepeatDirection="Horizontal">
+                    <asp:ListItem Text="Male" name="gender" Value="Male"></asp:ListItem>
+                    <asp:ListItem Text="Female" name="gender" Value="Female"></asp:ListItem>
+                    <asp:ListItem Text="Prefer Not to Say" name="gender" Value="Prefer Not to Say"></asp:ListItem>
+                </asp:RadioButtonList><br />
+                <asp:RequiredFieldValidator ID="rfvrdb" runat="server" ControlToValidate="rdbGender"
+                    ForeColor="Red" ErrorMessage="Please select a gender" Display="Dynamic" SetFocusOnError="true" />
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container4">
+        <div class="skills">
+            <asp:Label AssociatedControlID="lstSkills" ID="lblSkills" runat="server">✔ Skills If You are 100% Sure:</asp:Label><br />
+            <asp:CheckBoxList ID="lstSkills" runat="server" class="checkbox" AutoPostBack="true" OnSelectedIndexChanged="lstSkills_SelectedIndexChanged"></asp:CheckBoxList>
+        </div>
+        <div class="roles">
+            <asp:Label AssociatedControlID="lstRoles" ID="lblRoles" runat="server">Choose Role:</asp:Label><br />
+            <asp:ListBox runat="server" ID="lstRoles" CssClass="lstrole" SelectionMode="Multiple" AutoPostBack="true"></asp:ListBox>
+            <asp:Button runat="server" ID="Insert" Text="Insert" class="btn" OnClick="Insert_Click" />
+        </div>
+    </div>
+
+
+    <div class="container5">
+        <div class="getroles">
+            <asp:Label AssociatedControlID="lstEditRoles" ID="lblEditRoles" runat="server">Edit Role:</asp:Label>
+            <asp:ListBox runat="server" ID="lstEditRoles" CssClass="lstrole" AutoPostBack="true"></asp:ListBox><br />
+            <asp:RequiredFieldValidator ID="rfvLstEditRoles" runat="server" ControlToValidate="lstEditRoles"
+                ForeColor="Red" ErrorMessage="Please select a role" Display="Dynamic" SetFocusOnError="true" />
+        </div>
+        <div class="buttons">
+            <asp:Button runat="server" ID="Reset" Text="Reset" class="btn" OnClick="Reset_Click" />
+            <asp:Button runat="server" ID="SelectAll" Text="Select All" class="btn" OnClick="SelectAll_Click" />
+            <asp:Button runat="server" ID="Delete" Text="Delete" class="btn" OnClick="Delete_Click" />
+        </div>
+        <div class="Dob">
+            <asp:Label AssociatedControlID="calDOB" ID="lblDOB" runat="server">Reporting Available for:</asp:Label>
+            <asp:Calendar ID="calDOB" runat="server" OnSelectionChanged="cal_SelectionChanged"></asp:Calendar>
+            <input runat="server" type="hidden" id="txtHidden" />
+        </div>
+        <%--      </ContentTemplate>
+        </asp:UpdatePanel>--%>
+    </div>
+    <div class="container6">
+        <div class="upload">
+            <asp:Label AssociatedControlID="Upload" ID="lblUpload" runat="server">CMM:</asp:Label>
+            <asp:FileUpload ID="Upload" runat="server" AutoPostBack="true" /><br />
+            <asp:RequiredFieldValidator ID="rfvUpload" runat="server" ControlToValidate="Upload"
+                ForeColor="Red" ErrorMessage="Please select a file"
+                Display="Dynamic" SetFocusOnError="true" />
+        </div>
+
+
+        <asp:Button ID="btnSubmit" class="btn" runat="server" Text="Submit" OnClick="btnSubmit_Click" OnClientClick="return validation();" />
+
+    </div>
+
+</asp:Content>
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

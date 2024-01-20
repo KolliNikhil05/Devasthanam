@@ -1,0 +1,167 @@
+$(document).ready(function () {
+    let currentMonthIndex = 0;
+    let releaseData = [];
+
+    function renderCurrentMonth() {
+        const calendarDays = $("#calendarDays");
+        calendarDays.empty();
+
+        const currentMonthData = releaseData[currentMonthIndex];
+        const serverMonth = currentMonthData.Month;
+        const serverYear = currentMonthData.Year;
+
+        const daysInMonth = new Date(serverYear, serverMonth, 0).getDate();
+        const startingDay = new Date(serverYear, serverMonth - 1, 1).getDay();
+
+        const table = $('<table class="calendar-table"></table>');
+        const headerRow = $('<tr></tr>');
+
+        // Add weekday headers
+        const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        for (let i = 0; i < 7; i++) {
+            headerRow.append('<th>' + weekdays[i] + '</th>');
+        }
+        table.append(headerRow);
+
+        // Fill in the calendar days
+        let currentDay = 1;
+        for (let row = 0; row < 6; row++) {
+            const tableRow = $('<tr></tr>');
+            for (let col = 0; col < 7; col++) {
+                if (row === 0 && col < startingDay) {
+                    // Empty cells before the start of the month
+                    tableRow.append('<td></td>');
+                } else if (currentDay > daysInMonth) {
+                    // Empty cells after the end of the month
+                    tableRow.append('<td></td>');
+                } else {
+                    // Cells for the actual days
+                    const isReleased = currentMonthData.IsReleased === 'Y' && currentMonthData.Day === currentDay;
+                    const dayElement = $('<td class="day ' + (isReleased ? 'released' : '') + '">' + currentDay + '</td>');
+                    tableRow.append(dayElement);
+                    currentDay++;
+                }
+            }
+            table.append(tableRow);
+        }
+
+        calendarDays.append(table);
+    }
+
+    function updateMonthDisplay() {
+        const currentMonthData = releaseData[currentMonthIndex];
+        const serverMonth = currentMonthData.Month;
+        const serverYear = currentMonthData.Year;
+
+        const currentMonth = new Date(Date.UTC(serverYear, serverMonth - 1, 1)).toLocaleString("default", { month: "long" });
+        $("#Month").text(currentMonth + ' ' + serverYear);
+    }
+
+    function showNextMonth() {
+        if (currentMonthIndex < releaseData.length - 1) {
+            currentMonthIndex++;
+            renderCurrentMonth();
+            updateMonthDisplay();
+        }
+    }
+
+    function showPrevMonth() {
+        if (currentMonthIndex > 0) {
+            currentMonthIndex--;
+            renderCurrentMonth();
+            updateMonthDisplay();
+        }
+    }
+
+    $("#prev").click(showPrevMonth);
+    $("#next").click(showNextMonth);
+
+    $.ajax({
+        type: "POST",
+        url: "SlotBookings.aspx/GetCalendarData",
+        data: JSON.stringify({ year: new Date().getFullYear(), month: new Date().getMonth() + 1 }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            releaseData = JSON.parse(data.d);
+            if (releaseData.length > 0) {
+                renderCurrentMonth();
+                updateMonthDisplay();
+            }
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+});
+
+
+
+
+
+
+<%@ Page Title="" Language="C#" MasterPageFile="~/views/MasterPages/MainMaster.Master" AutoEventWireup="true" CodeBehind="SlotBookings.aspx.cs" Inherits="Devasthanam.views.SlotBooking.SlotBookings" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <script src="../../Scripts/Js_Page/jqueryCdn.js"></script>
+    <script src="../../Scripts/Js_Page/CDNJavaScript.js"></script>
+    <script src="../../Scripts/Js_Page/SlotBookings.js"></script>
+     <link href="../../StyleSheets/SlotBookings.css" rel="stylesheet" />
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div class="container">
+        <div id="calendar">
+            <div class="header">
+                <span id="prev">&#9665;</span>
+                <span id="Month">Month</span>
+                <span id="next">&#9655;</span>
+            </div>
+            <div class="days" id="calendarDays"></div>
+            <br />
+            <br />
+        </div>
+    </div>
+</asp:Content>
+
+
+
+        public static DataTable GetCalendarData()
+        {
+            using (SqlConnection con = new SqlConnection(Connection.connectionString_Devasthanam))
+            {
+                using (SqlCommand cmd = new SqlCommand("SlotReleaseData_Get", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+
+                    con.Close();
+                    return dt;
+                }
+            }
+        }
+    }
+}   
+
+
+
+ public static DataTable GetCalendarData()
+    {
+        return SlotBookingsDAL.GetCalendarData();
+    }
+}
+
+
+
+
+
+
+CREATE PROCEDURE SlotReleaseData_Get          
+AS            
+BEGIN            
+    SELECT DISTINCT Month, Year, IsReleased        
+    FROM Slot_Release            
+END  

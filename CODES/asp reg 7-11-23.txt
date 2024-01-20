@@ -1,0 +1,162 @@
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="test.aspx.cs" Inherits="Devasthanam.Views.test" %>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+</head>
+<body>
+    <form id="form1" runat="server">
+        
+
+        <div>
+            <asp:CheckBoxList ID="CheckBoxList1" runat="server">
+            </asp:CheckBoxList>
+            <asp:ListBox ID="ListBox1" runat="server">
+            </asp:ListBox>
+        </div>
+    </form>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using DevasthanamBAL;
+using System;
+using System.Data;
+
+namespace Devasthanam.Views
+{
+    public partial class test : System.Web.UI.Page
+    {
+
+        testBAL obj = new testBAL();
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+                // Retrieve skills using the BAL
+                DataTable skillsTable = obj.GetSkills();
+
+                // Bind skills to the CheckBoxList
+                CheckBoxList1.DataSource = skillsTable;
+                CheckBoxList1.DataTextField = "Skill"; // Column name for skill name
+                CheckBoxList1.DataValueField = "SkillId"; // Column name for skill ID
+                CheckBoxList1.DataBind();
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using System.Data;
+using DevasthanamDAL;
+namespace DevasthanamBAL
+{
+    public class testBAL
+    {
+        private testDAL obj = new testDAL();
+
+        public DataTable GetSkills()
+        {
+            return obj.GetSkills();
+        }
+    }
+
+}
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+namespace DevasthanamDAL
+{
+    public class testDAL
+    {
+        public string connectionString = ConfigurationManager.ConnectionStrings["connection_data"].ConnectionString;
+        public DataTable GetSkills()
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("Skills_Get", connection))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    connection.Open();
+
+                    DataTable skillsDataTable = new DataTable();
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                    {
+                        adapter.Fill(skillsDataTable);
+                    }
+
+                    return skillsDataTable;
+                }
+            }
+        }
+    }
+
+}
+
+
+
+
+
+
+
+

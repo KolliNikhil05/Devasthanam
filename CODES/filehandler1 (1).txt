@@ -1,0 +1,80 @@
+using System;
+using System.Configuration;
+using System.IO;
+using System.Web;
+
+namespace ecommerce.Utilities
+{
+    /// <summary>
+    /// Summary description for HandlerFile
+    /// </summary>
+    public class HandlerFile : IHttpHandler
+    {
+
+        public void ProcessRequest(HttpContext context)
+        {
+            try
+            {
+                if (context.Request.Files.Count > 0)
+                {
+                    HttpPostedFile file = context.Request.Files[0];
+                    string fileLocation = ConfigurationManager.AppSettings["fileupload"].ToString();
+                    if (!Directory.Exists(fileLocation))
+                    {
+                        Directory.CreateDirectory(fileLocation);
+                    }
+                    string filename = Path.GetFileName(file.FileName);
+                    string filepath = Path.Combine(fileLocation, filename);
+                    file.SaveAs(filepath);
+                    context.Response.Write("success");
+                }
+            }
+            catch(Exception ex)
+            {
+                context.Response.Write(ex.ToString());
+            }
+
+            context.Response.ContentType = "text/plain";
+            context.Response.Write("Hello World");
+        }
+
+        public bool IsReusable
+        {
+            get
+            {
+                return false;
+            }
+        }
+    }
+}
+
+
+
+
+
+
+function File() {
+    var formdata = new FormData();
+   
+    var file = $("#files")[0];
+    var fileinp = file.files[0];
+    formdata.append("file",fileinp)
+    $.ajax({
+        type: "POST",
+        url: "../Utilities/HandlerFile.ashx",
+        data: formdata,
+        processData: false,
+        contentType: false,
+
+        success: function (data) {
+            
+            alert(data);
+        },
+            error: function (err) { 
+                alert(err);
+            }
+       
+
+
+    });
+}

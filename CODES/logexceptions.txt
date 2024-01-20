@@ -1,0 +1,94 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Web;
+
+namespace ecommerce.Utilities
+{
+    public class LogExceptions
+    {
+        public static void LogException1(string Source, string ErrorCode, string Exc)
+        {
+            try
+            {
+                string Dirctry = @"D:\Ecommerce\LogExceptions\Login";
+                if (!Directory.Exists(Dirctry))
+                    Directory.CreateDirectory(Dirctry);
+                string logFile = Dirctry + "/ExcLog_.txt";
+                StreamWriter sw = new StreamWriter(logFile, true);
+                sw.WriteLine("***(0)**", DateTime.Now);
+                sw.Write("\nERROR CODE:" + ErrorCode);
+                sw.WriteLine("");
+                sw.WriteLine("\nSOURCE:" + Source);
+                sw.WriteLine("\nEXCEPTION:" + Exc);
+                sw.WriteLine("\nException Logged in DB:" + Convert.ToString(false));
+                sw.WriteLine("\n******* X");
+                sw.WriteLine("\n");
+                sw.Close();
+            }
+
+            catch
+            {
+
+            }
+        }
+        public static void LogException2(string Source, string ErrorCode, string Exc)
+        {
+            try
+            {
+                string Dirctry = @"D:\Ecommerce\LogExceptions\Registration";
+                if (!Directory.Exists(Dirctry))
+                    Directory.CreateDirectory(Dirctry);
+                string logFile = Dirctry + "/ExcLog_.txt";
+                StreamWriter sw = new StreamWriter(logFile, true);
+                sw.WriteLine("***(0)**", DateTime.Now);
+                sw.Write("\nERROR CODE:" + ErrorCode);
+                sw.WriteLine("");
+                sw.WriteLine("\nSOURCE:" + Source);
+                sw.WriteLine("\nEXCEPTION:" + Exc);
+                sw.WriteLine("\nException Logged in DB:" + Convert.ToString(false));
+                sw.WriteLine("\n******* X");
+                sw.WriteLine("\n");
+                sw.Close();
+            }
+
+            catch
+            {
+
+            }
+
+
+        }
+
+    }
+}
+
+
+
+
+
+.cs
+ catch (Exception ex)
+ {
+     LogExceptions.LogException1("Check_Login_Details", "404", ex.Message);
+
+ }
+
+
+
+
+  try
+  {
+      LoginDal objLoginDal = new LoginDal();
+      return objLoginDal.Check_Login_Details(LoginValues);
+  }
+  catch(Exception ex)
+  {
+      throw new Exception(ex.ToString());
+  } 
+
+
+
+
+

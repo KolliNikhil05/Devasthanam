@@ -1,0 +1,510 @@
+namespace programs
+{
+    public class CheckEvenOdd
+    {
+        public void checkNumberEvenOdd()
+        {
+            Console.WriteLine("Enter a Number:");
+            int num = Convert.ToInt32(Console.ReadLine());
+            if (num % 2 == 0)
+            {
+                Console.WriteLine($"{num} is even");
+            }
+            else
+            {
+                Console.WriteLine($"{num} is odd");
+            }
+        }
+    }
+}
+
+2)
+
+namespace programs
+{
+    internal class oddInRange
+    {
+        public  void oddRange()
+        {
+            Console.WriteLine("enter the range:");
+            int range = Convert.ToInt32(Console.ReadLine());
+            for (int i = 0; i < range; i++)
+            {
+                if(i%2 != 0)
+                {
+                    Console.WriteLine(i);
+                }
+                else
+                {
+                    continue;
+                }
+            }
+        }
+            
+    }
+}
+
+3)
+
+namespace programs
+{
+    internal class checkpositive
+    {
+        public void checkPositiveNum()
+        {
+            Console.WriteLine("enter a number:");
+            int num = Convert.ToInt32(Console.ReadLine());
+            if (num > 0)
+            {
+                Console.WriteLine($"{num} is positive");
+            }
+            else if (num == 0)
+            {
+                Console.WriteLine($"{num} is Zero");
+            }
+            else
+            {
+                Console.WriteLine($"{num} is negitive");
+            }
+        }
+    }
+}
+
+4)
+
+namespace programs
+{
+    internal class largestnumber
+    {
+        public void largestNum()
+        {
+            Console.WriteLine("enter number 1 :");
+            int num1 = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("enter number 2 :");
+            int num2 = Convert.ToInt32(Console.ReadLine());
+            if (num1 > num2)
+            {
+                Console.WriteLine($"{num1} is greater than {num2}");
+            }
+            else if (num2 > num1)
+            {
+                Console.WriteLine($"{num2} is greater than {num1}");
+            }
+            else
+            {
+                Console.WriteLine($"{num1} is equal  to {num2}");
+            }
+        }
+    }
+}
+
+5)
+namespace programs
+{
+    internal class swap
+    {
+        public void swapNum()
+        {
+            Console.WriteLine("enter 1st number:");
+            int number1 = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("enter 2nd number:");
+            int number2 = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine($" number one is {number1}");
+            Console.WriteLine($" number two is {number2}");
+            int temp;
+            temp = number1;
+            number1 = number2;
+            number2 = temp;
+            Console.WriteLine($" number one is {number1}");
+            Console.WriteLine($" number two is {number2}");
+        }
+    }
+}
+
+6)
+
+namespace programs
+{
+    internal class dividedTwo
+    {
+        public void dividedByTwo()
+        {
+            Console.WriteLine("enter number: ");
+            int num = Convert.ToInt32(Console.ReadLine());
+            if (num % 2 == 0)
+            {
+                Console.WriteLine($"{num} is divisible by 2");
+            }
+            else
+            {
+                Console.WriteLine($"{num} is not divisible by 2");
+            }
+        }
+    }
+}
+
+7)
+
+namespace programs
+{
+    internal class sumMultiples
+    {
+        public void sumOfMultiples()
+        {
+            Console.WriteLine("enter Range to check sum of multiples of 3 & 5 :");
+            var range = Convert.ToInt32(Console.ReadLine());
+            int sum = 0;
+            for (int i = 1; i < range; i++)
+            {
+                if (i % 3 == 0 && i % 5 == 0)
+                {
+                    sum = sum + i;
+                }
+            }
+            Console.WriteLine($"sum of multiples is: {sum}");
+        }
+
+    }
+}
+
+8)
+
+namespace programs
+{
+    internal class multiplesSiventeen
+    {
+        public void multiplesOfSiventeen()
+        {
+            Console.WriteLine("multiples of siventeen under 100");
+            for(int i = 1; i < 100; i++)
+            {
+                if (i % 17 == 0)
+                {
+                    Console.WriteLine(i);
+                }
+            }
+        }
+    }
+}
+
+9)
+
+namespace programs
+{
+    internal class sumDigits
+    {
+        public void sumOfDigits()
+        {
+            Console.WriteLine("enter a number:");
+            int num = Convert.ToInt32(Console.ReadLine());
+            int sum = 0;
+            int dig;
+            while (num > 0)
+            {
+                dig = num % 10;
+                sum += dig;
+                num /= 10;
+            }
+            Console.WriteLine($"SUM OF INDIVIDUAL DIGITS IS:{sum}");
+        }
+        
+    }
+}
+
+10)
+
+namespace programs
+{
+    internal class sumRecursion
+    {       
+            public static int sumByRecursion(int num)
+            {
+                if (num < 10)
+                {
+                    return num;
+                }
+                else
+                {
+                    int lastDigit = num % 10; // ld = 145%10= 5
+                    int remainingDigits = num / 10; // rd = 145/10= 14
+                    return lastDigit+sumByRecursion(remainingDigits); 
+                    // 5+recursion(14)
+                    //return num % 10 + sumOfRecursion(num / 10);
+                }
+            }
+
+        
+        
+
+        
+    }
+}
+
+11)
+
+namespace programs
+{
+    internal class reverse
+    {
+        public void reverseNum()
+        {
+            Console.WriteLine("enter a number:");
+            int num = Convert.ToInt32(Console.ReadLine());
+            int rev = 0;
+            int res;
+            while (num > 0)
+            {
+                res = num % 10;
+                rev = rev * 10 + res;
+                num /= 10;
+            }
+            Console.WriteLine($"reverse of the number :{rev}");
+        }
+
+    }
+}
+
+12)
+
+
+
+namespace programs
+{
+    internal class palindrome
+    {
+        public void checkPalindrome()
+        {
+            Console.WriteLine("enter a number:");
+            int num = Convert.ToInt32(Console.ReadLine());
+            int temp = num;
+            int rev = 0;
+            int res;
+            while (num > 0)
+            {
+                res = num % 10;
+                rev = rev * 10 + res;
+                num /= 10;
+            }
+            if (temp == rev)
+            {
+                Console.WriteLine($"{temp} is a palindrome");
+            }
+            else
+            {
+                Console.WriteLine($"{temp} is not a palindrome");
+            }
+        }
+    }
+}
+
+13,14)
+
+namespace programs
+{
+    internal class binarySum
+    {
+        public void sumOfBinary()
+        {
+        //    Console.WriteLine("enter binary number 1");
+        //    string bin1 = Console.ReadLine();
+        //    Console.WriteLine("enter binary number 2");
+        //    string bin2 = Console.ReadLine();
+        //    int num1 = Convert.ToInt32(bin1, 2);
+        //    int num2 = Convert.ToInt32(bin2, 2);
+        //    int sum = num1 + num2;
+        //    string binarySum = Convert.ToString(sum,2);
+        //    Console.WriteLine($"sum of binary is {bin1}+{bin2}: {binarySum}");
+          
+        }
+    }
+}
+
+
+namespace programs
+{
+    internal class binarySum
+    {
+        public void sumOfBinary()
+        {
+        //    Console.WriteLine("enter binary number 1");
+        //    string bin1 = Console.ReadLine();
+        //    Console.WriteLine("enter binary number 2");
+        //    string bin2 = Console.ReadLine();
+        //    int num1 = Convert.ToInt32(bin1, 2);
+        //    int num2 = Convert.ToInt32(bin2, 2);
+        //    int sum = num1 + num2;
+        //    string binarySum = Convert.ToString(sum,2);
+        //    Console.WriteLine($"sum of binary is {bin1}+{bin2}: {binarySum}");
+          
+        }
+    }
+}
+
+15)
+
+namespace programs
+{
+    internal class operations
+    {
+       public void performOperations()
+        {
+            Console.WriteLine("enter number 1:");
+            int num1 = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("enter number 2:");
+            int num2 = Convert.ToInt32(Console.ReadLine());
+            int sum = num1 + num2;
+            int mul = num1 * num2;
+            int div = num1 / num2;
+            int sub = num1 - num2;
+            Console.WriteLine($" sum of {num1} and {num2}is:{sum}");
+            Console.WriteLine($" multiply of {num1} and {num2}is:{mul}");
+            Console.WriteLine($"division of {num1} and {num2}is:{div}");
+            Console.WriteLine($" subtraction of {num1} and {num2}is:{sub}");
+        }
+            
+    }
+}
+
+16)
+
+namespace programs
+{
+    internal class exponentsmul
+    {
+        public void exponents()
+        {
+            Console.Write("Enter base: ");
+            double baseValue = Convert.ToDouble(Console.ReadLine());
+            Console.Write("Enter first exponent : ");
+            int exponent1 = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Enter second exponent : ");
+            int exponent2 = Convert.ToInt32(Console.ReadLine());
+
+            int resultExponent = exponent1 + exponent2;
+            double result = Math.Pow(baseValue, resultExponent);
+          
+            Console.WriteLine($"{baseValue}^{exponent1} * {baseValue}^{exponent2} = {baseValue}^{resultExponent} = {result}");
+        }
+    }
+}
+
+
+17)
+
+
+
+namespace programs
+{
+    internal class exponentsdiv
+    {
+        public void expdivision()
+        {
+            Console.Write("Enter base: ");
+            double baseValue = Convert.ToDouble(Console.ReadLine());
+            Console.Write("Enter  first exponent: ");
+            int exponent1 = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Enter second exponent: ");
+            int exponent2 = Convert.ToInt32(Console.ReadLine());
+            int resultExponent = exponent1 - exponent2;
+            double result = Math.Pow(baseValue, resultExponent);
+
+            Console.WriteLine($"{baseValue}^{exponent1} * {baseValue}^{exponent2} = {baseValue}^{resultExponent} = {result}");
+        }
+    }
+}
+
+
+18)
+
+namespace programs
+{
+    internal class table
+    {
+       public void multiplyTable()
+        {
+            Console.WriteLine("enter number :");
+            int num = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine($"{num} table");
+            for (int i = 1; i <= 10; i++)
+            {
+                Console.WriteLine($"{num} multiply {i}= {num*i}");
+            }
+        }
+    }
+}
+
+-----------------------
+namespace programs
+{
+    internal class exponentsdiv
+    {
+        public void expdivision()
+        {
+            Console.Write("Enter base: ");
+            double baseValue = Convert.ToDouble(Console.ReadLine());
+            Console.Write("Enter  first exponent: ");
+            int exponent1 = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Enter second exponent: ");
+            int exponent2 = Convert.ToInt32(Console.ReadLine());
+            int resultExponent = exponent1 - exponent2;
+            double result = Math.Pow(baseValue, resultExponent);
+
+            Console.WriteLine($"{baseValue}^{exponent1} * {baseValue}^{exponent2} = {baseValue}^{resultExponent} = {result}");
+        }
+    }
+}
+
+//CheckEvenOdd p = new CheckEvenOdd();
+//p.checkNumberEvenOdd();
+
+//oddInRange o = new oddInRange();
+//o.oddRange();
+
+//checkpositive c = new checkpositive();
+//c.checkPositiveNum();
+
+//largestnumber l = new largestnumber();
+//l.largestNum();
+
+//swap s = new swap();
+//s.swapNum();
+
+//dividedTwo d = new dividedTwo();
+//d.dividedByTwo();
+
+//sumMultiples multiples = new sumMultiples();
+//multiples.sumOfMultiples();
+
+//multiplesSiventeen m = new multiplesSiventeen();
+//m.multiplesOfSiventeen();
+
+//sumDigits sum = new sumDigits();
+//sum.sumOfDigits();
+
+//Console.WriteLine("enter number:");
+//int num = Convert.ToInt32(Console.ReadLine());
+//int sum = sumRecursion.sumByRecursion(num);
+//Console.WriteLine("sum is :" + sum);
+
+//reverse r = new reverse();
+//r.reverseNum();
+
+//palindrome pa = new palindrome();
+//pa.checkPalindrome();
+
+//binarySum bi = new binarySum();
+//bi.sumOfBinary();
+
+//binaryMultiply bm = new binaryMultiply();
+//bm.multiplyOfBinary();
+
+//operations operations = new operations();
+//operations.performOperations();
+
+//exponentsmul ex = new exponentsmul();
+//ex.exponents();
+
+
+
+//table t = new table();
+//t.multiplyTable();

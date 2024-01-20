@@ -1,0 +1,379 @@
+create procedure InsertRegistrationData  
+(      
+@uName varchar(15),      
+@SurName varchar(15),      
+@Phone varchar(10),      
+@Email varchar(25),      
+@Gender varchar(20),      
+@DOB varchar(8),      
+@City varchar(20),      
+@UAddress varchar(150),    
+@Qualification varchar(15),  
+@UPercentage varchar(6),  
+@UCertificate varchar(200)  
+)      
+as      
+begin      
+insert into registration     
+(  
+[uName],    
+[SurName],   
+[Phone],   
+[Email],   
+[Gender] ,   
+[DOB],    
+[City],    
+[UAddress],   
+[Qualification],   
+[UPercentage],    
+[UCertificate],      
+[CreatedBy],    
+[CreatedDate],    
+[IsActive]    
+)      
+values  
+(  
+@uName,      
+@SurName,      
+@Phone,      
+@Email,      
+@Gender,      
+@DOB,      
+@City,      
+@UAddress,    
+@Qualification,  
+@UPercentage,  
+@UCertificate,  
+@uName,  
+getdate(),  
+'y'  
+)      
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CREATE PROCEDURE getLoginData  
+AS  
+BEGIN  
+    SELECT userId, Password, role  
+    FROM signup  
+END
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CREATE PROCEDURE getCity   
+AS    
+BEGIN    
+    SELECT id, cityName   
+    FROM City    
+END
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CREATE PROCEDURE InsertSignupData  
+    @userId VARCHAR(10),  
+    @Password VARCHAR(15),  
+    @cPassword VARCHAR(15)  
+AS  
+BEGIN  
+    SET NOCOUNT ON;  
+  
+       
+    IF EXISTS (SELECT 1 FROM signup WHERE userId = @userId)  
+    BEGIN  
+          
+        SELECT 'Already Registered' AS MSG, 0 AS FLAG;  
+    END  
+    ELSE  
+    BEGIN  
+           
+        INSERT INTO signup (userId, [Password], cPassword, createdBy, createdTime, isActive, [role])  
+        VALUES (@userId, @Password, @cPassword, @userId, GETDATE(), 'y', 'user');  
+  
+          
+        SELECT 'INSERTED SUCCESSFULLY' AS MSG, 1 AS FLAG;  
+    END;  
+END;  
+  
+select*from signup
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+declare
+
+@dayLimit int =2, @daysinMonth int=0
+
+SET @daysinMonth =DAY(EOMONTH(GETDATE()))
+
+select @daysinMonth, @dayLimit*@daysinMonth AS ticketCount
+
+
+
+--slotmaster  :: SID , Month,Year, isReleased ( y/n), ticketCount, dayLimit
+
+-- booking :: BookingID, slotBookedDate, ticketsBooked, userName,paymentStatus
+
+----31/10/2023 -- 25 - 25 - 
+
+--- 1. ticketCount - max 2. date wise max - 25
+
+SELECT MONTH(GETDATE()) AS Month;
+
+DECLARE @dayLimit INT = 2;
+DECLARE @daysinMonth INT = 0;
+
+-- Calculate for the next month
+SET @daysinMonth = DAY(EOMONTH(DATEADD(MONTH, 1, GETDATE())));
+
+SELECT @daysinMonth AS NextMonthDays, @dayLimit * @daysinMonth AS NextMonthTicketCount;
+
+
+create procedure SlotRelease_Insert
+
+declare
+
+@dayLimit int =2, @daysinMonth int=0
+
+SET @daysinMonth = DAY(EOMONTH(DATEADD(MONTH, 1, GETDATE())));
+
+SELECT @daysinMonth AS NextMonthDays, @dayLimit * @daysinMonth AS NextMonthTicketCount;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CREATE PROCEDURE SlotRelease_Insert   
+    @Month VARCHAR(25),    
+    @Year VARCHAR(25),    
+    @IsReleased VARCHAR(5),
+    @TicketCount varchar(10),
+    @DayLimit varchar(25),
+    @CreatedBy varchar(10),
+	@CreatedTime varchar(25)
+AS    
+BEGIN
+    DECLARE @NextMonthNumber INT;
+    DECLARE @CurrentYear INT;
+    DECLARE @NextMonthDays INT;
+    DECLARE @NextMonthTicketCount INT;
+
+    -- Calculate the next month and current year
+    SET @NextMonthNumber = MONTH(DATEADD(MONTH, 1, GETDATE()));
+    SET @CurrentYear = YEAR(GETDATE());
+
+    -- Calculate @NextMonthDays and @NextMonthTicketCount
+    DECLARE @dayLimits INT = 10;
+    DECLARE @daysinMonth INT = 0;
+    SET @daysinMonth = DAY(EOMONTH(DATEADD(MONTH, 1, GETDATE())));
+    SET @NextMonthDays = @daysinMonth;
+    SET @NextMonthTicketCount = @dayLimits * @daysinMonth;
+
+    -- Insert data into the Slot_Release table
+    INSERT INTO Slot_Release (Month, Year, IsReleased, TicketCount, DayLimit, CreatedBy, CreatedTime)
+    VALUES (
+        @NextMonthNumber,
+        @CurrentYear,
+        'Y',
+        @TicketCount,
+        '25',
+        'ADMIN',
+        GETDATE()
+    );
+
+    SELECT 'RELEASED SUCCESSFULLY' AS MSG, 1 AS FLAG;    
+END;
+
+exec SlotRelease_Insert 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CREATE PROCEDURE  SlotRelease_Insert   
+    @Month VARCHAR(25),    
+    @Year VARCHAR(25),    
+    @IsReleased VARCHAR(5),
+	@TicketCount varchar(10),
+	@DayLimit varchar(25),
+	@CreatedBy varchar(10),
+	@CreatedTime varchar(25)
+AS    
+BEGIN         
+        INSERT INTO Slot_Release (Month,Year,IsReleased,TicketCount,DayLimit,CreatedBy,@CreatedTime)    
+        VALUES (
+		SELECT MONTH(DATEADD(MONTH, 1, GETDATE())) AS NextMonthNumber;, 
+		SELECT YEAR(GETDATE()) AS CurrentYear;,
+		'Y', 
+		declare
+         t int =2, @daysinMonth int=0
+        SET @daysinMonth = DAY(EOMONTH(DATEADD(MONTH, 1, GETDATE())));
+        SELECT @daysinMonth AS NextMonthDays, @dayLimit * @daysinMonth AS NextMonthTicketCount;,
+		'10',
+		'ADMIN',
+		GETDATE()
+		)   
+  
+        SELECT 'RELEASED SUCCESSFULLY' AS MSG, 1 AS FLAG;    
+    END  
+END   
+    
+   
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

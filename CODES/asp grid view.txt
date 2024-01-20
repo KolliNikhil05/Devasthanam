@@ -1,0 +1,889 @@
+<%@ Page Title="" Language="C#" MasterPageFile="~/views/MasterPages/MainMaster.Master" AutoEventWireup="true" CodeBehind="RecruiteePaymentDetails.aspx.cs" Inherits="Devasthanam.views.Admin.RecruiteePaymentDetails" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <link href="../../StyleSheets/RecruiteePaymentDetails.css" rel="stylesheet" />
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div class="container" style="width: 91%; height: 510px; overflow: auto;">
+        <h3>Recruitee Payment Data</h3>
+        <asp:DropDownList ID="ddlCity" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlCity_SelectedIndexChanged"></asp:DropDownList>
+        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" AllowPaging="True" PageSize="4" OnPageIndexChanging="GridView1_PageIndexChanging" OnRowDataBound="GridView1_InsertDropdown" ShowFooter="True" DataKeyNames="userId" CellPadding="4" OnRowDeleting="GridView1_RowDeleting" ForeColor="Black" GridLines="Vertical" OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating" OnRowCancelingEdit="GridView1_RowCancelingEdit" BackColor="White" BorderColor="#DEDFDE" BorderStyle="None" BorderWidth="1px">
+            <AlternatingRowStyle BackColor="White" />
+            <Columns>
+                <asp:CommandField ShowEditButton="True" ButtonType="Button" EditText="Edit" HeaderText="Edit" />
+                <asp:CommandField ShowDeleteButton="True" ButtonType="Button" DeleteText="Delete" HeaderText="Delete" />
+                <asp:TemplateField>
+                    <FooterTemplate>
+                        <asp:Button ID="btnAdd" runat="server" Text="Add New" OnClick="btn_AddRow" />
+                    </FooterTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="UserID">
+                    <EditItemTemplate>
+                        <asp:TextBox ID="txtEditUserId" runat="server" ReadOnly="true" Text='<%# Bind("userId") %>'></asp:TextBox>
+                    </EditItemTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="lblUserId" runat="server" Text='<%# Bind("userId") %>'></asp:Label>
+                    </ItemTemplate>
+                    <FooterTemplate>
+                        <asp:TextBox ID="txtNewUserId" runat="server" placeholder="Enter userId" Visible="false" ></asp:TextBox>
+                    </FooterTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="Name">
+                    <EditItemTemplate>
+                        <asp:TextBox ID="txtEditUName" runat="server" Text='<%# Bind("UName") %>'></asp:TextBox>
+                    </EditItemTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="lblUName" runat="server" Text='<%# Bind("UName") %>'></asp:Label>
+                    </ItemTemplate>
+                    <FooterTemplate>
+                        <asp:TextBox ID="txtNewUName" runat="server" placeholder="Enter Name" Visible="false" ></asp:TextBox>
+                    </FooterTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="SurName">
+                    <EditItemTemplate>
+                        <asp:TextBox ID="txtEditSurName" runat="server" Text='<%# Bind("SurName") %>'></asp:TextBox>
+                    </EditItemTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="lblSurName" runat="server" Text='<%# Bind("SurName") %>'></asp:Label>
+                    </ItemTemplate>
+                    <FooterTemplate>
+                        <asp:TextBox ID="txtNewSurName" runat="server" placeholder="Enter SurName" Visible="false"></asp:TextBox>
+                    </FooterTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="Phone">
+                    <EditItemTemplate>
+                        <asp:TextBox ID="txtEditPhone" runat="server" ReadOnly="true" Text='<%# Bind("Phone") %>'></asp:TextBox>
+                    </EditItemTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="lblPhone" runat="server" Text='<%# Bind("Phone") %>'></asp:Label>
+                    </ItemTemplate>
+                    <FooterTemplate>
+                        <asp:TextBox ID="txtNewPhone" runat="server" placeholder="Enter Phone" Visible="false"></asp:TextBox>
+                    </FooterTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="Email">
+                    <EditItemTemplate>
+                        <asp:TextBox ID="txtEditEmail" runat="server" Text='<%# Bind("Email") %>'></asp:TextBox>
+                    </EditItemTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="lblEmail" runat="server" Text='<%# Bind("Email") %>'></asp:Label>
+                    </ItemTemplate>
+                    <FooterTemplate>
+                        <asp:TextBox ID="txtNewEmail" runat="server" placeholder="Enter Email" Visible="false"></asp:TextBox>
+                    </FooterTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="Gender">
+                    <EditItemTemplate>
+                        <asp:RadioButtonList ID="rblEditGender" runat="server" RepeatDirection="Horizontal">
+                            <asp:ListItem Text="Male" Value="Male" />
+                            <asp:ListItem Text="Female" Value="Female" />
+                        </asp:RadioButtonList>
+                        <asp:HiddenField ID="hdnGender" runat="server" Value='<%#Bind("Gender") %>' />
+                    </EditItemTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="lblGender" runat="server" Text='<%# Bind("Gender") %>'></asp:Label>
+                    </ItemTemplate>
+                    <FooterTemplate>
+                        <asp:RadioButtonList ID="rdbNewGender" runat="server" RepeatDirection="Horizontal" Visible="false">
+                            <asp:ListItem Text="Male" Value="Male" />
+                            <asp:ListItem Text="Female" Value="Female" />
+                        </asp:RadioButtonList>
+                    </FooterTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="DOB">
+                    <EditItemTemplate>
+                        <asp:TextBox ID="txtEditDOB" runat="server" Text='<%# Bind("DOB", "{0:MM/dd/yyyy}") %>'></asp:TextBox>
+                    </EditItemTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="lblDOB" runat="server" Text='<%# Bind("DOB", "{0:MM/dd/yyyy}") %>'></asp:Label>
+                    </ItemTemplate>
+                    <FooterTemplate>
+                        <asp:TextBox ID="txtNewDOB" runat="server" placeholder="Enter DOB" Visible="false"></asp:TextBox>
+                    </FooterTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="City">
+                    <EditItemTemplate>
+                        <asp:DropDownList ID="ddlEditCity" runat="server" DataTextField="City" DataValueField="id">
+                        </asp:DropDownList>
+                        <asp:HiddenField ID="hdnCity" runat="server" Value='<%#Bind("City") %>' />
+                    </EditItemTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="lblCity" runat="server" Text='<%# Bind("City") %>'></asp:Label>
+                    </ItemTemplate>
+                    <FooterTemplate>
+                        <asp:DropDownList ID="ddlNewCity" runat="server" Visible="false"></asp:DropDownList>
+                    </FooterTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="Address">
+                    <EditItemTemplate>
+                        <asp:TextBox ID="txtEditAddress" runat="server" Text='<%# Bind("UAddress") %>'></asp:TextBox>
+                    </EditItemTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="lblAddress" runat="server" Text='<%# Bind("UAddress") %>'></asp:Label>
+                    </ItemTemplate>
+                    <FooterTemplate>
+                        <asp:TextBox ID="txtNewAddress" runat="server" placeholder="Enter Address" Visible="false"></asp:TextBox>
+                    </FooterTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="Qualification">
+                    <EditItemTemplate>
+                        <asp:TextBox ID="txtEditQualification" runat="server" Text='<%# Bind("Qualification") %>'></asp:TextBox>
+                    </EditItemTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="lblQualification" runat="server" Text='<%# Bind("Qualification") %>'></asp:Label>
+                    </ItemTemplate>
+                    <FooterTemplate>
+                        <asp:TextBox ID="txtNewQualification" runat="server" placeholder="Enter Qualification" Visible="false"></asp:TextBox>
+                    </FooterTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="Percentage">
+                    <EditItemTemplate>
+                        <asp:TextBox ID="txtEditPercentage" runat="server" Text='<%# Bind("UPercentage") %>'></asp:TextBox>
+                    </EditItemTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="lblPercentage" runat="server" Text='<%# Bind("UPercentage") %>'></asp:Label>
+                    </ItemTemplate>
+                    <FooterTemplate>
+                        <asp:TextBox ID="txtNewPercentage" runat="server" placeholder="Enter Percentage" Visible="false"></asp:TextBox>
+                    </FooterTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="Certificate">
+                    <EditItemTemplate>
+                        <asp:TextBox ID="txtEditCertificate" runat="server" ReadOnly="true" Text='<%# Bind("UCertificate") %>'></asp:TextBox>
+                    </EditItemTemplate>
+                    <ItemTemplate>                    
+                         <asp:LinkButton ID="lnkDownload" runat="server" CausesValidation="False" CommandArgument='<%# Eval("UCertificate") %>'  OnClick="download_Certifiacte" CommandName="Download" Text="Download" />  
+                         <asp:HiddenField ID="hdnCertificate" runat="server" Value='<%#Bind("UCertificate") %>' />
+                        <asp:Label ID="lblCertificate" runat="server" Visible="false" Text='<%# Bind("UCertificate") %>'></asp:Label>
+                    </ItemTemplate>
+                    <FooterTemplate>
+                        <asp:FileUpload runat="server" ID="txtNewCertificate" Visible="false"/>
+                    </FooterTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="Payment">
+                    <EditItemTemplate>
+                        <asp:TextBox ID="txtEditPayment" runat="server" Text='<%# Bind("Payment") %>'></asp:TextBox>
+                    </EditItemTemplate>
+                    <ItemTemplate>
+                        <asp:Label ID="lblPayment" runat="server" Text='<%# Bind("Payment") %>'></asp:Label>
+                    </ItemTemplate>
+                    <FooterTemplate>
+                        <asp:TextBox ID="txtNewPayment" runat="server" placeholder="Enter Payment" Visible="false"></asp:TextBox>
+                    </FooterTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField>
+                    <FooterTemplate>
+                        <asp:Button ID="btnInsert" runat="server" Text="Insert" CommandName="Insert" OnClick="data_insert" Visible="false" />
+                        <asp:Button ID="btnClear" runat="server" Text="Clear" Visible="false" OnClick="btn_Clear" />
+                    </FooterTemplate>
+                </asp:TemplateField>
+            </Columns>
+            <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="Black" />
+            <HeaderStyle CssClass="grid-header" BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+            <PagerStyle CssClass="grid-pager" HorizontalAlign="Center" BackColor="#2461BF" ForeColor="Black" /> 
+            <RowStyle BackColor="#EFF3FB" />
+            <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
+            <SortedAscendingCellStyle BackColor="#F5F7FB" HorizontalAlign="Center" />
+            <SortedAscendingHeaderStyle BackColor="#6D95E1" />
+            <SortedDescendingCellStyle BackColor="#E9EBEF" />
+            <SortedDescendingHeaderStyle BackColor="#4870BE" />
+        </asp:GridView>
+        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+    </div>
+</asp:Content>
+
+
+
+
+
+
+
+
+
+
+
+
+using BAL;
+using DevasthanamDAL;
+using System;
+using System.Collections.ObjectModel;
+using System.Configuration;
+using System.Data;
+using System.Data.Common;
+using System.Data.SqlClient;
+using System.IO;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace Devasthanam.views.Admin
+{
+    public partial class RecruiteePaymentDetails : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+                LoadCityDropDown();               
+            }
+        }
+        public void LoadCityDropDown()
+        {
+            RecruiteePaymentDetailsBAL objCity = new RecruiteePaymentDetailsBAL();
+            ddlCity.DataSource = objCity.GetCity();
+            ddlCity.DataTextField = "City";
+            ddlCity.DataValueField = "id";
+            ddlCity.DataBind();
+            ddlCity.Items.Insert(8, new ListItem("All", "All"));
+            ddlCity.Items.Insert(0, new ListItem("Select City", "0"));
+        }
+        public void ddlCity_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            BindGridView();
+        }
+        public void BindGridView()
+        {
+            RecruiteePaymentDetailsBAL objBind = new RecruiteePaymentDetailsBAL();
+            string selectedCity = ddlCity.SelectedValue;
+            DataTable BindByCity;
+            BindByCity = objBind.GetRecruiteePaymentData(selectedCity);
+            GridView1.DataSource = BindByCity;
+            GridView1.DataBind();
+           // ViewState["DataTable"] = dataTable;
+        }
+        public void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+            try
+            {
+                GridViewRow row = GridView1.Rows[e.RowIndex];
+                string userId = ((TextBox)row.FindControl("txtEditUserId")).Text;
+                string uName = ((TextBox)row.FindControl("txtEditUName")).Text;
+                string surName = ((TextBox)row.FindControl("txtEditSurName")).Text;
+                string phone = ((TextBox)row.FindControl("txtEditPhone")).Text;
+                string email = ((TextBox)row.FindControl("txtEditEmail")).Text;
+                string gender = ((RadioButtonList)row.FindControl("rblEditGender")).SelectedValue;
+                string dob = ((TextBox)row.FindControl("txtEditDOB")).Text;
+                DropDownList ddlEditCity = (DropDownList)row.FindControl("ddlEditCity");
+                string city = ddlEditCity.SelectedItem.Text;
+                string address = ((TextBox)row.FindControl("txtEditAddress")).Text;
+                string qualification = ((TextBox)row.FindControl("txtEditQualification")).Text;
+                string percentage = ((TextBox)row.FindControl("txtEditPercentage")).Text;
+                string payment = ((TextBox)row.FindControl("txtEditPayment")).Text;
+                RecruiteePaymentDetailsBAL objUpdate = new RecruiteePaymentDetailsBAL();
+                objUpdate.UpdateUser(userId, phone, uName, surName, email, gender, dob, city, address, qualification, percentage, payment);
+                GridView1.EditIndex = -1;
+                BindGridView();
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "UpdateSuccess", "alert('Updation done Successfully.');", true);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        public void GridView1_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            GridView1.EditIndex = -1;
+            BindGridView();
+        }
+        public void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            try
+            {
+                int rowIndex = e.RowIndex;
+                if (GridView1.DataKeys.Count > rowIndex && GridView1.DataKeys[rowIndex] != null)
+                {
+                    string userId = GridView1.DataKeys[rowIndex]["userId"].ToString();
+                    RecruiteePaymentDetailsBAL objDelete = new RecruiteePaymentDetailsBAL();
+                    objDelete.DeleteRecord(userId);
+                    BindGridView();
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "deleteSuccess", "alert('Record deleted successfully.');", true);
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        public void GridView1_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            GridView1.PageIndex = e.NewPageIndex;
+            BindGridView();
+        }
+        public void GridView1_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            GridView1.EditIndex = e.NewEditIndex;
+            BindGridView();
+            DropDownList ddlEditCity = (DropDownList)GridView1.Rows[e.NewEditIndex].FindControl("ddlEditCity");
+            HiddenField hdnCity = (HiddenField)GridView1.Rows[e.NewEditIndex].FindControl("hdnCity");
+            LoadCityDropDownForEditing(ddlEditCity, hdnCity.Value);
+            RadioButtonList rblEditGender = (RadioButtonList)GridView1.Rows[e.NewEditIndex].FindControl("rblEditGender");
+            HiddenField hdnGender = (HiddenField)GridView1.Rows[e.NewEditIndex].FindControl("hdnGender");           
+            LoadGenderRadioButtonForEditing(rblEditGender, hdnGender.Value);
+        }
+        public void LoadCityDropDownForEditing(DropDownList ddlEditCity, string selectedCity)
+        {
+            RecruiteePaymentDetailsBAL objCities = new RecruiteePaymentDetailsBAL();
+            ddlEditCity.DataSource = objCities.GetCity();
+            ddlEditCity.DataTextField = "City";
+            ddlEditCity.DataValueField = "id";
+            ddlEditCity.DataBind();
+            ddlEditCity.Items.Insert(0, new ListItem("Select City", "0"));
+
+            //ddlEditCity.SelectedValue =  hdnCity.value ;
+            for (int i = 0; i < ddlEditCity.Items.Count; i++)
+            {
+                if (ddlEditCity.Items[i].Text == selectedCity)
+                {
+                    ddlEditCity.Items[i].Selected = true;
+                    break;
+                }
+            }
+        }
+        public void LoadGenderRadioButtonForEditing(RadioButtonList rblEditGender, string selectedGender)
+        {
+            foreach (ListItem item in rblEditGender.Items)
+            {
+                if (item.Value == selectedGender)
+                {
+                    item.Selected = true;
+                    break;
+                }
+            }
+        }
+        public void data_insert(object sender, EventArgs e)
+        {
+            try
+            {
+                string userId = ((TextBox)GridView1.FooterRow.FindControl("txtNewUserId")).Text;
+                string uName = ((TextBox)GridView1.FooterRow.FindControl("txtNewUName")).Text;
+                string surName = ((TextBox)GridView1.FooterRow.FindControl("txtNewSurName")).Text;
+                string phone = ((TextBox)GridView1.FooterRow.FindControl("txtNewPhone")).Text;
+                string email = ((TextBox)GridView1.FooterRow.FindControl("txtNewEmail")).Text;
+                string gender = ((RadioButtonList)GridView1.FooterRow.FindControl("rdbNewGender")).SelectedValue;
+                string dob = ((TextBox)GridView1.FooterRow.FindControl("txtNewDOB")).Text;
+                string city = ((DropDownList)GridView1.FooterRow.FindControl("ddlNewCity")).SelectedItem.Text;
+                string address = ((TextBox)GridView1.FooterRow.FindControl("txtNewAddress")).Text;
+                string qualification = ((TextBox)GridView1.FooterRow.FindControl("txtNewQualification")).Text;
+                string percentage = ((TextBox)GridView1.FooterRow.FindControl("txtNewPercentage")).Text;
+                FileUpload fileUpload = (FileUpload)GridView1.FooterRow.FindControl("txtNewCertificate");
+                if (fileUpload.HasFile)
+                {
+                    string fileName = Path.GetFileName(fileUpload.FileName);
+                    string directoryPath = ConfigurationManager.AppSettings["uploads"].ToString();
+                    string filePath = Path.Combine(directoryPath, fileName);
+                    fileUpload.SaveAs(filePath);
+                    string certificate = filePath;
+                    string payment = ((TextBox)GridView1.FooterRow.FindControl("txtNewPayment")).Text;
+                    RecruiteePaymentDetailsBAL objInsert = new RecruiteePaymentDetailsBAL();
+                    objInsert.InsertUser(userId, uName, surName, phone, email, gender, dob, city, address, qualification, percentage, certificate, payment);
+                    BindGridView();
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "InsertSuccess", "alert('Insertion done Successfully.');", true);
+                }              
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        public void GridView1_InsertDropdown(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.Footer)
+            {
+                DropDownList ddlNewCity = (DropDownList)e.Row.FindControl("ddlNewCity");
+                if (ddlNewCity != null)
+                {
+                    RecruiteePaymentDetailsBAL bal = new RecruiteePaymentDetailsBAL();
+                    ddlNewCity.DataSource = bal.GetCity();
+                    ddlNewCity.DataTextField = "City";
+                    ddlNewCity.DataValueField = "id";
+                    ddlNewCity.DataBind();
+                    ddlNewCity.Items.Insert(0, new ListItem("Select City", "0"));
+                }
+            }            
+        }
+        public void btn_AddRow(object sender, EventArgs e)
+        {
+            TextBox txtNewUserId = (TextBox)GridView1.FooterRow.FindControl("txtNewUserId");
+            TextBox txtNewUName = (TextBox)GridView1.FooterRow.FindControl("txtNewUName");
+            TextBox txtNewSurName = (TextBox)GridView1.FooterRow.FindControl("txtNewSurName");
+            TextBox txtNewPhone = (TextBox)GridView1.FooterRow.FindControl("txtNewPhone");
+            TextBox txtNewEmail = (TextBox)GridView1.FooterRow.FindControl("txtNewEmail");
+            RadioButtonList rdbNewGender = (RadioButtonList)GridView1.FooterRow.FindControl("rdbNewGender");
+            TextBox txtNewDOB = (TextBox)GridView1.FooterRow.FindControl("txtNewDOB");
+            DropDownList ddlNewCity = (DropDownList)GridView1.FooterRow.FindControl("ddlNewCity");
+            TextBox txtNewAddress = (TextBox)GridView1.FooterRow.FindControl("txtNewAddress");
+            TextBox txtNewQualification = (TextBox)GridView1.FooterRow.FindControl("txtNewQualification");
+            TextBox txtNewPercentage = (TextBox)GridView1.FooterRow.FindControl("txtNewPercentage");
+            TextBox txtNewPayment = (TextBox)GridView1.FooterRow.FindControl("txtNewPayment");
+            Button btnInsert = (Button)GridView1.FooterRow.FindControl("btnInsert");
+            Button btnClear = (Button)GridView1.FooterRow.FindControl("btnClear");
+            FileUpload txtNewCertificate = (FileUpload)GridView1.FooterRow.FindControl("txtNewCertificate");
+            if (txtNewUserId != null)
+            {
+                txtNewUserId.Visible = !txtNewUserId.Visible;
+            }
+            if (txtNewUName != null)
+            {
+                txtNewUName.Visible = !txtNewUName.Visible;
+            }
+            if (txtNewSurName != null)
+            {
+                txtNewSurName.Visible = !txtNewSurName.Visible;
+            }
+            if (txtNewPhone != null)
+            {
+                txtNewPhone.Visible = !txtNewPhone.Visible;
+            }
+            if (txtNewEmail != null)
+            {
+                txtNewEmail.Visible = !txtNewEmail.Visible;
+            }
+            if (rdbNewGender != null)
+            {
+                rdbNewGender.Visible = !rdbNewGender.Visible;
+            }
+            if (txtNewDOB != null)
+            {
+                txtNewDOB.Visible = !txtNewDOB.Visible;
+            }
+            if (ddlNewCity != null)
+            {
+                ddlNewCity.Visible = !ddlNewCity.Visible;
+            }
+            if (txtNewAddress != null)
+            {
+                txtNewAddress.Visible = !txtNewAddress.Visible;
+            }
+            if (txtNewQualification != null)
+            {
+                txtNewQualification.Visible = !txtNewQualification.Visible;
+            }
+            if (txtNewPercentage != null)
+            {
+                txtNewPercentage.Visible = !txtNewPercentage.Visible;
+            }
+            if (txtNewPayment != null)
+            {
+                txtNewPayment.Visible = !txtNewPayment.Visible;
+            }
+            if (btnInsert != null)
+            {
+                btnInsert.Visible = !btnInsert.Visible;
+            }
+            if (btnClear != null)
+            {
+                btnClear.Visible = !btnClear.Visible;
+            }
+            if (txtNewCertificate != null)
+            {
+                txtNewCertificate.Visible = !txtNewCertificate.Visible;
+            }
+        }
+        public void btn_Clear(object sender, EventArgs e)
+        {
+            TextBox txtNewUserId = (TextBox)GridView1.FooterRow.FindControl("txtNewUserId");
+            TextBox txtNewUName = (TextBox)GridView1.FooterRow.FindControl("txtNewUName");
+            TextBox txtNewSurName = (TextBox)GridView1.FooterRow.FindControl("txtNewSurName");
+            TextBox txtNewPhone = (TextBox)GridView1.FooterRow.FindControl("txtNewPhone");
+            TextBox txtNewEmail = (TextBox)GridView1.FooterRow.FindControl("txtNewEmail");
+            RadioButtonList rdbNewGender = (RadioButtonList)GridView1.FooterRow.FindControl("rdbNewGender");
+            TextBox txtNewDOB = (TextBox)GridView1.FooterRow.FindControl("txtNewDOB");
+            DropDownList ddlNewCity = (DropDownList)GridView1.FooterRow.FindControl("ddlNewCity");
+            TextBox txtNewAddress = (TextBox)GridView1.FooterRow.FindControl("txtNewAddress");
+            TextBox txtNewQualification = (TextBox)GridView1.FooterRow.FindControl("txtNewQualification");
+            TextBox txtNewPercentage = (TextBox)GridView1.FooterRow.FindControl("txtNewPercentage");
+            TextBox txtNewPayment = (TextBox)GridView1.FooterRow.FindControl("txtNewPayment");
+
+            if (txtNewUserId != null)
+            {
+                txtNewUserId.Text = string.Empty;
+            }
+            if (txtNewUName != null)
+            {
+                txtNewUName.Text = string.Empty;
+            }
+            if (txtNewSurName != null)
+            {
+                txtNewSurName.Text = string.Empty;
+            }
+            if (txtNewPhone != null)
+            {
+                txtNewPhone.Text = string.Empty;
+            }
+            if (txtNewEmail != null)
+            {
+                txtNewEmail.Text = string.Empty;
+            }
+            if (rdbNewGender != null)
+            {
+                rdbNewGender.ClearSelection();
+            }
+            if (txtNewDOB != null)
+            {
+                txtNewDOB.Text = string.Empty;
+            }
+            if (ddlNewCity != null)
+            {
+                ddlNewCity.SelectedIndex = -1;
+            }
+            if (txtNewAddress != null)
+            {
+                txtNewAddress.Text = string.Empty;
+            }
+            if (txtNewQualification != null)
+            {
+                txtNewQualification.Text = string.Empty;
+            }
+            if (txtNewPercentage != null)
+            {
+                txtNewPercentage.Text = string.Empty;
+            }
+            if (txtNewPayment != null)
+            {
+                txtNewPayment.Text = string.Empty;
+            }
+               
+
+
+        }
+        public void download_Certifiacte(object sender, EventArgs e)
+        {
+            GridViewRow row = (GridViewRow)((LinkButton)sender).NamingContainer;
+            HiddenField hdnfile = (HiddenField)row.FindControl("hdnCertificate");
+            string file = hdnfile.Value.Trim();
+            if (!string.IsNullOrEmpty(file) && File.Exists(file))
+            {
+
+                Response.ContentType = "application/octet-stream";
+                Response.AppendHeader("Content-Disposition", "attachment; filename=" + Path.GetFileName(file));
+                Response.TransmitFile(file);
+                Response.End();
+            }
+            else
+            {
+                string script = "alert('File not found or invalid path.');";
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
+            }
+        }
+
+    
+    }
+}
+
+
+
+
+
+
+using DAL;
+using System.Data;
+
+namespace BAL
+{
+    public class RecruiteePaymentDetailsBAL
+    {
+        RecruiteePaymentDetailsDAL obj = new RecruiteePaymentDetailsDAL();
+        public DataTable GetCity()
+        {
+            return obj.GetCity();
+        }
+        public DataTable GetRecruiteePaymentData(string city)
+        {
+            return obj.GetRecruiteePaymentData(city);
+        }
+        public void UpdateUser(string userId, string phone, string uName, string surName, string email, string gender, string dob, string city, string address, string qualification, string percentage, string payment)
+        {
+            RecruiteePaymentDetailsDAL objUpdate = new RecruiteePaymentDetailsDAL();
+            objUpdate.UpdateUser(userId,phone, uName, surName, email, gender, dob, city, address, qualification, percentage, payment);
+        }
+        public void DeleteRecord(string userId)
+        {
+            RecruiteePaymentDetailsDAL objDelete = new RecruiteePaymentDetailsDAL();
+            objDelete.DeleteRecord(userId);
+        }
+        public void InsertUser(string userId, string uName, string surName, string phone, string email, string gender, string dob, string city, string address, string qualification, string percentage, string certificate, string payment)
+        {
+            RecruiteePaymentDetailsDAL objInsert = new RecruiteePaymentDetailsDAL();
+            objInsert.InsertUser(userId, uName, surName, phone, email, gender, dob, city, address, qualification, percentage, certificate, payment);
+        }
+    }
+}
+
+
+
+
+
+
+
+using DevasthanamDAL;
+using System;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+
+namespace DAL
+{
+    public class RecruiteePaymentDetailsDAL
+    {
+        public DataTable GetCity()
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["connection_data"].ConnectionString;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("getExCity", connection))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    connection.Open();
+                    DataTable dt = new DataTable();          
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                    {
+                        adapter.Fill(dt);
+                    }
+                    return dt;
+                }
+            }
+        }
+        public DataTable GetRecruiteePaymentData(string city)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["connection_data"].ConnectionString;
+            DataTable RecruiteeData = new DataTable();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("RecruiteePaymentData_Get", connection))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@City", city);
+                    connection.Open();
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                    {
+                        adapter.Fill(RecruiteeData);
+                    }
+                }
+            }
+            return RecruiteeData;
+        }
+        public void UpdateUser(string userId, string phone, string uName, string surName, string email, string gender, string dob, string city, string address, string qualification, string percentage, string payment)
+        {
+            using (SqlConnection connection = new SqlConnection(Connection.connectionString_Devasthanam))
+            {
+                connection.Open();
+
+                using (SqlCommand cmd = new SqlCommand("UpdateRegistration_Data", connection))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@userId", userId);
+                    cmd.Parameters.AddWithValue("@uName", uName);
+                    cmd.Parameters.AddWithValue("@surName", surName);
+                    cmd.Parameters.AddWithValue("@phone", phone);
+                    cmd.Parameters.AddWithValue("@email", email);
+                    cmd.Parameters.AddWithValue("@gender", gender);
+                    cmd.Parameters.AddWithValue("@dob", dob);
+                    cmd.Parameters.AddWithValue("@city", city);
+                    cmd.Parameters.AddWithValue("@address", address);
+                    cmd.Parameters.AddWithValue("@qualification", qualification);
+                    cmd.Parameters.AddWithValue("@percentage", percentage);
+                    cmd.Parameters.AddWithValue("@payment", payment);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+        public void DeleteRecord(string userId)
+        {
+            using (SqlConnection connection = new SqlConnection(Connection.connectionString_Devasthanam))
+            {
+                connection.Open();
+
+                using (SqlCommand cmd = new SqlCommand("DeleteRegistration_Data", connection))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@userId", userId);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+        public void InsertUser(string userId, string uName, string surName, string phone, string email, string gender, string dob, string city, string address, string qualification, string percentage, string certificate, string payment)
+        {
+            using (SqlConnection connection = new SqlConnection(Connection.connectionString_Devasthanam))
+            {
+                using (SqlCommand command = new SqlCommand("InsertRegistration", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@userId", userId);
+                    command.Parameters.AddWithValue("@uName", uName);
+                    command.Parameters.AddWithValue("@surName", surName);
+                    command.Parameters.AddWithValue("@phone", phone);
+                    command.Parameters.AddWithValue("@email", email);
+                    command.Parameters.AddWithValue("@gender", gender);
+                    command.Parameters.AddWithValue("@dob", dob);
+                    command.Parameters.AddWithValue("@city", city);
+                    command.Parameters.AddWithValue("@address", address);
+                    command.Parameters.AddWithValue("@qualification", qualification);
+                    command.Parameters.AddWithValue("@percentage", percentage);
+                    command.Parameters.AddWithValue("@UCertificate", certificate);
+                    command.Parameters.AddWithValue("@payment", payment);
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+    }
+}
+
+
+
+
+
+
+CREATE PROCEDURE RecruiteePaymentData_Get      
+    @City NVARCHAR(255) = NULL      
+AS      
+BEGIN      
+    IF @City = 'All'      
+    BEGIN      
+        SELECT uName, SurName, Phone, Email, Gender, DOB, r.City, UAddress, Qualification, UPercentage, Payment,userId,UCertificate    
+        FROM registration r      
+        INNER JOIN ExCity e ON r.City = e.City      
+        WHERE Payment = 'Y'      
+        ORDER BY userId;      
+    END      
+    ELSE      
+    BEGIN      
+        -- If a specific city is selected, get data for that city      
+        SELECT uName, SurName, Phone, Email, Gender, DOB, r.City, UAddress, Qualification, UPercentage, Payment,userId,UCertificate     
+        FROM registration r      
+        INNER JOIN ExCity e ON r.City = e.City      
+        WHERE e.id = @City AND Payment = 'Y'      
+        ORDER BY userId;      
+    END      
+END   
+
+
+
+
+
+CREATE PROCEDURE DeleteRegistration_Data    
+    @userId  int   
+AS    
+BEGIN    
+    DELETE FROM registration    
+    WHERE userId = @userId;    
+END;
+
+
+
+
+
+
+
+
+
+
+CREATE PROCEDURE UpdateRegistration_Data    
+      
+    @uName VARCHAR(15),    
+    @surName VARCHAR(15),   
+ @phone  VARCHAR(10),   
+    @email VARCHAR(25),    
+    @gender NVARCHAR(20),    
+    @dob DATE,    
+    @city VARCHAR(20),    
+    @address VARCHAR(150),    
+    @qualification VARCHAR(15),    
+    @percentage VARCHAR(6),    
+    @payment VARCHAR(15),    
+    @userId int  
+AS    
+BEGIN    
+    UPDATE registration    
+    SET uName = @uName,    
+        SurName = @surName,    
+  Phone = @phone,  
+        Email = @email,    
+        Gender = @gender,    
+        DOB = @dob,    
+        City = @city,    
+        UAddress = @address,    
+        Qualification = @qualification,    
+        UPercentage = @percentage,    
+        Payment = @payment    
+    WHERE  userId = @userId  
+END;
+
+
+
+
+create table GridViewData
+(
+userId varchar(5),
+uName varchar(15),
+SurName varchar(15),
+Phone varchar(10)
+)
+
+CREATE TYPE UT_GridViewData AS TABLE
+(
+    userId varchar(5),
+    uName varchar(15),
+    SurName varchar(15),
+    Phone varchar(10)
+);
+
+CREATE PROCEDURE InsertGridViewData 
+    @GridViewData UT_GridViewData READONLY
+AS
+BEGIN
+    INSERT INTO GridViewData (userId, uName, SurName, Phone)
+    SELECT userId, uName, SurName, Phone
+    FROM @GridViewData;
+END;
+
+ 
+DECLARE @Data UT_GridViewData;
+INSERT INTO @Data
+VALUES
+('1', 'John', 'Doe', '1234567890'),
+('2', 'Jane', 'Smith', '9876543210');
+EXEC InsertGridViewData @GridViewData = @Data;
+
+select * from GridViewData
+
+
+ 
+
+
+ CREATE PROCEDURE InsertRegistration    
+    @userId int,    
+    @uName VARCHAR(15),      
+    @surName VARCHAR(15),      
+    @phone  VARCHAR(10),      
+    @email VARCHAR(25),      
+    @gender NVARCHAR(20),      
+    @dob DATE,      
+    @city VARCHAR(20),      
+    @address VARCHAR(150),      
+    @qualification VARCHAR(15),      
+    @percentage VARCHAR(6),    
+ @UCertificate VARCHAR(200),  
+    @payment VARCHAR(15)          
+AS      
+BEGIN      
+    INSERT INTO registration (userId, uName, SurName, Phone, Email, Gender, DOB, City, UAddress, Qualification, UPercentage,UCertificate,Payment)      
+    VALUES (@userId,@uName, @surName, @phone, @email, @gender, @dob, @city, @address, @qualification, @percentage,@UCertificate, @payment);      
+END; 
+
+
+
+
+
+
+
+
+
+
+

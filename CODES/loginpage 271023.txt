@@ -1,0 +1,370 @@
+using System;
+using System.Data;
+using System.Data.SqlClient;
+using System.Web;
+
+namespace DevasthanamDAL
+{
+    public class LoginPageDAL
+    {
+        public DataSet GetLogin(LoginDetails LoginValues)
+        {
+            HttpContext context = HttpContext.Current;
+            DataSet dt = new DataSet();
+            try
+            {
+                SqlConnection con = new SqlConnection(Connection.connectionString_Devasthanam);
+                con.Open();
+                SqlCommand cmd = con.CreateCommand();
+                cmd.CommandText = "LoginData_Get";
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@userId", LoginValues.phone);
+                cmd.Parameters.AddWithValue("@Password", LoginValues.password);
+                context.Session["userid"] = LoginValues.phone;
+                context.Session["password"] = LoginValues.password;
+                SqlDataAdapter objSqlDataAdapter = new SqlDataAdapter(cmd);
+                objSqlDataAdapter.Fill(dt);
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+
+            }
+            return dt;
+        }
+    }
+    public class LoginDetails
+    {
+        public string phone { get; set; }
+        public string password { get; set; }
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //public DataSet GetLogin(LoginData parameter)
+    //{
+    //    HttpContext context = HttpContext.Current;
+    //    DataSet dt = new DataSet();
+    //    try
+    //    {
+    //        SqlConnection con = new SqlConnection(Connection.connectionString_Devasthanam);
+    //        con.Open();
+    //        SqlCommand cmd = con.CreateCommand();
+    //        cmd.CommandText = "LoginData_Get";
+    //        cmd.CommandType = CommandType.StoredProcedure;
+    //        cmd.Parameters.AddWithValue("@userId", parameter.phone);
+    //        cmd.Parameters.AddWithValue("@Password", parameter.password);
+    //        context.Session["userid"] = parameter.phone;
+    //        context.Session["password"] = parameter.password;
+    //        SqlDataAdapter objSqlDataAdapter = new SqlDataAdapter(cmd);
+    //        objSqlDataAdapter.Fill(dt);
+    //        con.Close();
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        Console.WriteLine(ex.Message);
+
+    //    }
+    //    return dt;
+    //}
+
+    //public class LoginData
+    //{
+    //    public string phone { get; set; }
+    //    public string password { get; set; }
+    //}
+
+
+
+
+
+//public DataTable GetLogin(LoginData data)
+//{
+//    SqlConnection con = new SqlConnection(Connection.connectionString_Devasthanam);
+//    DataTable datatable = new DataTable();
+//    SqlCommand cmd;
+//    try
+//    {
+//        if (con.State == ConnectionState.Closed)
+//        {
+//            con.Open();
+//        }
+//        cmd = con.CreateCommand();
+//        cmd.CommandType = CommandType.StoredProcedure;
+//        cmd.CommandText = "LoginData_Get ";
+//        cmd.CommandType = CommandType.StoredProcedure;
+//        cmd.Parameters.AddWithValue("@userId", data.userId);
+//        cmd.Parameters.AddWithValue("@Password", data.password);
+//        SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+//        adapter.Fill(datatable);
+
+//    }
+//    catch (Exception ex)
+//    {
+//        Console.WriteLine(ex.Message);
+//    }
+//    return datatable;
+//}
+
+
+
+
+
+
+
+
+
+//public DataTable GetLoginData()
+//{
+//    SqlConnection conn = new SqlConnection(Connection.connectionString_Devasthanam);
+//    DataTable dt = new DataTable();
+//    SqlCommand cmd = null;
+//    try
+//    {
+//        if (conn.State == ConnectionState.Closed)
+//        {
+//            conn.Open();
+//        }
+//        cmd = conn.CreateCommand();
+//        cmd.CommandType = CommandType.StoredProcedure;
+//        cmd.CommandText = "LoginData_Get";
+//        SqlDataAdapter da = new SqlDataAdapter(cmd);
+//        da.Fill(dt);
+//    }
+//    catch (Exception e)
+//    {
+//        throw new Exception(e.Message);
+//    }
+//    finally
+//    {
+//        if (conn.State == ConnectionState.Open)
+//        {
+//            conn.Close();
+//        }
+
+//    }
+//    return dt;
+//}
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using DevasthanamDAL;
+using System;
+using System.Data;
+
+namespace DevasthanamBAL
+{
+    public class LoginPageBAL
+    {
+            public DataSet GetLogin(LoginDetails LoginValues)
+            {
+            try
+            {
+                LoginPageDAL objLoginDal = new LoginPageDAL();
+                return objLoginDal.GetLogin(LoginValues);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using Devasthanam.views.Utilities;
+using DevasthanamBAL;
+using DevasthanamDAL;
+using Newtonsoft.Json;
+using System;
+using System.Data;
+using System.Web.Services;
+
+namespace Devasthanam
+{
+    public partial class LoginPage : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            
+        }
+        [WebMethod]
+        public static string GetLogin(LoginDetails LoginValues)
+        {
+            string jsonresult = " ";
+            try
+            {
+                LoginPageBAL objLoginBal = new LoginPageBAL();
+                DataSet ds = objLoginBal.GetLogin(LoginValues);
+               
+           
+                if (ds.Tables.Count > 1)
+                {
+                    jsonresult = JsonConvert.SerializeObject(ds);
+                }
+                else
+                {
+                    jsonresult = JsonConvert.SerializeObject(ds);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogExceptions.LogException2("GetLogin", "101", ex.Message);                
+            }
+          return jsonresult;
+        }
+    }
+}
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function Login() {
+    var phone = $("#txtPhone").val();
+    var password = $("#loginPswd").val();
+    // Phone number validation
+    if (phone === null || phone === "") {
+        alert("Please enter your Phone number.");
+        $("#txtPhone").focus();
+        return false;
+    }
+    if (password === null || password === "") {
+        alert("Please enter a password.");
+        $("#loginPswd").focus();
+        return false;
+    }
+    var logindata = {
+        phone: $("#txtPhone").val(),
+        password: $("#loginPswd").val()
+    }
+
+    $.ajax({
+        type: "POST",
+        url: "LoginPage.aspx/GetLogin ",
+        data: JSON.stringify({ LoginValues: logindata }),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function (response) {
+            var data = JSON.parse(response.d);
+            if (data != null) {
+                if (data["Table"][0].FLAG == 1) {
+                    alert(data["Table"][0].MSG);
+                    if (data["Table1"][0].role == "1") {
+                        window.location = "Demo.aspx";
+                    }
+                    else if (data["Table1"][0].role == "2") {
+
+                        window.location = "../UserHome/UserHomePage.aspx"; 
+                    }
+                }
+                else {
+                    alert(data["Table"][0].MSG);
+                }
+            }
+        },
+        error: function (error) {
+            alert(error);
+        },
+
+    });
+
+}
