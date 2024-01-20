@@ -1,0 +1,324 @@
+/*****************************program1****************************/
+
+/*namespace ConsoleApp1
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Enter a Number:");
+            int num = Convert.ToInt32(Console.ReadLine());
+            if (num % 2 == 0)
+            {
+                Console.WriteLine($"{num} is even");
+            }
+            else
+            {
+                Console.WriteLine($"{num} is odd");
+            }
+        }
+    }
+}*/
+
+/*****************************program2****************************/
+
+/*namespace ConsoleApp1
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("enter Range");
+            int range = Convert.ToInt32(Console.ReadLine());
+            for(int i= 1;i<= range; i++)
+            {
+                if(i%2!=0)
+                {
+                    Console.WriteLine(i);
+                }
+                else
+                {
+                    continue;
+                }
+            }
+        }
+    }
+}
+*/
+
+/*****************************program3****************************/
+
+namespace ConsoleApp1
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("enter a number");
+            int num =Convert.ToInt32(Console.ReadLine());
+            if(num > 0)
+            {
+                Console.WriteLine($"{num} IS POSITIVE");
+            }
+            else if (num == 0)
+            {
+                Console.WriteLine($"{num} is Zero");
+            }
+            else
+            {
+                Console.WriteLine($"{num} is negitive");
+            }
+        }
+    }
+}
+/*****************************program4****************************/
+/*namespace program
+{
+    internal class Program
+    {
+       
+            static void Main(string[] args)
+            {
+                Console.WriteLine("enter number 1");
+                int num1 = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("enter number 2");
+                int num2 = Convert.ToInt32(Console.ReadLine());
+                if (num1 > num2)
+                {
+                    Console.WriteLine($"{num1} is greater than {num2}");
+                }
+                else if (num2 > num1)
+                {
+                    Console.WriteLine($"{num2} is greater than {num1}");
+                }
+                else
+                {
+                    Console.WriteLine($"{num1} is equal  to {num2}");
+                }
+            }
+        
+    }
+}
+*/
+/*****************************program5****************************/
+/*
+namespace program
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("enter 1st number");
+            int number1 = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("enter 2nd number");
+            int number2 = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine($" number one is {number1}");
+            Console.WriteLine($" number two is {number2}");
+            int temp;
+            temp = number1;
+            number1 = number2;
+            number2 = temp;
+            Console.WriteLine($" number one is {number1}");
+            Console.WriteLine($" number two is {number2}");
+        }
+    }
+}
+*/
+/*****************************program6****************************/
+/*
+namespace program
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("enter number");
+            int num=Convert.ToInt32(Console.ReadLine());
+            if(num%2==0)
+            {
+                Console.WriteLine($"{num} is divisible by 2");
+            }
+            else
+            {
+                Console.WriteLine($"{num} is not divisible by 2");
+            }
+        }
+    }
+}
+*/
+/*****************************program7****************************/
+namespace program
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            int sum = 0;
+            for(int i = 1;i<45;i++)
+            {
+                if(i%3==0 && i%5==0)
+                {
+                    sum=sum+i;
+                }
+            }
+            Console.WriteLine($"sum is {sum}");
+        }
+    }
+}
+/*****************************program8****************************/
+/*
+namespace program
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("enter a number");
+            int num =Convert.ToInt32(Console.ReadLine());
+            int sum = 0;
+            int dig;
+            while (num > 0)
+            {
+                dig = num % 10;
+                sum += dig;
+                num /= 10;
+            }
+            Console.WriteLine($"SUM OF INDIVIDUAL DIGITS IS:{sum}");
+        }
+    }
+}
+*/
+/***********************************program9****************************/
+namespace ConsoleApp1
+{
+    internal class Program
+    {
+
+        static int sumOfDig(int num)
+        {
+            if (num == 0)
+            {
+                return 0;
+            }
+            else
+            {
+                return num % 10 + sumOfDig(num / 10);
+            }
+        }
+        static void Main(string[] args)
+        {
+                Console.WriteLine("enter a number:");
+                int num = Convert.ToInt32(Console.ReadLine());
+                int sumOfDigits = sumOfDig(num);
+                Console.WriteLine("sum of digits: " + sumOfDigits);
+               
+        }
+    }
+}
+/***********************************program10****************************/
+namespace ConsoleApp1
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("enter a number:");
+            int num = Convert.ToInt32(Console.ReadLine());
+            int rev = 0;
+            int res;
+            while (num > 0)
+            {
+                res = num % 10;
+                rev = rev * 10 + res;
+                num /= 10;
+            }
+            Console.WriteLine($"reverse of the number :{rev}");
+        }
+    }
+}
+/***********************************program11****************************/
+namespace ConsoleApp1
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("enter a number:");
+            int num = Convert.ToInt32(Console.ReadLine());
+            int temp = num;
+            int rev = 0;
+            int res;
+            while (num > 0)
+            {
+                res = num % 10;
+                rev = rev * 10 + res;
+                num /= 10;
+            }
+            if(temp==rev)
+            {
+                Console.WriteLine($"{temp} is a palindrome");
+            }
+            else
+            {
+                Console.WriteLine($"{temp} is not a palindrome");
+            }
+        }
+    }
+}
+/***********************************program12****************************/
+/***********************************program13****************************/
+/***********************************program14****************************/
+namespace ConsoleApp1
+{
+    internal class Program
+    {
+        public void operation()
+        {
+            Console.WriteLine("enter number one");
+            int n1 = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("enter number two");
+            int n2 = Convert.ToInt32(Console.ReadLine());
+            int sum = n1 + n2;
+            Console.WriteLine("sum is : " + sum);
+            int mul = n1 * n2;
+            Console.WriteLine("multiply is :" + mul);
+            int div = n1 / n2;
+            Console.WriteLine("division is :" + div);
+            int sub = n1 - n2;
+            Console.WriteLine("subtraction is :" + sub);
+        }
+        static void Main(string[] args)
+        {
+            Program obj = new Program();
+            obj.operation();
+        }
+    }
+}
+/***********************************program15****************************/
+/***********************************program16****************************/
+/***********************************program17****************************/
+/***********************************program18****************************/
+namespace ConsoleApp1
+{
+    internal class Program
+    {
+        public void table()
+        {
+            Console.WriteLine("enter number :");
+            int num=Convert.ToInt32(Console.ReadLine());
+            for (int i = 1;i<=10;i++)
+            {
+                Console.WriteLine($"{num}*{i}: "+num*i);
+            }
+            
+        }
+        static void Main(string[] args)
+        {
+            Program obj = new Program();
+            obj.table();
+        }
+    }
+}
+/***********************************program19****************************/
+/***********************************program19****************************/
+/***********************************program19****************************/

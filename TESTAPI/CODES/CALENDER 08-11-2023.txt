@@ -1,0 +1,271 @@
+ 
+
+$(document).ready(function () {
+    const now = new Date();
+    let currentMonthView = new Date();
+
+    $("#prevMonth").click(function () {
+        if (currentMonthView.getMonth() === now.getMonth()) {
+            // If the current month is viewed, do not allow going to past months
+            return;
+        }
+        currentMonthView.setMonth(currentMonthView.getMonth() - 1);
+        renderCalendar(currentMonthView);
+    });
+
+    $("#nextMonth").click(function () {
+        currentMonthView.setMonth(currentMonthView.getMonth() + 1);
+        renderCalendar(currentMonthView);
+    });
+
+    renderCalendar(currentMonthView);
+
+    function renderCalendar(date) {
+        const calendarDays = $("#calendarDays");
+        calendarDays.empty();
+        const currentMonth = date.toLocaleString("default", { month: "long" });
+        const currentYear = date.getFullYear();
+        $("#currentMonth").text(currentMonth + " " + currentYear);
+        const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+        const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+        const daysInMonth = lastDay.getDate();
+        const startingDay = firstDay.getDay();
+
+        for (let i = 0; i < startingDay; i++) {
+            calendarDays.append('<div class="day"></div>');
+        }
+
+        for (let day = 1; day <= daysInMonth; day++) {
+            const dayElement = $('<div class="day">' + day + '</div>');
+            calendarDays.append(dayElement);
+        }
+        // Call changeDayColor here
+        // changeDayColor('lightgreen', startingDay);
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     
+
+
+
+
+
+
+
+
+
+
+
+//$(document).ready(function () {
+//    const now = new Date();
+//    $("#prevMonth").click(function () {
+//        now.setMonth(now.getMonth() - 1);
+//        renderCalendar(now);
+//    });
+//    $("#nextMonth").click(function () {
+//        now.setMonth(now.getMonth() + 1);
+//        renderCalendar(now);
+//    });
+//    renderCalendar(now);
+//    Slots(); 
+//    function renderCalendar(date) {
+//        const calendarDays = $("#calendarDays");
+//        calendarDays.empty();
+//        const currentMonth = date.toLocaleString("default", { month: "long" });
+//        const currentYear = date.getFullYear();
+//        $("#currentMonth").text(currentMonth + " " + currentYear);
+//        const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+//        const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+//        const daysInMonth = lastDay.getDate();
+//        const startingDay = firstDay.getDay(); 
+//        for (let i = 0; i < startingDay; i++) {
+//            calendarDays.append('<div class="day"></div>');
+//        }
+//        for (let day = 1; day <= daysInMonth; day++) {
+//            const dayElement = $('<div class="day">' + day + '</div>');
+//            calendarDays.append(dayElement);
+//        }
+//        // Call changeDayColor here
+//        /*changeDayColor('lightgreen', startingDay);*/
+//    }
+//});
+//    function Slots() {
+//    $.ajax({
+//        type: "POST",
+//        dataType: "json",
+//        url: "SlotBookings.aspx/SlotsGet", // Adjust the URL to the actual endpoint
+//        async: true, // You can use async:true for asynchronous requests
+//        data: "{}",
+//        contentType: "application/json",
+
+//        success: function (res) {
+//            var data = JSON.parse(res.d);
+
+//            // Check if IsReleased is 'Y'
+//            if (data.Month==="11" && data.IsReleased === 'Y') {
+//                // Set the color of days in the current month and next month to green
+//                changeDayColor('green', startingDay);
+//            }
+//        },
+//        error: function (err) {
+//            alert("Something went wrong! Please try again later.");
+//        }
+//    });
+//}
+  
+//    function changeDayColor(backgroundColor, startingDay) {
+//        // Update the background color of days in the current month and next month to green
+//        const today = new Date();
+//        const currentMonth = today.getMonth();
+//        const nextMonth = (currentMonth + 1) % 12; // Get the next month
+//        const dayElements = $(".day");
+
+//        dayElements.each(function (index, element) {
+//            const day = $(element).text();
+//            if (day !== "") {
+//                const month = index < startingDay ? currentMonth : nextMonth;
+//                const currentDate = new Date(today.getFullYear(), month, day);
+//                if (currentDate >= today) {
+//                    $(element).css('background-color', backgroundColor);
+//                }
+//            }
+//        });
+//    }
+
+    
+
+
+function choose() {
+    $("div").attr("style", "display:block");
+    $("#lblslot").show();
+    $("#txtslot").show();
+    //$("#lblTicket").hide();
+    //$("#txtTicket").hide();
+    //$("#addDetails").hide();
+    $("#lblName").hide();
+    $("#txtName").hide();
+    $("#buy").hide();
+
+    $("#txtslot").on("change", function (event) {
+        event.preventDefault();
+        var selectedValue = $(this).val();
+        if (selectedValue !== "") {
+            //$("#lblTicket").show();
+            //$("#txtTicket").show();
+            //$("#addDetails").show();
+            $("#lblName").show();
+            $("#txtName").show();
+            $("#buy").show();
+        }
+    });
+
+    //$("#addDetails").on("click", function (event) {
+    //    event.preventDefault();  
+    //    $("#lblTicket").show();
+    //    $("#txtTicket").show();
+    //    $("#addDetails").show();
+    //    $("#lblName").show();
+    //    $("#txtName").show();
+    //    $("#buy").show();
+    //});
+}
+
+ 
+<%@ Page Title="" Language="C#" MasterPageFile="~/views/MasterPages/MainMaster.Master" AutoEventWireup="true" CodeBehind="SlotBookings.aspx.cs" Inherits="Devasthanam.views.SlotBooking.SlotBookings" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <link href="../../StyleSheets/SlotBookings.css" rel="stylesheet" />
+    <script src="../../Scripts/Js_Page/jqueryCdn.js"></script>
+    <script src="../../Scripts/Js_Page/CDNJavaScript.js"></script>
+    <script src="../../Scripts/Js_Page/SlotBookings.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            renderCalendar(now);
+            Slots();
+        });
+    </script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div class="container">
+        <div id="calendar">
+            <div class="header">
+                <span id="prevMonth">&#9665;</span>
+                <span id="currentMonth">November 2023</span>
+                <span id="nextMonth">&#9655;</span>
+            </div>
+            <div class="days">
+                <div class="day">Sun</div>
+                <div class="day" >Mon</div>
+                <div class="day" >Tue</div>
+                <div class="day" >Wed</div>
+                <div class="day" >Thu</div>
+                <div class="day" >Fri</div>
+                <div class="day" >Sat</div>
+            </div>
+            <div class="days" id="calendarDays"></div>
+        
+        </div>
+        <div class="container2">
+            <div class="ticket">
+                <div class="slot">
+                    <label id="lblslot" for="txtslot">Choose Slot:</label>
+                    <select id="txtslot">
+                        <option id="opt1" value=" ">Slot Timings</option>
+                        <option id="opt2" value="1">09:00 - 10:00 AM</option>
+                        <option id="opt3" value="2">10:00 - 11:00 AM</option>
+                        <option id="opt4" value="3">11:00 - 12:00 PM</option>
+                        <option id="opt5" value="4">02:00 - 03:00 PM</option>
+                        <option id="opt6" value="5">03:00 - 04:00 PM</option>
+                        <option id="opt7" value="6">04:00 - 05:00 PM</option>
+                        <option id="opt8" value="7">05:00 - 06:00 PM</option>
+                        <option id="opt9" value="8">07:00 - 08:00 PM</option>
+                        <option id="opt10" value="9">08:00 - 09:00 PM</option>
+                    </select><br />
+                </div>
+                <%--  <div class="numberTickets">
+                    <label id="lblTicket" for="txtTicket">Number Of Tickets:</label>
+                    <input type="number" id="txtTicket" placeholder="only one Ticket" max="1" min="1" />
+                    <button id="addDetails">Add Details</button><br />
+                </div>--%>
+                <div class="details">
+                    <label id="lblName" for="txtName">Name:</label>
+                    <input type="text" id="txtName" placeholder="enter Your Name:" />
+                    <button id="buy" value="Buy">Buy</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</asp:Content>
+
+
+
+
+
+ 

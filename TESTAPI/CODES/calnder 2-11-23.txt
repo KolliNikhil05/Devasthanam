@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hello, World!</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+      <div id="calendar">
+    <table>
+        <thead>
+            <tr>
+                <th colspan="7" id="calendar-month-year"></th>
+            </tr>
+            <tr>
+                <th>Sun</th>
+                <th>Mon</th>
+                <th>Tue</th>
+                <th>Wed</th>
+                <th>Thu</th>
+                <th>Fri</th>
+                <th>Sat</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Calendar days will be generated here using jQuery -->
+        </tbody>
+    </table>
+</div>
+
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Initial calendar setup
+        function updateCalendar(year, month) {
+            // Clear the previous month's content
+            $('#calendar tbody').empty();
+
+            // Get the first day of the month
+            let firstDay = new Date(year, month, 1).getDay();
+            // Get the last day of the month
+            let lastDay = new Date(year, month + 1, 0).getDate();
+
+            // Fill in the days of the month
+            let day = 1;
+            for (let i = 0; i < 6; i++) {
+                let row = $('<tr>');
+                for (let j = 0; j < 7; j++) {
+                    if (i === 0 && j < firstDay) {
+                        row.append($('<td>'));
+                    } else if (day <= lastDay) {
+                        row.append($('<td>' + day + '</td>'));
+                        day++;
+                    }
+                }
+                $('#calendar tbody').append(row);
+            }
+
+            // Update the month and year in the calendar header
+            $('#calendar-month-year').text(new Date(year, month).toLocaleString('en-US', { month: 'long', year: 'numeric' }));
+        }
+
+        // Initial calendar display
+        let today = new Date();
+        updateCalendar(today.getFullYear(), today.getMonth());
+
+        // Event handler for next month button
+        $('#next-month').on('click', function() {
+            let currentMonth = today.getMonth();
+            today.setMonth(currentMonth + 1);
+            updateCalendar(today.getFullYear(), today.getMonth());
+        });
+
+        // Event handler for previous month button
+        $('#prev-month').on('click', function() {
+            let currentMonth = today.getMonth();
+            today.setMonth(currentMonth - 1);
+            updateCalendar(today.getFullYear(), today.getMonth());
+        });
+    });
+</script>
+
+  </body>
+</html>

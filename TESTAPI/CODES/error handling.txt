@@ -1,0 +1,631 @@
+{Message: "No parameterless constructor defined for type of 'System.String'.", StackTrace: '   at System.Web.Script.Serialization.ObjectConver…Context context, WebServiceMethodData methodData)', ExceptionType: 'System.MissingMethodException'}
+responseText
+: 
+"{\"Message\":\"No parameterless constructor defined for type of \\u0027System.String\\u0027.\",\"StackTrace\":\"   at System.Web.Script.Serialization.ObjectConverter.ConvertDictionaryToObject(IDictionary`2 dictionary, Type type, JavaScriptSerializer serializer, Boolean throwOnError, Object\\u0026 convertedObject)\\r\\n   at System.Web.Script.Serialization.ObjectConverter.ConvertObjectToTypeInternal(Object o, Type type, JavaScriptSerializer serializer, Boolean throwOnError, Object\\u0026 convertedObject)\\r\\n   at System.Web.Script.Serialization.ObjectConverter.AssignToPropertyOrField(Object propertyValue, Object o, String memberName, JavaScriptSerializer serializer, Boolean throwOnError)\\r\\n   at System.Web.Script.Serialization.ObjectConverter.ConvertDictionaryToObject(IDictionary`2 dictionary, Type type, JavaScriptSerializer serializer, Boolean throwOnError, Object\\u0026 convertedObject)\\r\\n   at System.Web.Script.Serialization.ObjectConverter.ConvertObjectToTypeInternal(Object o, Type type, JavaScriptSerializer serializer, Boolean throwOnError, Object\\u0026 convertedObject)\\r\\n   at System.Web.Script.Services.WebServiceMethodData.StrongTypeParameters(IDictionary`2 rawParams)\\r\\n   at System.Web.Script.Services.RestHandler.InvokeMethod(HttpContext context, WebServiceMethodData methodData, IDictionary`2 rawParams)\\r\\n   at System.Web.Script.Services.RestHandler.ExecuteWebServiceCall(HttpContext context, WebServiceMethodData methodData)\",\"ExceptionType\":\"System.MissingMethodException\"}"
+explain the reason for the error
+
+
+
+.js page 
+
+ 
+function validation() {
+    debugger;
+    var name = $("#txtName").val();
+    var surname = $("#txtsurname").val();
+    var phone = $("#txtphone").val();
+    var email = $("#txtemail").val();
+    var gender = $("input[name='gender']:checked").val();
+    var dob = $("#datedob").val();
+    var city = $("#ddlCity").val();
+    var address = $("#txtarea").val();
+    var qualification = $("#selectyourqualification").val();
+    var percentage = $("#txtpercentage").val();
+
+    cities();
+    qualifications();
+    /*********name********/
+    if (name == null || name === "") {
+        alert("Please enter Your Name");
+        $("#txtname").focus();
+        return false;
+    }
+    else if (name.length < 3) {
+        alert("Name should contain atleast 3 Characters");
+        $("#txtname").focus();
+        return false;
+    }
+    else if (!name.match(/^[a-zA-Z]+$/)) {
+        alert("Name should contain only letters (no digits or special characters).");
+        $("#txtname").focus();
+        return false;
+    }
+    /********surname********/
+    if (surname == null || surname === "") {
+        alert("Please enter Your SurName");
+        $("#txtsurname").focus();
+        return false;
+    }
+    else if (surname < 3) {
+        alert("SurName should contain atleast 3 Characters");
+        $("#txtsurname").focus();
+        return false;
+    }
+    else if (!surname.match(/^[a-zA-z]+$/)) {
+        alert("SurName should contain only letters (no digits or special characters).");
+        $("#txtsurname").focus();
+        return false;
+    }
+    /*********phone*******/
+    if (phone == null || phone === "") {
+        alert("Please enter your Phone number.");
+        $("#txtphone").focus();
+        return false;
+    }
+    else if (phone.length !== 10) {
+        alert("Mobile Number should be exactly 10 digits.");
+        $("#txtphone").focus();
+        return false;
+    }
+    else if (!phone.match(/^[9|8|7|6]\d/)) {
+        alert("Phone number should start with 9,8,7 or 6.");
+        $("#txtphone").focus();
+        return false;
+    }
+    else if (!phone.match(/^\d+$/)) {
+        alert("Mobile number should only contain digits.");
+        $("#txtphone").focus();
+        return false;
+    }
+    /**********email*********/
+    if (email == null || email === "") {
+        alert("Please enter your email address.");
+        $("#txtemail").focus();
+        return false;
+    }
+    else if (!email.match(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/)) {
+        alert("Please enter a valid email.");
+        $("#txtemail").focus();
+        return false;
+    }
+    /********gender********/
+    if (gender == null || gender === "") {
+        alert("Please select a gender.");
+        $("#gender").focus();
+        return false;
+    }
+
+    /*********dob**********/
+
+    var today = new Date();
+    var dateofbirth = new Date(dob);
+    var age = today.getFullYear() - dateofbirth.getFullYear();
+    var monthDiff = today.getMonth() - dateofbirth.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dateofbirth.getDate())) {
+        age--;
+    }
+    if (dob == null || dob === "") {
+        alert("Please enter your date of birth.");
+        $("#datedob").focus();
+        return false;
+    }
+    else if (dateofbirth > today) {
+        alert("Invalid date of birth.");
+        $("#datedob").focus();
+        return false;
+    }
+    if (age < 18 || age > 30) {
+        alert("The age should be between 18 and 30 years.");
+        $("#datedob").focus();
+        return false;
+    }
+    /*******city***********/
+    if (city == null || city === " " || city === "0") {
+        alert("Please select your city.");
+        $("#ddlCity").focus();
+        return false;
+    }
+    /*******Address********/
+
+    if (address == null || address === "") {
+        alert("Please enter your address.");
+        $("#txtarea").focus();
+        return false;
+    }
+    else if (address.length < 20) {
+        alert("Address must contain 20 characters.");
+        $("#txtarea").focus();
+        return false;
+    }
+    /******qualification*****/
+    if (qualification == null || qualification === "" || qualification === "0") {
+        alert("Please Select your Qualification");
+        $("#selectyourqualification").focus();
+        return false;
+    }
+    /*****percentage*******/
+    if (percentage == null || percentage === "") {
+        alert("Please enter your Percentage");
+        $("#txtpercentage").focus();
+        return false;
+    }
+    else if (percentage < 65) {
+        alert("Percentage should me more than 65, if not You are ineligible");
+        $("#txtpercentage").focus();
+        return false;
+    }
+    else if (percentage > 100) {
+        alert("Invalid Percentage");
+        $("#txtpercentage").focus();
+        return false;
+    }
+    /********upload*******/
+
+    var upload = $("#fileupload")[0].files[0];
+    if (upload == null || upload === "") {
+        alert("Please upload a file");
+        $("#fileupload").focus();
+        return false;
+    }
+    else if (!/\.(pdf)$/i.test(upload.name)) {
+        alert("Please Select a PDF file");
+        $("#fileupload").focus();
+        return false;
+    }
+    else if (upload.size > 3 * 1024 * 1024) {
+        alert("Size of the file should be less than 3mb");
+        $("#fileupload").focus();
+        return false;
+    }
+
+    InsertRegistrationData();
+
+}
+
+
+function onlyNumbers(evt) {
+    var charcode = (evt.which) ? evt.which : evt.keyCode;
+    if (charcode > 31 && (charcode < 48 || charcode > 57)) {
+        evt.preventDefault();
+    }
+    return true;
+}
+
+
+
+function cities() {
+
+    $("#ddlCity").empty();
+    $.ajax({
+        type: "POST",
+        url: "RecruiteeRegistration.aspx/Citiesg",
+        data: "{}",
+        async: true,
+        contentType: "application/json",
+        success: function (res) {
+
+            if ((res.d) == "") {
+                alert("No Data Found ");
+                return false;
+            }
+            else {
+                $("#ddlCity").append("<option value=" + "0" + ">" + "Select City" + "</option>");
+                var obj = JSON.parse(res.d);
+                $.each(obj, function (index, value) {
+                    $("#ddlCity").append("<option value=" + value.cityName + ">" + value.cityName + "</option>");
+
+                });
+
+            }
+
+        },
+        error: function (err) {
+
+            alert("Something went wrong! Please Try Again Later");
+        },
+        complete: function (data) {
+
+        }
+
+    });
+
+
+
+}
+
+function qualifications() {
+
+    $("#selectyourqualification").empty();
+    $.ajax({
+        type: "POST",
+        url: "RecruiteeRegistration.aspx/Qualificationg",
+        data: "{}",
+        async: true,
+        contentType: "application/json",
+        success: function (result) {
+
+            if ((result.d) == "") {
+                alert("No Data Found ");
+                return false;
+            }
+            else {
+                $("#selectyourqualification").append("<option value=" + "0" + ">" + "Highest Qualification" + "</option>");
+                var obj1 = JSON.parse(result.d);
+                $.each(obj1, function (index, value) {
+                    $("#selectyourqualification").append("<option value=" + value.Qualification + ">" + value.Qualification + "</option>");
+
+                });
+
+            }
+
+        },
+        error: function (err) {
+
+            alert("Something went wrong! Please Try Again Later");
+        },
+        complete: function (data) {
+
+        }
+
+    });
+}
+
+
+
+function InsertRegistrationData() {
+    var name = $("#txtName").val();
+    var surname = $("#txtsurname").val();
+    var phone = $("#txtphone").val();
+    var email = $("#txtemail").val();
+    var gender = $("input[name='gender']:checked").val();
+    var dob = $("#datedob").val();
+    var city = $("#ddlCity").val();
+    var address = $("#txtarea").val();
+    var qualification = $("#selectyourqualification").val();
+    var percentage = $("#txtpercentage").val();
+
+
+    var data = {
+        name: name,
+        surname: surname,
+        phone: phone,
+        email: email,
+        gender: gender,
+        dob: dob,
+        city: city,
+        address: address,
+        qualification: qualification,
+        percentage: percentage,
+        upload: upload
+    };
+
+
+
+    $.ajax({
+        type: "POST",
+        dataType: "json",
+        url: "RecruiteeRegistration.aspx/InsertRegistrationData",
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify({ parameter: data }),  
+        success: function (res) {
+            var obj = (res.d)
+            if (obj[0].FLAG == 0) {
+                alert("Already Registered");
+            } else if (obj[0].FLAG == 1) {
+                alert("REGISTERED SUCCESSFULLY");
+                window.location.href = "RecruiteePayment.aspx";
+            }
+        },
+        error: function (err) {
+            alert("Something went wrong! Please try again later");
+        }
+    });
+
+
+}
+
+  dal.cs
+
+using System;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+
+namespace DevasthanamDAL
+{
+    public class RecruiteeRegistrationDAL
+    {
+        public DataTable GetCities()
+        {
+
+            string connectionString = ConfigurationManager.ConnectionStrings["connection_data"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+
+                DataTable dtDetails = new DataTable();
+                SqlCommand cmd = null;
+                try
+                {
+                    if (con.State == ConnectionState.Closed)
+                    {
+                        con.Open();
+                    }
+                    cmd = con.CreateCommand();
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandText = "getCity";
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    da.Fill(dtDetails);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+                finally
+                {
+                    if (con.State == ConnectionState.Open)
+                    {
+                        con.Close();
+                    }
+                }
+                return dtDetails;
+            }
+        }
+
+        public DataTable GetQualification()
+        {
+
+            string connectionString = ConfigurationManager.ConnectionStrings["connection_data"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+
+                DataTable dtDetail = new DataTable();
+                SqlCommand cmd = null;
+                try
+                {
+                    if (con.State == ConnectionState.Closed)
+                    {
+                        con.Open();
+                    }
+                    cmd = con.CreateCommand();
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandText = "getQualification";
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    da.Fill(dtDetail);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+                finally
+                {
+                    if (con.State == ConnectionState.Open)
+                    {
+                        con.Close();
+                    }
+                }
+                return dtDetail;
+
+            }
+        }
+
+        //    public DataTable InsertRegistrationData(string name, string surname, string phone, string email,
+        //string gender, string dob, string city, string address, string qualification, string percentage,
+        //string upload)
+        public DataTable InsertRegistrationData(DataIn parameter)
+        {
+            SqlConnection conn = new SqlConnection(Connection.connectionString_Devasthanam);
+            DataTable dt = new DataTable();
+            SqlCommand cmd = null;
+            try
+            {
+                if (conn.State == ConnectionState.Closed)
+                {
+                    conn.Open();
+                }
+                cmd = conn.CreateCommand();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "InsertRegistrationData";
+                cmd.Parameters.AddWithValue("@uName", parameter.name);
+                cmd.Parameters.AddWithValue("@SurName", parameter.surname);
+                cmd.Parameters.AddWithValue("@Phone", parameter.phone);
+                cmd.Parameters.AddWithValue("@Email", parameter.email);
+                cmd.Parameters.AddWithValue("@Gender", parameter.gender);
+                cmd.Parameters.AddWithValue("@DOB", parameter.dob);
+                cmd.Parameters.AddWithValue("@City", parameter.city);
+                cmd.Parameters.AddWithValue("@UAddress", parameter.address);
+                cmd.Parameters.AddWithValue("@Qualification", parameter.qualification);
+                cmd.Parameters.AddWithValue("@UPercentage", parameter.percentage);
+                cmd.Parameters.AddWithValue("@UCertificate", parameter.upload);
+
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                if (conn.State == ConnectionState.Open)
+                {
+                    conn.Close();
+                }
+
+            }
+            return dt;
+
+        }
+
+      
+
+    }
+    public class DataIn
+
+    {
+        public string name { get; set; }
+        public string surname { get; set; }
+        public string phone { get; set; }
+        public string email { get; set; }
+        public string gender { get; set; }
+        public string dob { get; set; }
+        public string city { get; set; }
+        public string address { get; set; }
+        public string qualification { get; set; }
+        public string percentage { get; set; }
+        public string upload { get; set; }
+
+        public DataIn()
+        {
+            // You can initialize properties here if needed.
+        }
+    }
+}
+ 
+bal.cs
+
+using DevasthanamDAL;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using static DevasthanamDAL.RecruiteeRegistrationDAL;
+
+namespace DevasthanamBAL
+{
+    public   class RecruiteeRegistrationBAL
+    {
+        RecruiteeRegistrationDAL objdal = new RecruiteeRegistrationDAL();
+
+        public DataTable GetCities()
+        {
+            return objdal.GetCities();
+        }
+
+
+           
+        public DataTable GetQualification()
+        {
+            return objdal.GetQualification();
+        }
+
+        
+
+        public  DataTable InsertRegistrationData(DataIn parameter)
+        {
+           
+             return objdal.InsertRegistrationData(parameter);
+        }
+        //public DataTable InsertRegistrationData(string name, string surname, string phone, string email,
+        //    string gender, string dob, string city, string address, string qualification, string percentage,
+        //    string upload)
+        //{
+        //    return objdal2.InsertRegistrationData(name,surname,phone,email,
+        //   gender,dob,city,address,qualification,percentage,upload);
+        //}
+
+    }
+
+}
+
+aspx.cs
+
+using DevasthanamBAL;
+using DevasthanamDAL;
+using Newtonsoft.Json;
+using System;
+using System.Data;
+using System.Web.Services;
+using static DevasthanamDAL.RecruiteeRegistrationDAL;
+
+namespace Devasthanam
+{
+    public partial class RecruiteeRegistration : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
+        }
+        [WebMethod(EnableSession = true)]
+        public static string Citiesg()
+        {
+            string jsonResult = "";
+            try
+            {
+                RecruiteeRegistrationBAL objbal = new RecruiteeRegistrationBAL();
+                DataTable dtResult = objbal.GetCities();
+                if (dtResult.Rows.Count > 0)
+                {
+                    jsonResult = JsonConvert.SerializeObject(dtResult);
+                    jsonResult.Replace(@"\", string.Empty);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return (jsonResult);
+
+        }
+
+
+
+        [WebMethod(EnableSession = true)]
+        public static string Qualificationg()
+        {
+            string jsonResult = "";
+            try
+            {
+                RecruiteeRegistrationBAL objbal1 = new RecruiteeRegistrationBAL();
+                DataTable dtResults = objbal1.GetQualification();
+                if (dtResults.Rows.Count > 0)
+                {
+                    jsonResult = JsonConvert.SerializeObject(dtResults);
+                    jsonResult.Replace(@"\", string.Empty);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return (jsonResult);
+
+        }
+
+
+
+
+        [WebMethod(EnableSession = true)]
+
+        public static string InsertRegistrationData(DataIn parameter)
+        {
+            string jsonResult = "";
+            try
+            {
+                RecruiteeRegistrationBAL objbal2 = new RecruiteeRegistrationBAL();
+
+
+                DataTable dt = objbal2.InsertRegistrationData(parameter);
+                if (dt.Rows.Count != 0)
+                {
+                    jsonResult = JsonConvert.SerializeObject(dt);
+                    jsonResult.Replace(@"\", string.Empty);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+            return (jsonResult);
+        }
+      
+
+    }
+
+}
+
+

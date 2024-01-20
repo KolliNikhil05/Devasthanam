@@ -1,0 +1,103 @@
+<%@ Page Title="" Language="C#" MasterPageFile="~/views/MasterPages/Test.Master" AutoEventWireup="true" CodeBehind="GridViewAdd.aspx.cs" Inherits="Devasthanam.views.Test.GridViewAdd" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <link href="../../StyleSheets/GridViewAdd.css" rel="stylesheet" />
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div class="container">
+        <h3>Add Data To Grid View</h3>
+        <asp:GridView ID="Gridview1" runat="server" ShowHeaderWhenEmpty="true" ShowFooter="true" ShowHeader="true" AutoGenerateColumns="false">
+            <Columns>
+                <asp:TemplateField HeaderText="userId">
+                    <ItemTemplate>
+                        <asp:Label ID="lblUserId" runat="server" Text="as"></asp:Label>
+                    </ItemTemplate>
+                    <FooterTemplate>
+                        <asp:TextBox ID="txtNewUserId" runat="server" placeholder="Enter userId"  ></asp:TextBox>
+                    </FooterTemplate>
+                </asp:TemplateField>
+
+                <asp:TemplateField HeaderText="Name">
+                    <FooterTemplate>
+                        <asp:TextBox ID="txtNewUName" runat="server" placeholder="Enter Name" ></asp:TextBox>
+                    </FooterTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="SurName">
+                    <FooterTemplate>
+                        <asp:TextBox ID="txtNewSurName" runat="server" placeholder="Enter SurName" ></asp:TextBox>
+                    </FooterTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="Phone">
+                    <FooterTemplate>
+                        <asp:TextBox ID="txtNewPhone" runat="server" placeholder="Enter Phone"  ></asp:TextBox>
+                    </FooterTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField>
+                    <asp:FooterTemplate>
+                        <asp:Button  runat="server"/>
+                    </asp:FooterTemplate>
+                </asp:TemplateField>
+            </Columns>
+            <HeaderStyle CssClass="grid-header" Font-Bold="True" ForeColor="White" />
+        </asp:GridView>
+    </div>
+</asp:Content>
+
+
+
+
+
+
+
+
+
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace Devasthanam.views.Test
+{
+    public partial class GridViewAdd : System.Web.UI.Page
+    {
+        public void Page_Load(object sender, EventArgs e)
+        {
+            //if (!IsPostBack)
+            //{
+            //    List<UserData> dataSource = GetYourData(); 
+            //    if (dataSource.Count == 0)
+            //    {
+            //        dataSource.Add(new UserData());
+            //        Gridview1.DataSource = dataSource;
+            //        Gridview1.DataBind();
+            //        Gridview1.Rows[0].Visible = false; 
+            //    }
+            //    else
+            //    {
+            //        Gridview1.DataSource = dataSource;
+            //        Gridview1.DataBind();
+            //    }
+            //}
+        }
+        //public List<UserData> GetYourData()
+        //{
+        //    List<UserData> data = new List<UserData>
+        //    {
+        //    };
+
+        //    return data;
+        //}
+        //public class UserData
+        //{
+        //    public int UserId { get; set; }
+        //    public string Name { get; set; }
+        //    public string SurName { get; set; }
+        //    public string Phone { get; set; }
+        //}
+
+    }
+
+}

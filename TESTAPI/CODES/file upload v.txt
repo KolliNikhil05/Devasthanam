@@ -1,0 +1,435 @@
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
+using System.Linq;
+using System.Web;
+
+namespace OnlineExaminationSystem.Utilities
+{
+    /// <summary>
+    /// Summary description for Handler1
+    /// </summary>
+    public class Handler1 : IHttpHandler
+    {
+
+        public void ProcessRequest(HttpContext context)
+        {
+            string virtualPath = ConfigurationManager.AppSettings["fileUpload"].ToString();
+            if (context.Request.Files.Count > 0)
+            {
+                HttpPostedFile file = context.Request.Files[0];
+                if (file != null && file.ContentLength > 0)
+                {
+                    string filename = Path.GetFileName(file.FileName);
+                    string filePath = Path.Combine(virtualPath,filename);
+                    //string filePath = virtualPath + filename;
+                    file.SaveAs(filePath);
+                    context.Response.ContentType = "application/json";
+                    context.Response.Write(filePath);
+                }
+                if(!Directory.Exists(virtualPath))
+                {
+                    Directory.CreateDirectory(virtualPath); 
+                }
+            }
+            context.Response.ContentType = "text/plain";
+                    }
+
+        public bool IsReusable
+        {
+            get
+            {
+                return false;
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+function FileInput() {
+    var formData = new FormData();
+    formData.append("file", $("#fileinput")[0].files[0]);
+        
+    $.ajax({
+        type: "POST",
+        url: "../../Utilities/FileUploadHandler.ashx",
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function (re) {
+            //var data = JSON.parse(re.d);
+            var Upload = re;
+            Validate(Upload);
+        },
+        error: function (error) {
+            // Handle error (if needed)
+            console.log("Error: " + error);
+        }
+    });
+}
+function Validate(data) {
+    var fullname = $("#txtFullname").val();
+    var username = $("#txtUsername").val();
+    var email = $("#txtemail").val();
+    var phoneNumber = $("#txtphoneNumber").val();
+    var password = $("#txtpassword").val();
+    var confirmPassword = $("#txtconfirmPassword").val();
+    var dob = $("#txtdob").val();
+    var rollNum = $("#txtrollNumber").val();
+    var Qualification = $("#ddlQualification").val();
+    var Branch = $("#ddlBranch").val();
+    var selectedGender = $("input[name='gender']:checked").val();
+
+    var emailre = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    var passwordvalidate = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
+    var dobDate = new Date(dob);
+    var currentDate = new Date();
+    var age = currentDate.getFullYear() - dobDate.getFullYear();
+    var regexPattern = /^[a-zA-Z0-9]+$/;
+    if (fullname === "") {
+        alert("Please enter Name");
+        $("#txtFullname").focus();
+        $("#txtFullname").css("border-color", "red");
+        return false;
+    }
+    else if (fullname.match(/\d/)) {
+        alert("Please enter only characters");
+        $("#txtFullname").focus();
+        $("#txtFullname").css("border-color", "red");
+        return false;
+    }
+    else if (fullname.match(/[``~!@#$%^&*()-+_;'',./:""<>?\|]/)) {
+        alert("name cannot contain any special character");
+        $("#txtFullname").focus();
+        $("#txtFullname").css("border-color", "red");
+        return false;
+    }
+    else if (fullname.length < 5) {
+        alert("Please enter atleast 8 characters");
+        $("#txtFullname").focus();
+        $("#txtFullname").css("border-color", "red");
+        return false;
+    }
+    else {
+        $("#txtFullname").css("border-color", "green");
+    }
+    if (username === "") {
+        alert("Please enter username");
+        $("#txtUsername").focus();
+        $("#txtUsername").css("border-color", "red");
+        return false;
+    }
+    else if (!username.match(/\d/)) {
+        alert("Please enter characters followed by numbers");
+        $("#txtUsername").focus();
+        $("#txtUsername").css("border-color", "red");
+        return false;
+    }
+    else if (username.length < 5) {
+        alert("Please enter atleast 5 characters above");
+        $("#txtUsername").focus();
+        $("#txtUsername").css("border-color", "red");
+        return false;
+    }
+    else if (username.match(/[``~!@#$%^&*()-+_;'',./:""<>?\|]/)) {
+        alert("Please enter a valid Roll Number!r");
+        $("#txtUsername").focus();
+        $("#txtUsername").css("border-color", "red");
+        return false;
+    }
+    
+    else {
+        $("#txtUsername").css("border-color", "green");
+    }
+    if (email === "") {
+        alert("Please enter an email id");
+        $("#txtemail").focus();
+        $("#txtemail").css("border-color", "red");
+        return false;
+    }
+    else if (!email.match(emailre)) {
+        alert("Please enter a valid email id");
+        $("#txtemail").focus();
+        $("#txtemail").css("border-color", "red");
+        return false;
+    }
+    else {
+        $("#txtemail").css("border-color", "green");
+    }
+    if (phoneNumber == "") {
+        alert("Please enter mobile number");
+        $("#txtphoneNumber").focus();
+        $("#txtphoneNumber").css("border-color", "red");
+        return false;
+    }
+    else if ((!phoneNumber.match(/^[6-9]\d{9}$/) || !phoneNumber.match(/^[0-9]{10}$/))) {
+        alert("Please enter valid mobile number");
+        $("#txtphoneNumber").focus();
+        $("#txtphoneNumber").css("border-color", "red");
+        return false;
+    }
+    else {
+        $("#txtphoneNumber").css("border-color", "green");
+    }
+    if (password === "") {
+        alert("Please enter password");
+        $("#txtpassword").focus();
+        $("#txtpassword").css("border-color", "red");
+        return false;
+    }
+    else if (password.length < 8) {
+        alert("length must be atleast 8 characters");
+        $("#txtpassword").focus();
+        $("#txtpassword").css("border-color", "red");
+        return false;
+    }
+    else if (!password.match(passwordvalidate)) {
+        alert("one uppercase letter, one numeric digit, and one special character");
+        $("#txtpassword").focus();
+        $("#txtpassword").css("border-color", "red");
+        return false;
+    }
+    else {
+        $("#txtpassword").css("border-color", "green");
+    }
+    if (confirmPassword === "") {
+        alert("Confirm password is required");
+        $("#txtconfirmPassword").focus();
+        $("#txtconfirmPassword").css("border-color", "red");
+        return false;
+    }
+    else if (confirmPassword != password) {
+        alert("Passwords are not same! Retry ");
+        $("#txtconfirmPassword").focus();
+        $("#txtconfirmPassword").css("border-color", "red");
+        return false;
+    }
+    else {
+        $("#txtconfirmPassword").css("border-color", "green");
+    }
+    if (dob == "") {
+        alert("Please select your date of birth");
+        $("#txtdob").focus();
+        $("#txtdob").css("border-color", "red");
+        return false;
+    }
+    else if (age < 18) {
+        alert("You are not yet 18 years old.");
+        $("#txtdob").focus();
+        $("#txtdob").css("border-color", "red");
+        return false;
+    }
+    else {
+        $("#txtdob").css("border-color", "green");
+    }
+    if (rollNum === "") {
+        alert("Please enter your rollNumber");
+        $("#txtrollNumber").focus();
+        $("#txtrollNumber").css("border-color", "red");
+        return false;
+    }
+    else if (!rollNum.match(/\d/)) {
+        alert("Please enter a valid Roll Number!");
+        $("#txtrollNumber").focus();
+        $("#txtrollNumber").css("border-color", "red");
+        return false;
+    }
+    else if (rollNum.match(/[``~!@#$%^&*()-+_;'',./:""<>?\|]/)) {
+        alert("Please enter a valid Roll Number!r");
+        $("#txtrollNumber").focus();
+        $("#txtrollNumber").css("border-color", "red");
+        return false;
+    }
+    else {
+        $("#txtrollNumber").css("border-color", "green");
+    }
+    if (Qualification === "0") {
+        alert("Please select your qualification");
+        $("#ddlQualification").focus();
+        $("#ddlQualification").css("border-color", "red");
+        return false;
+    }
+    else {
+        $("#ddlQualification").css("border-color", "green");
+    }
+    if (Branch == "0") {
+        alert("Please select your branch");
+        $("#ddlBranch").focus();
+        $("#ddlBranch").css("border-color", "red");
+        return false;
+    }
+    else {
+        $("#ddlBranch").css("border-color", "green");
+    }
+
+    if (!selectedGender) {
+        alert("Please select your gender");
+        return false;
+    }
+   // FileInput();
+    var upload = data;
+   
+    //var upload = $("#fileinput").val();
+    if (upload == null || upload === "") {
+        alert("Please upload a file");
+        return false;
+    }
+    ////else {
+    ////    alert("Registered Successfully!");
+    ////    return true;
+    ////}
+
+    
+    
+
+
+
+
+
+
+
+
+    var UserData = {};
+    UserData.fullname = fullname;
+    UserData.username = username;
+    UserData.email = email;
+    UserData.phoneNumber = phoneNumber;
+    UserData.confirmPassword = confirmPassword;
+    UserData.dob = dob;
+    UserData.rollNum = rollNum;
+    UserData.Qualification = Qualification;
+    UserData.Branch = Branch;
+    UserData.selectedGender = selectedGender;
+    UserData.upload = upload;
+    //Insert Data ajax
+    $.ajax({
+        type: "POST",
+        url: "Registration.aspx/RegisterUser",
+        data: '{UserData:' + JSON.stringify(UserData) + '}',
+        //data: "{'fullname':'" + fullname + "','username':'" + username + "','email':'" + email + "','phoneNumber':'" + phoneNumber + "','confirmPassword':'" + confirmPassword + "','dob':'" + dob + "','rollNum':'" + rollNum + "','Qualification':'" + Qualification + "','Branch':'" + Branch + "','selectedGender':'" + selectedGender + "','upload':'" + upload + "'}",
+        contentType: "application/json; charset=utf-8",
+        dataType: "Json",
+        success: function (response) {
+            var data = JSON.parse(response.d)
+            if (data[0].FLAG == 1) {
+                alert(data[0].MSG);
+                $('#Form-Data')[0].reset();
+                window.location = "../Login/Login.aspx";
+            }
+            else {
+                alert(data[0].MSG);
+            }
+        },
+        error: function (ERROR) {
+            alert("error");
+        }
+    });
+}
+//Get Qualifications ajax
+$(document).ready(function () {
+    var Qualification = $("#ddlQualification");
+    $.ajax({
+        type: "POST",
+        url: "Registration.aspx/GetQualifications",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            if (data.d != "" || undefined) {
+                Qualification.append("<option value=" + "0" + ">" + "Select" + "</option>");
+                var obj = JSON.parse(data.d);
+                $.each(obj, function (index, value) {
+                    Qualification.append("<option value=" + value.Qualification_ID + ">" + value.Qualification_Name + "</option>");
+                });
+            }
+            else {
+                alert("Not Found");
+            }
+        },
+        error: function (error) {
+            alert("An error occurred: " + error);
+        }
+    });
+    //Get Branch based on Qualification
+    var branch = $("#ddlBranch");
+    $("#ddlQualification").on('change', function () {
+        var selectedValue = $(this).val();
+        branch.empty();
+        $.ajax({
+            type: "POST",
+            url: "Registration.aspx/GetBranches",
+            data: JSON.stringify({ branchid: selectedValue }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                if (data.d != "" || undefined) {
+                    branch.append("<option value=" + "0" + ">" + "Select" + "</option>");
+                    var obj = JSON.parse(data.d);
+                    $.each(obj, function (index, value) {
+                        branch.append("<option value=" + value.BranchID + ">" + value.BranchName + "</option>");
+                    });
+                }
+                else {
+                    alert("Not Found");
+                }
+            },
+            error: function (error) {
+                alert("An error occurred: " + error);
+            }
+        });
+    });
+
+});
+//mobile number validation
+function onlyNumbers(evt) {
+    var charcode = (evt.which) ? evt.which : evt.keyCode;
+    if (charcode > 31 && (charcode < 48 || charcode > 57)) {
+        evt.preventDefault();
+    }
+    return true;
+}
+//hide and show password
+$(document).ready(function () {
+
+    $('#showPass').on('click', function () {
+        var passInput = $("#txtpassword");
+
+        if (passInput.attr('type') === 'password') {
+            passInput.attr('type', 'text');
+            $(this).attr("src", "../../Images/hide.png");
+        } else {
+            passInput.attr('type', 'password');
+            $(this).attr("src", "../../Images/eyeshow.png");
+        }
+    })
+})
+
+$(document).ready(function () {
+    $("#ShowConfimpassword").on('click', function () {
+        var confirmPassword = $("#txtconfirmPassword");
+        if (confirmPassword.attr('type') === "password") {
+            confirmPassword.attr('type', 'text');
+            $(this).attr("src", "../../Images/hide.png");
+        } else {
+            confirmPassword.attr('type', 'password');
+            $(this).attr("src", "../../Images/eyeshow.png");
+        }
+    })
+})
+
+
+
+
+
+
+
+
+

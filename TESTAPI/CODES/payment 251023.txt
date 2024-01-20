@@ -1,0 +1,401 @@
+//function validation() {
+//    var phone = $("#txtPhone").val();
+//    var paymentmode = $("input[name='payment']:checked").val();
+//    var upi = $("#txtUpi").val();
+//    if (phone == null || phone === "") {
+//        alert("Please enter your Phone number.");
+//        $("#txtPhone").focus();
+//        return false;
+//    }
+//    else if (phone.length !== 10) {
+//        alert("Mobile Number should be exactly 10 digits.");
+//        $("#txtPhone").focus();
+//        return false;
+//    }
+//    else if (!phone.match(/^[9|8|7|6]\d/)) {
+//        alert("Phone number should start with 9,8,7 or 6.");
+//        $("#txtPhone").focus();
+//        return false;
+//    }
+//    else if (!phone.match(/^\d+$/)) {
+//        alert("Mobile number should only contain digits.");
+//        $("#txtPhone").focus();
+//        return false;
+//    }
+
+//    /*******************/
+//    if (paymentmode == null || paymentmode === "") {
+//        alert("Please select a Payment Mode.");
+//        $("#payment").focus();
+//        return false;
+//    }
+//    if (paymentmode == "upi" && (upi == null || upi === "")) {
+//        alert("Please Enter Upi");
+//        $("#txtUpi").focus();
+//        return false;
+//    }
+//    else {
+//        alert("Payment Successfull");
+//        return true;
+//    }
+
+////}
+//function validation() {
+//    var phone = $("#txtPhone").val();
+//    var paymentmode = $("input[name='payment']:checked").val();
+//    var upi = $("#txtUpi").val();
+//    if (phone == null || phone === "") {
+//        alert("Please enter your Phone number.");
+//        $("#txtPhone").focus();
+//        return false;
+//    }
+//    else if (phone.length !== 10) {
+//        alert("Mobile Number should be exactly 10 digits.");
+//        $("#txtPhone").focus();
+//        return false;
+//    }
+//    else if (!phone.match(/^[9|8|7|6]\d/)) {
+//        alert("Phone number should start with 9, 8, 7, or 6.");
+//        $("#txtPhone").focus();
+//        return false;
+//    }
+//    else if (!phone.match(/^\d+$/)) {
+//        alert("Mobile number should only contain digits.");
+//        $("#txtPhone").focus();
+//        return false;
+//    }
+
+//    if (paymentmode == null || paymentmode === "") {
+//        alert("Please select a Payment Mode.");
+//        return false;
+//    }
+//    if (paymentmode == "upi" && (upi == null || upi === "")) {
+//        alert("Please Enter Upi");
+//        $("#txtUpi").focus();
+//        return false;
+//    }
+//    else {
+//        alert("Payment Successful");
+//        return true;
+//    }
+//}
+
+
+
+//function upihide()
+//{    
+//    if (upi.checked = "true") {
+//        $("#upiInput").show();
+//        //$("#lblqr").hide();
+//        //$("#qr").hide();
+//        $("#qrImage").hide();
+//        return false;
+
+//    }
+//}
+
+//function upicheck()
+//{
+//      if (qr.checked = "true") {
+//            $("#qrImage").show();
+//            //$("#lblupi").hide();
+//            //$("#upi").hide();
+//            $("#upiInput").hide();
+//      }
+//}
+function validation() {
+    var phone = $("#txtPhone").val();
+    var paymentmode = $("input[name='payment']:checked").val();
+    var upi = $("#txtUpi").val();
+
+    if (phone == null || phone === "") {
+        alert("Please enter your Phone number.");
+        $("#txtPhone").focus();
+        return false;
+    } else if (phone.length !== 10) {
+        alert("Mobile Number should be exactly 10 digits.");
+        $("#txtPhone").focus();
+        return false;
+    } else if (!phone.match(/^[9|8|7|6]\d/)) {
+        alert("Phone number should start with 9, 8, 7, or 6.");
+        $("#txtPhone").focus();
+        return false;
+    } else if (!phone.match(/^\d+$/)) {
+        alert("Mobile number should only contain digits.");
+        $("#txtPhone").focus();
+        return false;
+    }
+
+    if (paymentmode == null || paymentmode === "") {
+        alert("Please select a Payment Mode.");
+        return false;
+    }
+
+    if (paymentmode === "upi" && (upi == null || upi === "")) {
+        alert("Please Enter UPI");
+        $("#txtUpi").focus();
+        return false;
+    }
+
+    //alert("Payment Successful");
+    //return true;
+    var data = {};
+    data.phone = phone;
+
+    $.ajax({
+        type: "POST",
+        url: "RecruiteePayment.aspx/RecruiteePaymentInsert",
+        data: JSON.stringify({ data: data }),
+        datatype: "JSON",
+        contentType: "application/json",
+        success: function (res) {
+            var obj = JSON.parse(res.d);
+            if (obj[0] != null) {
+                if (obj[0].FLAG === 0) {
+                    alert(obj[0].MSG);
+                } else if (obj[0].FLAG === 1) {
+                    alert(obj[0].MSG);
+                }
+            }
+        },
+        error: function (err) {
+            alert(err);
+        }
+    });
+
+}
+
+           /* if (obj[0] != null) {*/
+                //if (obj[0].FLAG === 0) {
+                //    alert(obj[0].MSG);
+                //    /* alert("already Registered"); */
+                //}
+                //else if (obj[0].FLAG === 1) {
+                //    alert(obj[0].MSG);
+
+                    /* alert(" Registation Successfull "); */
+                    //window.location = "RecruiteeRegistration.aspx";
+                    //var form = $("#form");
+                    //form[0].reset();
+
+              /*  }*/
+           /* }*/
+
+
+
+function upihide() {
+    $("#upiInput").show();
+    $("#qrImage").hide();
+}
+
+function upicheck() {
+    $("#qrImage").show();
+    $("#upiInput").hide();
+
+}
+
+
+
+
+
+
+<%@ Page Title="" Language="C#" MasterPageFile="~/views/MasterPages/MainMaster.Master" AutoEventWireup="true" CodeBehind="RecruiteePayment.aspx.cs" Inherits="Devasthanam.views.Recruitment.RecruiteePayment" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <link href="../../StyleSheets/RecruiteePayment.css" rel="stylesheet" />
+    <script src="../../Scripts/Js_Page/CDNJavaScript.js"></script>
+    <script src="../../Scripts/Js_Page/jqueryCdn.js"></script>
+    <script src="../../Scripts/Js_Page/RecruiteePayment.js"></script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <nav>
+        <ul>
+            <li>
+                <img src="../../Image/home.jpg" id="home" />
+                <a href="../UserHome/UserHomePage.aspx">Home</a>
+            </li>
+            <li>
+                <img src="../../Image/call.jpg" id="contact" />
+                <a href="../UserHome/ContactUs.aspx">Contact Us</a>
+
+            </li>
+            <li>
+                <img src="../../Image/logout.jpg" id="logout" />
+                <a href="../Signup/LoginPage.aspx">Log Out</a>
+            </li>
+        </ul>
+    </nav>
+
+            <div class="container">
+            <h3>Payment</h3>
+            <div class="payment">
+                <label for="txtPhone">Phone:</label>
+                <input type="text" id="txtPhone" name="txtPhone" />
+                <br />
+                <label>Payment Mode:</label>
+                <input type="radio" name="payment" id="upi" value="upi" onclick="upihide()" />
+                <label for="upi">UPI</label>
+               
+                <input type="radio" name="payment" id="qr" value="qr" onclick="upicheck()" />
+                <label for="qr">QR Code</label>
+                <br />
+                <div id="upiInput" style="display: none">
+                    <label for="txtUpi">Enter UPI:</label>
+                    <input type="text" id="txtUpi" name="txtUpi" />
+                </div>
+                <div id="qrImage" style="display: none">
+                    <img src="../../Image/qr.png"  id="qrimg"/>
+
+                </div>
+                <br />
+                 <button id="pay" onclick="return validation();" type="button">Pay</button>
+               <%-- <input type="submit" id="pay" value="PAY" onclick="return validation();"/>--%>
+
+            </div>
+        </div>
+ 
+
+</asp:Content>
+
+
+
+
+using DAL;
+using DevasthanamDAL;
+using System;
+using System.Data;
+
+namespace BAL
+{
+    public class RecruiteePaymentBAL
+    {
+        RecruiteePaymentDAL objDal = new RecruiteePaymentDAL();
+        public DataTable RecruiteePaymentInsert(PaymentData data)
+        {
+            return objDal.RecruiteePaymentInsert(data);
+        }
+
+        public DataTable RecruiteePaymentInsert(UserData data)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}
+
+
+
+
+
+
+
+
+using DevasthanamDAL;
+using System;
+using System.Data;
+using System.Data.SqlClient;
+
+namespace DAL
+{
+    public class RecruiteePaymentDAL
+    {
+        public DataTable RecruiteePaymentInsert(PaymentData data)
+        {
+            SqlConnection con = new SqlConnection(Connection.connectionString_Devasthanam);
+            DataTable RecruiteePaymentInsert = new DataTable();
+            SqlCommand cmd;
+            try
+            {
+                if (con.State == ConnectionState.Closed)
+                {
+                    con.Open();
+                }
+                cmd = con.CreateCommand();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "RecruiteePayment_Insert";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Phone", data.phone);
+               
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(RecruiteePaymentInsert);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return RecruiteePaymentInsert;
+        }
+    
+
+}
+    public class PaymentData
+
+    {
+        public string phone { get; set; }
+    }
+}
+
+
+
+
+using BAL;
+using DAL;
+using DevasthanamDAL;
+using Newtonsoft.Json;
+using System;
+using System.Data;
+using System.Web.Services;
+
+namespace Devasthanam.views.Recruitment
+{
+    public partial class RecruiteePayment : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
+        }
+        [WebMethod]
+        public static string RecruiteePaymentInsert(PaymentData data)
+
+        {
+            string Result = "";
+            try
+            {
+                RecruiteePaymentBAL objPayment = new RecruiteePaymentBAL();
+                DataTable dtPayment = objPayment.RecruiteePaymentInsert(data);
+                if (dtPayment.Rows.Count != 0)
+                {
+                    Result = JsonConvert.SerializeObject(dtPayment);
+                    Result.Replace(@"\", string.Empty);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return Result;
+
+        }
+    }
+}
+
+
+CREATE PROCEDURE RecruiteePayment_Insert  
+(  
+@Phone VARCHAR(10)  
+)  
+AS  
+BEGIN  
+    SET NOCOUNT ON  
+    IF EXISTS (SELECT Phone FROM registration WHERE Phone = @Phone)  
+    BEGIN  
+        UPDATE registration SET Payment = 'Y' WHERE Phone = @Phone;  
+        SELECT 'Payment Successful' AS msg, 1 AS FLAG;  
+    END  
+    ELSE  
+    BEGIN  
+        SELECT 'Invalid User' AS msg, 0 AS FLAG;  
+    END  
+END
+
+

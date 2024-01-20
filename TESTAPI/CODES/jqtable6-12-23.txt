@@ -1,0 +1,364 @@
+<%@ Page Title="" Language="C#" MasterPageFile="~/views/MasterPages/Test.Master" AutoEventWireup="true" CodeBehind="JqueryDataTable.aspx.cs" Inherits="Devasthanam.views.Test.JqueryDataTable" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+ <script src="../../Scripts/Js_Page/CDNJavaScript.js"></script>
+ <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+ <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+ <script type="text/javascript" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="../../Scripts/Js_Page/JqueryDataTable.js"></script>
+    <link href="../../StyleSheets/JqueryDataTable.css" rel="stylesheet" />
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+       <div class="data">
+<table id="Data1" class="display" ">
+    <thead>
+        <tr id="colName">
+            <th>S.No</th>
+            <th>Name</th>
+            <th>SurName</th>
+            <th>Phone</th>
+            <th>City</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+   </div>
+</asp:Content>
+
+
+.data
+{
+    margin-top:100px;
+    width:91%;
+    margin-left:60px;
+}
+#colName {
+    background-image: url('../image/c1.jpg');
+}
+
+#Data1_wrapper .dataTables_info {
+    background-color: aquamarine;
+    width: 936.5px;
+    height: 28px;
+}
+#Data1_wrapper .dataTables_paginate {
+    background-color: aquamarine;
+}
+#Data1 th, #Data1 td {
+    text-align: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//$(document).ready(function () {
+//    $.ajax({
+//        type: "POST",
+//        url: "JqueryDataTable.aspx/GetData",
+//        dataType: "json",
+//        contentType: "application/json; charset=utf-8",
+//        success: function (response) {
+//            var dataTable = JSON.parse(response.d);
+//            var table = $('#Data1').DataTable({
+//                dom: 'Bfrtip',
+//                data: dataTable,
+//                columns: [
+//                    {
+//                        render: function (data, type, row, meta) {
+//                            return meta.row + meta.settings._iDisplayStart + 1;
+//                        }
+//                    },
+//                    { data: 'uName', class: 'editable text' },
+//                    { data: 'SurName', class: 'editable text' },
+//                    { data: 'Phone', class: 'editable text' },
+//                    { data: 'City', class: 'editable text' },
+//                    {
+//                        render: function (data, type, row) {
+//                            return createButton('edit', row.id) +
+//                                '<button class="update" style="display:none;">Update</button>' +
+//                                '<button class="cancel" style="display:none;">Cancel</button>';
+//                        }
+//                    },
+//                    {
+//                        render: function (data, type, row) {
+//                            return createButton('delete', row.id);
+//                        }
+//                    }
+//                ],
+//                autoWidth: false,
+//                scrollX: true,
+//                lengthMenu: [5],
+//                pageLength: 5,
+//                searching: false,
+//                paging: true,
+//                info: true,
+//                language: {
+//                    emptyTable: 'No data available'
+//                },
+//                fnRowCallback: function (nRow, aData, iDisplayIndex) {
+//                    $('td:first', nRow).html(iDisplayIndex + 1);
+//                    $(nRow).addClass('editable-row');
+//                    return nRow;
+//                }
+//            });
+
+//            $('#Data1').on('click', 'tbody td .edit', function (e) {
+//                e.preventDefault();
+//                var tr = $(this).closest('tr');
+//                var row = table.row(tr);
+//                if (!tr.hasClass('editing')) {
+//                    table.rows('.editing').nodes().to$().removeClass('editing');
+//                    tr.addClass('editing');
+//                    tr.find('td.editable.text').each(function () {
+//                        var cell = $(this);
+//                        var html = fnCreateTextBox(cell.html(), cell.data('field'));
+//                        cell.html(html);
+//                    });
+//                    tr.find('.edit').hide();
+//                    tr.find('.update, .cancel').show();
+//                }
+//            });
+
+//            $('#Data1').on('click', 'tbody td .cancel', function (e) {
+//                e.preventDefault();
+//                fnResetControls(table);
+//            });
+
+//            $('#Data1').on('click', 'tbody td .update', function (e) {
+//                e.preventDefault();
+//                fnUpdateControls(table);
+//            });
+//        },
+//        error: function () {
+//            alert('Error fetching data.');
+//        }
+//    });
+
+//    function createButton(buttonType, rowID) {
+//        var buttonText = buttonType == 'edit' ? 'Edit' : 'Delete';
+//        return '<button class="' + buttonType + '" type="button">' + buttonText + '</button>';
+//    }
+
+//    function fnCreateTextBox(value, fieldprop) {
+//        return '<input data-field="' + fieldprop + '" type="text" value="' + value + '" />';
+//    }
+
+//    function fnResetControls(table) {
+//        var editingRows = table.rows('.editing').nodes();
+//        $(editingRows).removeClass('editing');
+//        $(editingRows).find('td.editable.text').each(function () {
+//            var cell = $(this);
+//            cell.html(cell.find('input').val());
+//        });
+//        $(editingRows).find('.edit').show();
+//        $(editingRows).find('.update, .cancel').hide();
+//    }
+
+//    function fnUpdateControls(table) {
+//        var editingRows = table.rows('.editing').nodes();
+//        $(editingRows).removeClass('editing');
+//        $(editingRows).find('.edit').show();
+//        $(editingRows).find('.update, .cancel').hide();
+//        $(editingRows).find('td.editable.text').each(function () {
+//            var cell = $(this);
+//            var inputVal = cell.find('input').val();
+//            cell.html(inputVal);
+//        });
+//    }
+
+//    $('#Data1').on('click', 'tbody td .delete', function (e) {
+//        // Handle delete button click here
+//        // You can access the row data using table.row($(this).closest('tr')).data()
+//    });
+//});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//$(document).ready(function () {
+//    $.ajax({
+//        type: "POST",
+//        url: "JqueryDataTable.aspx/GetData",
+//        dataType: "json",
+//        contentType: "application/json; charset=utf-8",
+//        success: function (response) {
+//            var dataTable = JSON.parse(response.d);
+//            $('#Data1').DataTable({
+//                "autoWidth": false,
+//                "scrollX": true,
+//                "lengthMenu": [5],
+//                "pageLength": 5,
+//                data: dataTable,
+//                columns: [
+//                    { "data": "uName" },
+//                    { "data": "SurName" },
+//                    { "data": "Phone" },
+//                    { "data": "City" },
+//                    {
+//                        "data": null,
+//                        "render": function (data, type, row) {
+//                            return '<button class="editButton">Edit</button>'; 
+//                        } 
+//                    },
+//                    {
+//                        "data": null,
+//                        "render": function (data, type, row) {
+//                            return '<button class="DeleteButton">Delete</button>';
+//                        }
+//                    }
+//                ]
+//            });
+//        },
+//        error: function () {
+//            alert("Error fetching data.");
+//        }
+//    });
+//});
+
+
+
+
+
+
+
+using BAL;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.Services;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace Devasthanam.views.Test
+{
+    public partial class JqueryDataTable : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
+        }
+        [WebMethod]
+        public static string GetData()
+        {
+            string jsonResult = "";
+            JqueryDataTableBAL objData = new JqueryDataTableBAL();
+            DataTable dataTable = objData.GetRecruiteeData();
+            jsonResult = JsonConvert.SerializeObject(dataTable);
+            return jsonResult;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+using DevasthanamDAL;
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web;
+
+namespace DAL
+{
+    public class JqueryDataTableDAL
+    {
+        public DataTable GetRecruiteeData()
+        {
+            HttpContext context = HttpContext.Current;
+            DataTable dt = new DataTable();
+            SqlConnection connection = new SqlConnection(Connection.connectionString_Devasthanam);
+            SqlCommand cmd;
+            try
+            {
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+                cmd = connection.CreateCommand();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "RegistrationData_Get";
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                adapter.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return dt;
+        }
+    }
+}
+
+
+
+
+
+
+
+using DAL;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BAL
+{
+    public class JqueryDataTableBAL
+    {
+        public DataTable GetRecruiteeData()
+        {
+            JqueryDataTableDAL objDal = new JqueryDataTableDAL();
+            DataTable dataTable = objDal.GetRecruiteeData();
+
+            return dataTable;
+        }
+    }
+}
+
+
+
+
+
+

@@ -1,0 +1,298 @@
+<%@ Page Title="" Language="C#" MasterPageFile="~/views/MasterPages/MainMaster.Master" AutoEventWireup="true" CodeBehind="SlotBookings.aspx.cs" Inherits="Devasthanam.views.SlotBooking.SlotBookings" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <link href="../../StyleSheets/SlotBookings.css" rel="stylesheet" />
+    <script src="../../Scripts/Js_Page/jqueryCdn.js"></script>
+    <script src="../../Scripts/Js_Page/CDNJavaScript.js"></script>
+    <script src="../../Scripts/Js_Page/SlotBookings.js"></script>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+   <div class="container">
+        <div id="calendar">
+            <div class="header">
+                <span id="prevMonth">&#9665;</span>
+                <span id="currentMonth">November 2023</span>
+                <span id="nextMonth">&#9655;</span>
+            </div>
+            <div class="days">
+                <div class="day">Sun</div>
+                <div class="day">Mon</div>
+                <div class="day">Tue</div>
+                <div class="day">Wed</div>
+                <div class="day">Thu</div>
+                <div class="day">Fri</div>
+                <div class="day">Sat</div>
+            </div>
+            <div class="days" id="calendarDays"></div>
+            <br />
+            <br />
+        </div>
+    </div>
+</asp:Content>
+
+<%--<div id="calendar">
+            <div class="header">
+                <span id="prevMonth">&#9665;</span>
+                <span id="currentMonth">November 2023</span>
+                <span id="nextMonth">&#9655;</span>
+            </div>
+            <div class="days">
+                <div class="day">Sun</div>
+                <div class="day" >Mon</div>
+                <div class="day" >Tue</div>
+                <div class="day" >Wed</div>
+                <div class="day" >Thu</div>
+                <div class="day" >Fri</div>
+                <div class="day" >Sat</div>
+            </div>
+            <div class="days" id="calendarDays"></div>
+            <br />
+            <br />
+          <div id="calendarContainer" runat="server">HEllo</div>
+        </div> --%>
+<%-- <div class="container2">
+            <div class="ticket">
+                <div class="slot">
+                    <label id="lblslot" for="txtslot">Choose Slot:</label>
+                    <select id="txtslot">
+                        <option id="opt1" value=" ">Slot Timings</option>
+                        <option id="opt2" value="1">09:00 - 10:00 AM</option>
+                        <option id="opt3" value="2">10:00 - 11:00 AM</option>
+                        <option id="opt4" value="3">11:00 - 12:00 PM</option>
+                        <option id="opt5" value="4">02:00 - 03:00 PM</option>
+                        <option id="opt6" value="5">03:00 - 04:00 PM</option>
+                        <option id="opt7" value="6">04:00 - 05:00 PM</option>
+                        <option id="opt8" value="7">05:00 - 06:00 PM</option>
+                        <option id="opt9" value="8">07:00 - 08:00 PM</option>
+                        <option id="opt10" value="9">08:00 - 09:00 PM</option>
+                    </select><br />
+                </div>
+                <div class="details">
+                    <label id="lblName" for="txtName">Name:</label>
+                    <input type="text" id="txtName" placeholder="enter Your Name:" />
+                    <button id="buy" value="Buy">Buy</button>
+                </div>
+            </div>
+        </div>--%>
+
+
+
+
+
+
+
+using BAL;
+using DevasthanamDAL;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+using System.Web.Script.Services;
+using System.Web.Services;
+using System.Web.UI.WebControls;
+
+namespace Devasthanam.views.SlotBooking
+{
+    public partial class SlotBookings : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+          
+        }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public static string GetCalendarData(int year, int month)
+        {
+            //string constr = ConfigurationManager.ConnectionStrings["YourConnectionString"].ConnectionString;
+
+            //using (SqlConnection con = new SqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(Connection.connectionString_Devasthanam))
+            {
+                using (SqlCommand cmd = new SqlCommand("SlotReleaseData_Get", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+
+                    con.Close();
+
+                    // Convert DataTable to JSON
+                    string json = DataTableToJson(dt);
+                    return json;
+                }
+            }
+        }
+
+        private static string DataTableToJson(DataTable dt)
+        {
+            System.Web.Script.Serialization.JavaScriptSerializer serializer =
+                new System.Web.Script.Serialization.JavaScriptSerializer();
+
+            System.Collections.ArrayList rows = new System.Collections.ArrayList();
+            Dictionary<string, object> row;
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                row = new Dictionary<string, object>();
+                foreach (DataColumn col in dt.Columns)
+                {
+                    row.Add(col.ColumnName, dr[col]);
+                }
+                rows.Add(row);
+            }
+
+            return serializer.Serialize(rows);
+        }
+    }  
+}
+
+
+
+
+
+
+
+
+$(document).ready(function () {
+    const now = new Date();
+    let currentMonthView = new Date();
+
+    $("#prevMonth").click(function () {
+        if (currentMonthView.getMonth() === now.getMonth()) {
+            return;
+        }
+        currentMonthView.setMonth(currentMonthView.getMonth() - 1);
+        renderCalendar(currentMonthView);
+    });
+
+    $("#nextMonth").click(function () {
+        currentMonthView.setMonth(currentMonthView.getMonth() + 1);
+        renderCalendar(currentMonthView);
+    });
+
+    renderCalendar(currentMonthView);
+
+    function renderCalendar(date) {
+        const calendarDays = $("#calendarDays");
+        calendarDays.empty();
+        const currentMonth = date.toLocaleString("default", { month: "long" });
+        const currentYear = date.getFullYear();
+        $("#currentMonth").text(currentMonth + " " + currentYear);
+
+        $.ajax({
+            type: "POST",
+            url: "SlotBookings.aspx/GetCalendarData",
+            data: JSON.stringify({ year: currentYear, month: date.getMonth() + 1 }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                const daysInMonth = new Date(currentYear, date.getMonth() + 1, 0).getDate();
+                const startingDay = new Date(currentYear, date.getMonth(), 1).getDay();
+
+                for (let i = 0; i < startingDay; i++) {
+                    calendarDays.append('<div class="day"></div>');
+                }
+
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const dayElement = $('<div class="day">' + day + '</div>');
+                    calendarDays.append(dayElement);
+                }
+                // Call changeDayColor here
+                // changeDayColor('lightgreen', startingDay);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//$(document).ready(function () {
+//    function renderCalendar(data) {
+//        const now = new Date();
+//        let currentMonthView = new Date();
+
+//        $("#prevMonth").click(function () {
+//            if (currentMonthView.getMonth() === now.getMonth()) {
+//                return;
+//            }
+//            currentMonthView.setMonth(currentMonthView.getMonth() - 1);
+//            renderCalendarView(currentMonthView, data);
+//        });
+
+//        $("#nextMonth").click(function () {
+//            currentMonthView.setMonth(currentMonthView.getMonth() + 1);
+//            renderCalendarView(currentMonthView, data);
+//        });
+
+//        renderCalendarView(currentMonthView, data);
+//    }
+
+//    function renderCalendarView(date, data) {
+//        const calendarDays = $("#calendarDays");
+//        calendarDays.empty();
+//        const currentMonth = date.toLocaleString("default", { month: "long" });
+//        const currentYear = date.getFullYear();
+//        $("#currentMonth").text(currentMonth + " " + currentYear);
+//        const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+//        const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+//        const daysInMonth = lastDay.getDate();
+//        const startingDay = firstDay.getDay();
+
+//        for (let i = 0; i < startingDay; i++) {
+//            calendarDays.append('<div class="day"></div>');
+//        }
+
+//        for (let day = 1; day <= daysInMonth; day++) {
+//            const dayElement = $('<div class="day">' + day + '</div>');
+//            const eventData = getEventData(day, date.getMonth() + 1, date.getFullYear(), data);
+//            if (eventData) {
+//                dayElement.addClass(eventData.IsReleased ? 'released' : 'not-released');
+//            }
+//            calendarDays.append(dayElement);
+//        }
+//    }
+
+//    function getEventData(day, month, year, data) {
+//        return data.find(item => item.Day === day && item.Month === month && item.Year === year);
+//    }
+
+//    $.ajax({
+//        type: "POST",
+//        url: "SlotBookings.aspx/GetCalendar",
+//        contentType: "application/json; charset=utf-8",
+//        dataType: "json",
+//        success: function (res) {
+//            if (res.d.length > 0) {
+//                renderCalendar(res.d);
+//            } else {
+//                alert("No data found");
+//            }
+//        },
+//        error: function (error) {
+//            console.log("AJAX request error:", error);
+//        }
+//    });
+//});

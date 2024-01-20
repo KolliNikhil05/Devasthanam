@@ -1,0 +1,103 @@
+$(document).ready(function () {
+    let currentMonthIndex = 0;
+    let releaseData = [];
+
+    function renderCurrentMonth() {
+        const calendarDays = $("#calendarDays");
+        calendarDays.empty();
+
+        const currentMonthData = releaseData[currentMonthIndex];
+        const serverMonth = currentMonthData.Month;
+        const serverYear = currentMonthData.Year;
+
+        const daysInMonth = new Date(serverYear, serverMonth, 0).getDate();
+        const startingDay = new Date(serverYear, serverMonth - 1, 1).getDay();
+
+        const table = $('<table class="calendar-table"></table>');
+        const headerRow = $('<tr></tr>');
+
+        // Add weekday headers
+        const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        for (let i = 0; i < 7; i++) {
+            headerRow.append('<th>' + weekdays[i] + '</th>');
+        }
+        table.append(headerRow);
+
+        // Fill in the calendar days
+        let currentDay = 1;
+        for (let row = 0; row < 6; row++) {
+            const tableRow = $('<tr></tr>');
+            for (let col = 0; col < 7; col++) {
+                if (row === 0 && col < startingDay) {
+                    // Empty cells before the start of the month
+                    tableRow.append('<td></td>');
+                } else if (currentDay > daysInMonth) {
+                    // Empty cells after the end of the month
+                    tableRow.append('<td></td>');
+                } else {
+                    // Cells for the actual days
+                    const isReleased = currentMonthData.IsReleased === 'Y' && currentMonthData.Day === currentDay;
+                    const dayElement = $('<td class="day ' + (isReleased ? 'released' : '') + '">' + currentDay + '</td>');
+                    tableRow.append(dayElement);
+                    currentDay++;
+                }
+            }
+            table.append(tableRow);
+        }
+
+        calendarDays.append(table);
+    }
+
+    function updateMonthDisplay() {
+        const currentMonthData = releaseData[currentMonthIndex];
+        const serverMonth = currentMonthData.Month;
+        const serverYear = currentMonthData.Year;
+
+        const currentMonth = new Date(Date.UTC(serverYear, serverMonth - 1, 1)).toLocaleString("default", { month: "long" });
+        $("#Month").text(currentMonth + ' ' + serverYear);
+    }
+
+    function showNextMonth() {
+        if (currentMonthIndex < releaseData.length - 1) {
+            currentMonthIndex++;
+            renderCurrentMonth();
+            updateMonthDisplay();
+        }
+    }
+
+    function showPrevMonth() {
+        if (currentMonthIndex > 0) {
+            currentMonthIndex--;
+            renderCurrentMonth();
+            updateMonthDisplay();
+        }
+    }
+
+    $("#prev").click(showPrevMonth);
+    $("#next").click(showNextMonth);
+
+    $.ajax({
+        type: "POST",
+        url: "SlotBookings.aspx/GetCalendarData",
+        data: JSON.stringify({ year: new Date().getFullYear(), month: new Date().getMonth() + 1 }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            releaseData = JSON.parse(data.d);
+            if (releaseData.length > 0) {
+                renderCurrentMonth();
+                updateMonthDisplay();
+            }
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+});
+
+
+
+11	2023	Y	300	10	ADMIN	Oct 31 2023  3:35PM	NULL	NULL
+12	2023	Y	310	10	ADMIN	Nov 15 2023  9:51AM	NULL	NULL
+1	2024	Y	310	10	ADMIN	Dec 11 2023 10:32AM	NULL	NULL
+

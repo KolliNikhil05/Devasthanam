@@ -1,0 +1,737 @@
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="RecruiteeRegistration.aspx.cs" Inherits="Devasthanam.RecruiteeRegistration" EnableEventValidation="true" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>RecruiteeRegistration</title>
+    <link href="../../StyleSheets/RecruiteeRegistration.css" rel="stylesheet" />
+    <script src="../../Scripts/Js_Page/CDNJavaScript.js"></script>
+    <script src="../../Scripts/Js_Page/jqueryCdn.js"></script>
+    <script src="../../Scripts/Js_Page/RecruiteeRegistration.js"></script>
+</head>
+<%-- <script>
+        $(document).ready(function () {
+            cities();
+        });
+    </script>--%>
+<body>
+    <form id="form1" method="post">
+        <div class="logo">
+            <img src="../../Image/Master.jpg" id="masterpage" />
+        </div>
+        <nav>
+            <ul>
+                <li>
+                    <img src="../../Image/home.jpg" id="home" />
+                    <a href="../UserHome/UserHomePage.aspx">Home</a>
+                </li>
+                <li>
+                    <img src="../../Image/call.jpg" id="contact" />
+                    <a href="../UserHome/ContactUs.aspx">Contact Us</a>
+                </li>
+                <li>
+                    <img src="../../Image/logout.jpg" id="logout" />
+                    <a href="../Signup/LoginPage.aspx">Log Out</a>
+                </li>
+            </ul>
+        </nav>
+        <div class="container">
+            <h2 id="conname">Registration</h2>
+            <div class="con1">
+                <div class="name">
+                    <label for="txtname" id="lblname">Name:</label><br />
+                    <input type="text" id="txtname" placeholder="Enter your Name" maxlength="15" />
+                </div>
+                <div class="surname">
+                    <label for="txtsurname" id="lblsurname">SurName:</label><br />
+                    <input type="text" id="txtsurname" placeholder="Enter your SurName" maxlength="15" />
+                </div>
+            </div>
+            <div class="con2">
+                <div class="phone">
+                    <label for="txtphone" id="lblphone">Phone:</label><br />
+                    <input type="tel" id="txtphone" onkeypress="return onlyNumbers(event);" placeholder="Enter your Phone Number" maxlength="10" />
+                </div>
+                <div class="email">
+                    <label for="txtemail" id="lblemail">Email:</label><br />
+                    <input type="email" id="txtemail" placeholder="Enter your Email" maxlength="25" />
+                </div>
+            </div>
+            <div class="con3">
+                <div class="gender">
+                    <label id="lblgender">Gender:</label>
+                    <input type="radio" name="gender" id="rdbmale" />
+                    <label for="rdbmale" id="lblmale">Male</label>
+                    <input type="radio" name="gender" id="rdbfemale" />
+                    <label for="rdbfemale" id="lblfemale">Female</label>
+                    <input type="radio" name="gender" id="rdbnone" />
+                    <label for="rdbnone" id="lblnone">Prefer Not to Say</label>
+                </div>
+            </div>
+            <div class="con4">
+                <div class="dob">
+                    <label for="datedob" id="lbldob">DOB:</label><br />
+                    <input type="date" id="datedob" />
+                </div>
+                <div>
+                    <label for="ddlCity" id="lblCity">City:</label>
+                    <select id="ddlCity">
+                        <option value="0">select city</option>
+                    </select>
+                </div>
+            </div>
+            <div class="con5">
+                <div class="address">
+                    <label for="txtarea" id="lbladdress">Address:</label><br />
+                    <textarea rows="6" cols="61" id="txtarea" maxlength="40" runat="server"></textarea>
+                </div>
+            </div>
+            <div class="con6">
+                <div class="qualification">
+                    <label id="lblqualification" for="selectyourqualification">Qualification:</label><br />
+                    <%--<asp:DropDownList ID="selectyourqualification" runat="server">
+                        <asp:ListItem Text="Highest Qualification" Value="0" />
+                        <asp:ListItem Text="Graduation" Value="1" />
+                        <asp:ListItem Text="Post Graduation" Value="2" />
+                    </asp:DropDownList>--%>
+                    <select id="selectyourqualification">
+                        <option value="0">Highest Qualification</option>
+                        <option value="1">Graduation</option>
+                        <option value="2">Post Graduation</option>
+                    </select>
+
+                </div>
+                <div class="percentage">
+                    <label for="txtpercentage" id="lblpercentage">Percentage:</label><br />
+                    <input type="text" id="txtpercentage" placeholder="Enter your Percentage" maxlength="6" />
+                </div>
+            </div>
+            <div class="con7">
+                <div class="certificate">
+                    <label for="fileupload" id="lblcmm">CMM Upload:</label>
+                    <input type="file" id="fileupload" />
+                </div>
+            </div>
+            <div class="submit">
+                <%--<input type="submit" id="btnregister" value="submit" onclick="buttonClick" />--%>
+                <%--<asp:Button Text="submit" ID="btnRegisters" />--%>
+                <button id="btnRegisters" onclick="validation();" type="submit">Submit</button>
+            </div>
+        </div>
+        <div class="footer">
+            <p id="footer1">Copyright © 2023-2025 Simhachala Devasthanams, All Rights Reserved</p>
+            <p id="footer2">Devoloped by Nikhil</p>
+        </div>
+    </form>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using DevasthanamBAL;
+using Newtonsoft.Json;
+using System;
+using System.Data;
+using System.Web.Services;
+
+namespace Devasthanam
+{
+    public partial class RecruiteeRegistration : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
+        }
+        [WebMethod(EnableSession = true)]
+        public static string citiesg()
+        {
+            string jsonResult = "";
+            try
+            {
+                RecruiteeRegistrationBAL objbal = new RecruiteeRegistrationBAL();
+                DataTable dtResult = objbal.GetCities();
+                if (dtResult.Rows.Count > 0)
+                {
+                    jsonResult = JsonConvert.SerializeObject(dtResult);
+                    jsonResult.Replace(@"\", string.Empty);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return (jsonResult);
+
+        }
+
+        public static string InsertRegistrationData(string name, string surname, string phone, string email,
+            string gender, string dob, string city, string address, string qualification, string percentage,
+            string upload)
+        {
+            string jsonResult = "";
+            try
+            {
+                RecruiteeRegistrationBAL objbal2 = new RecruiteeRegistrationBAL();
+                
+
+                DataTable dt = objbal2.InsertRegistrationData(name, surname, phone, email,
+                     gender, dob, city, address, qualification, percentage, upload);
+                if (dt != null)
+                {
+                    jsonResult = JsonConvert.SerializeObject(dt);
+                    jsonResult.Replace(@"\", string.Empty);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+            return (jsonResult);
+        }
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using DevasthanamDAL;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DevasthanamBAL
+{
+    public   class RecruiteeRegistrationBAL
+    {
+        RecruiteeRegistrationDAL objdal = new RecruiteeRegistrationDAL();
+
+        public DataTable GetCities()
+        {
+            return objdal.GetCities();
+        }
+        RecruiteeRegistrationDAL objdal2 = new RecruiteeRegistrationDAL();
+        public DataTable InsertRegistrationData(string name, string surname, string phone, string email,
+            string gender, string dob, string city, string address, string qualification, string percentage,
+            string upload)
+        {
+            return objdal2.InsertRegistrationData(name,surname,phone,email,
+           gender,dob,city,address,qualification,percentage,upload);
+        }
+
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Configuration;
+using System.Security.Policy;
+
+namespace DevasthanamDAL
+{
+    public class RecruiteeRegistrationDAL
+    {
+        public DataTable GetCities()
+        {
+            //SqlConnection conn = new SqlConnection(Connection.connection_data);
+            string connectionString = ConfigurationManager.ConnectionStrings["connection_data"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+                //SqlCommand checkCmd = new SqlCommand("CheckUserIdExists", con);
+                DataTable dtDetails = new DataTable();
+                SqlCommand cmd = null;
+                try
+                {
+                    if (con.State == ConnectionState.Closed)
+                    {
+                        con.Open();
+                    }
+                    cmd = con.CreateCommand();
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandText = "getCity";
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    da.Fill(dtDetails);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+                finally
+                {
+                    if (con.State == ConnectionState.Open)
+                    {
+                        con.Close();
+                    }
+                }
+                return dtDetails;
+            }
+        }
+
+        public DataTable InsertRegistrationData(string name, string surname, string phone, string email,
+            string gender, string dob, string city, string address, string qualification, string percentage,
+            string upload)
+        {
+            SqlConnection conn = new SqlConnection(Connection.connectionString_Devasthanam);
+            DataTable dt = new DataTable();
+            SqlCommand cmd = null;
+            try
+            {
+                if (conn.State == ConnectionState.Closed)
+                {
+                    conn.Open();
+                }
+                cmd = conn.CreateCommand();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "InsertRegistrationData";
+                cmd.Parameters.AddWithValue("@uName",name );
+                cmd.Parameters.AddWithValue("@SurName",surname );
+                cmd.Parameters.AddWithValue("@Phone",phone);
+                cmd.Parameters.AddWithValue("@Email",email);
+                cmd.Parameters.AddWithValue("@Gender",gender );
+                cmd.Parameters.AddWithValue("@DOB",dob);
+                cmd.Parameters.AddWithValue("@City", city);
+                cmd.Parameters.AddWithValue("@UAddress", address);
+                cmd.Parameters.AddWithValue("@Qualification",qualification );
+                cmd.Parameters.AddWithValue("@UPercentage", percentage);
+                cmd.Parameters.AddWithValue("@UCertificate", upload);
+
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                if (conn.State == ConnectionState.Open)
+                {
+                    conn.Close();
+                }
+
+            }
+            return dt;
+
+        }
+        
+
+
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function validation() {
+    var name = $("#txtname").val();
+    var surname = $("#txtsurname").val();
+    var phone = $("#txtphone").val();
+    var email = $("#txtemail").val();
+    var gender = $('input[name="gender"]:checked');
+    var dob = $("#datedob").val();
+    var city = $("#selectyourcity").val();
+    var address = $("#txtarea").val();
+    var qualification = $("#selectyourqualification").val();
+    var percentage = $("#txtpercentage").val();
+   
+ /*********name********/
+    if (name == null || name === "")
+    {
+        alert("Please enter Your Name");
+        $("#txtname").focus();
+        return false;
+    }
+    else if (name.length < 3)
+    {
+        alert("Name should contain atleast 3 Characters");
+        $("#txtname").focus();
+        return false;
+    }
+    else if (!name.match(/^[a-zA-Z]+$/))
+    {
+        alert("Name should contain only letters (no digits or special characters).");
+        $("#txtname").focus();
+        return false;
+    }
+ /********surname********/
+    if (surname == null || surname === "")
+    {
+        alert("Please enter Your SurName");
+        $("#txtsurname").focus();
+        return false;
+    }
+    else if (surname < 3)
+    {
+        alert("SurName should contain atleast 3 Characters");
+        $("#txtsurname").focus();
+        return false;
+    }
+    else if (!surname.match(/^[a-zA-z]+$/))
+    {
+        alert("SurName should contain only letters (no digits or special characters).");
+        $("#txtsurname").focus();
+        return false;
+    }
+/*********phone*******/
+    if (phone == null || phone === "")
+    {
+        alert("Please enter your Phone number.");
+        $("#txtphone").focus();
+        return false;
+    }
+    else if (phone.length !== 10)
+    {
+        alert("Mobile Number should be exactly 10 digits.");
+        $("#txtphone").focus();
+        return false;
+    }
+    else if (!phone.match(/^[9|8|7|6]\d/))
+    {
+        alert("Phone number should start with 9,8,7 or 6.");
+        $("#txtphone").focus();
+        return false;
+    }
+    else if (!phone.match(/^\d+$/))
+    {
+        alert("Mobile number should only contain digits.");
+        $("#txtphone").focus();
+        return false;
+    }
+ /**********email*********/
+    if (email == null || email === "")
+    {
+        alert("Please enter your email address.");
+        $("#txtemail").focus();
+        return false;
+    }
+    else if (!email.match(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/)) {
+        alert("Please enter a valid email.");
+        $("#txtemail").focus();
+        return false;
+    }
+/********gender********/
+    if (gender.length === 0)
+    {
+        alert("Please select a gender.");
+        return false;
+    }
+/*********dob**********/
+
+    var today = new Date();
+    var dateofbirth = new Date(dob);
+    var age = today.getFullYear() - dateofbirth.getFullYear();
+    var monthDiff = today.getMonth() - dateofbirth.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dateofbirth.getDate())) {
+        age--;
+    }
+    if (dob == null || dob === "")
+    {
+        alert("Please enter your date of birth.");
+        $("#datedob").focus();
+        return false;
+    }
+    else if (dateofbirth > today)
+    {
+        alert("Invalid date of birth.");
+        $("#datedob").focus();
+        return false;
+    }
+    if (age < 18 || age > 30)
+    {
+        alert("The age should be between 18 and 30 years.");
+        $("#datedob").focus();
+        return false;
+    }
+/*******city***********/
+    if (city == null || city === " ")
+    {
+        alert("Please select your city.");
+        $("#selectyourcity").focus();
+        return false;
+    }
+/*******Address********/
+
+    if (address == null || address === "")
+    {
+        alert("Please enter your address.");
+        $("#txtarea").focus();
+        return false;
+    }
+    else if (address.length < 20)
+    {
+        alert("Address must contain 20 characters.");
+        $("#txtarea").focus();
+        return false;
+    }
+/******qualification*****/
+    if (qualification == null || qualification === "")
+    {
+        alert("Please Select your Qualification");
+        $("#selectyourqualification").focus();
+        return false;
+    }
+ /*****percentage*******/
+    if (percentage == null || percentage === "")
+    {
+        alert("Please enter your Percentage");
+        $("#txtpercentage").focus();
+        return false;
+    }
+    else if (percentage < 65)
+    {
+        alert("Percentage should me more than 65, if not You are ineligible");
+        $("#txtpercentage").focus();
+        return false;
+    }
+    else if (percentage > 100)
+    {
+        alert("Invalid Percentage");
+        $("#txtpercentage").focus();
+        return false;
+    }
+/********upload*******/
+    
+    var upload = $("#fileupload")[0].files[0];
+    if (upload == null || upload === "")
+    {
+        alert("Please upload a file");
+        $("#fileupload").focus();
+        return false;
+    }
+    else if (!/\.(pdf)$/i.test(upload.name))
+    {
+        alert("Please Select a PDF file");
+        $("#fileupload").focus();
+        return false;
+    }
+    else if (upload.size > 3 * 1024 * 1024)
+    {
+        alert("Size of the file should be less than 3mb");
+        $("#fileupload").focus();
+        return false;
+    }
+   
+    InsertRegistrationData();
+    cities();
+
+    //else
+    //{
+    //    alert("registered Succesfully");
+    //    return true;
+    //} 
+}
+
+
+function onlyNumbers(evt) {
+    var charcode = (evt.which) ? evt.which : evt.keyCode;
+    if (charcode > 31 && (charcode < 48 || charcode > 57)) {
+        evt.preventDefault();
+    }
+    return true;
+}
+
+function InsertRegistrationData()
+{
+    var name = $("#txtname").val();
+    var surname = $("#txtsurname").val();
+    var phone = $("#txtphone").val();
+    var email = $("#txtemail").val();
+    var gender = $('input[name="gender"]:checked');
+    var dob = $("#datedob").val();
+    var city = $("#selectyourcity").val();
+    /*var City_Index = city.se*/
+    var address = $("#txtarea").val();
+    var qualification = $("#selectyourqualification").val();
+    var percentage = $("#txtpercentage").val();
+    var upload = $("#fileupload")[0].files[0];
+    $.ajax({
+        type: "POST",
+        dataType: "JSON",
+        url: "RecruiteeRegistration.aspx/InsertSignUpData",
+        async: false,
+        data: "{'name':'" + name + "','surname':'" + surname + "','phone':'" + phone + "','email':'" + email + "','gender':'" + gender +
+            "','dob':'" + dob + "','city':'" + city + "','address':'" + address + "','qualification':'" + qualification + "','percentage':'" + percentage +"','upload':'" + upload +"'}",
+        contentType: "application/json",
+        success: function (res) {
+            var obj = JSON.parse(res.d);
+             
+            alert("INSERTED SUCCESSFULLY");
+            window.location.href = "RecruiteePayment.aspx";
+        },
+        error: function (err) {
+            alert("Something went wrong! please Try Again Later");
+        },
+
+    });
+}
+function cities() {
+    debugger;
+    $("#ddlCity").empty();
+    $.ajax({
+        type: "POST",
+        url: "RecruiteeRegistration.aspx/citiesg",
+        data: "{}",
+        async: true,
+        contentType: "application/json",
+        success: function (res) {
+
+            if ((res.d) == "") {
+                alert("No Data Found ");
+                return false;
+            }
+            else {
+                $("#ddlCity").append("<option value=" + "0" + ">" + "Select CET" + "</option>");
+                var obj = JSON.parse(res.d);
+                $.each(obj, function (index, value) {
+                    $("#ddlCity").append("<option value=" + value.id + ">" + value.cityName + "</option>");
+
+                });
+
+            }
+
+        },
+        error: function (err) {
+
+            alert("Something went wrong! Please Try Again Later");
+        },
+        complete: function (data) {
+
+        }
+
+    });
+
+}
+

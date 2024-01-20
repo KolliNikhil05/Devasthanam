@@ -1,0 +1,178 @@
+
+CREATE procedure InsertSignUpData    
+(    
+@userId varchar(10),    
+@Password varchar(15),    
+@cPassword varchar(15)    
+)    
+As    
+Begin    
+if exists (select 1 from signup (nolock) where userId=@userId and isActive='y')  
+select '1'flag  
+SET NOCOUNT ON    
+Insert into signup    
+(    
+[userId],    
+[Password],    
+[cPassword],    
+[createdBy],    
+[createdTime],    
+[isActive],    
+[role]    
+)values(@userId,@Password,@cPassword,@userId,GETDATE(),'y','user')    
+End;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace Devasthanam
+{
+    public partial class Signup : System.Web.UI.Page
+    {
+        protected void pageLoad()
+        {
+        }
+        public void buttonClick(object sender, EventArgs e)
+        {
+            try
+            {
+                string connectionString = ConfigurationManager.ConnectionStrings["connection_data"].ConnectionString;
+                using (SqlConnection con = new SqlConnection(connectionString))
+                {
+                    con.Open();
+                    SqlCommand checkCmd = new SqlCommand("CheckUserIdExists", con);
+                    checkCmd.CommandType = CommandType.StoredProcedure;
+                    checkCmd.Parameters.AddWithValue("@userId", txtPhone.Value);
+                    int userCount = (int)checkCmd.ExecuteScalar();
+
+                    if (userCount > 0)
+                    {
+                        txtPhone.Value = String.Empty;
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Already Registered');", true);
+                    }
+                    else
+                    {                      
+                        SqlCommand insertCmd = new SqlCommand("InsertSignUpData", con);
+                        insertCmd.CommandType = CommandType.StoredProcedure;
+                        insertCmd.Parameters.AddWithValue("@userId", txtPhone.Value);
+                        insertCmd.Parameters.AddWithValue("@Password", loginPswd.Value);
+                        insertCmd.Parameters.AddWithValue("@cPassword", loginCPswd.Value);
+                        insertCmd.ExecuteNonQuery();
+                        txtPhone.Value = String.Empty;
+                        loginPswd.Value = String.Empty;
+                        loginCPswd.Value = String.Empty;
+                        Response.Redirect("LoginPage.aspx");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);       
+            }
+        }
+
+
+         
+    }
+
+}
+/*Aaaaaa1*/
+
+
+
+
+
+
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace Devasthanam
+{
+    public partial class LoginPage : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
+        }
+        public void Button1_Click(object sender, EventArgs e)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connection_data"].ConnectionString);
+
+                SqlCommand cmd = con.CreateCommand();
+                cmd.CommandText = "getLoginData";
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                SqlDataAdapter objDataReader = new SqlDataAdapter(cmd);
+                objDataReader.Fill(dt);
+                foreach (DataRow dr in dt.Rows)
+                {
+                    var userId = dr["userId"].ToString();
+                    var Password = dr["Password"].ToString();
+                    var roleid = dr["role"].ToString();
+                    //string userId = reader["userId"].ToString();
+                    //string Password = reader["Password"].ToString();
+                    //string roleid = reader["role"].ToString();
+                    var useridinp = txtPhone.Value.ToString();
+                    var userpassword = loginPswd.Value.ToString();
+                    if (useridinp == userId && userpassword == Password)
+                    {
+                        if (roleid == "Admin")
+                        {
+                            Response.Redirect("Admin.aspx");
+                        }
+
+                        else if (roleid == "user")
+                        {
+                            Response.Redirect("UserHomePage.aspx");
+                        }
+                        
+                        txtPhone.Value = String.Empty;
+                        loginPswd.Value = String.Empty;
+                    }
+                    else
+                    {
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Invalid UserId or Password');", true);
+                    }
+                }
+            }
+            catch(Exception ex) 
+            { 
+                Console.WriteLine(ex.Message);
+            }
+
+        }
+    }
+}

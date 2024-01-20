@@ -1,0 +1,425 @@
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="LoginPage.aspx.cs" Inherits="Devasthanam.LoginPage" %>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <link href="../../StyleSheets/LoginPage.css" rel="stylesheet" />
+ 
+    <script src="../../Scripts/Js_Page/CDNJavaScript.js"></script>
+    <script src="../../Scripts/Js_Page/jqueryCdn.js"></script>
+    <script src="../../Scripts/Js_Page/LoginPage.js"></script>
+    <title>LoginPage</title>
+</head>
+<body>
+    <form id="form1" runat="server" method="post" >
+        <div class="logo">
+            <img src="../../Image/Master.jpg" id="masterpage"/>             
+        </div>
+        <div class="main">
+        <div class="slideshow">
+        <div class="slide">
+            <img src="../../Image/main.jpg" alt="Image 1" />
+        </div>
+        <div class="slide">
+            <img src="../../Image/archi.png" alt="Image 2" />
+        </div>
+        <div class="slide">
+            <img src="../../Image/main.jpg" alt="Image 3" />
+        </div>
+        </div>
+        <div class="container">
+            <h2 id="conName">Login</h2>
+            <div class="userid">
+                <label for="txtPhone" id="lblLoginPhone">Mobile:
+                    <span style="color : red">*</span>
+                </label><br />
+                <input type="tel" id="txtPhone" runat="server" placeholder="Enter Your UserID" maxlength="10" /><br />
+            </div>
+            <div class="password">
+                <label id="lbl_pswd" for="loginPswd">Password:
+                    <span style="color : red">*</span>
+                </label><br />
+                <input type="password" id="loginPswd" runat="server" placeholder="Enter Your password" /><br />  
+            </div>
+            <div class="button">
+               <asp:Button ID="btnLogin" runat="server"   Text="Login" OnClick="btnlogin_Click" OnClientClick="loginValidation();"/>
+
+            </div>   
+            <a href="ForgetPassword.aspx" id="anchor">Forget Password ?</a>
+        </div>
+        </div>
+        <div class="footer">
+            <p id="footer1">Copyright © 2023-2025 Simhachala Devasthanams, All Rights Reserved</p>    
+            <p id="footer2">Devoloped by Nikhil</p>           
+        </div>
+    </form>                                                
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
+using System.Data;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.Services;
+using DevasthanamBAL;
+using Newtonsoft.Json;
+using System.Security.Policy;
+
+namespace Devasthanam
+{
+    public partial class LoginPage : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
+        }
+
+
+        protected void btnlogin_Click(object sender, EventArgs e)
+        {
+            {
+
+                try
+                {
+                    LoginPageBAL objbal = new LoginPageBAL();
+                    DataTable dt = objbal.getLoginData();
+                    if (dt.Rows.Count > 0)
+                    {
+
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            var userId = dr["userId"].ToString();
+                            var Password = dr["Password"].ToString();
+                            var roleid = dr["role"].ToString();
+
+                            var useridinp = txtPhone.Value.ToString();
+                            var userpassword = loginPswd.Value.ToString();
+                            if (useridinp == userId && userpassword == Password)
+                            {
+                                if (roleid == "Admin")
+                                {
+                                    Response.Redirect("../Admin/Admin.aspx");
+
+                                }
+
+                                else if (roleid == "user")
+                                {
+                                    Response.Redirect("../UserHome/UserHomePage.aspx");
+                                }
+
+                                txtPhone.Value = String.Empty;
+                                loginPswd.Value = String.Empty;
+                            }
+                            else
+                            {
+                                ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Invalid UserId or Password');", true);
+                            }
+                        }
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+            
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using DevasthanamDAL;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DevasthanamBAL
+{
+    public class LoginPageBAL
+    {
+        LoginPageDAL objdal =  new LoginPageDAL();
+        public DataTable getLoginData()
+        {
+            return objdal.GetLoginData();
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using System;
+using System.Data;
+using System.Data.SqlClient;
+
+namespace DevasthanamDAL
+{
+    public class LoginPageDAL
+    {
+        public DataTable GetLoginData()
+        {
+            SqlConnection conn = new SqlConnection(Connection.connectionString_Devasthanam);
+            DataTable dt = new DataTable();
+            SqlCommand cmd = null;
+            try
+            {
+                if (conn.State == ConnectionState.Closed)
+                {
+                    conn.Open();
+                }
+                cmd = conn.CreateCommand();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "getLoginData";
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                if (conn.State == ConnectionState.Open)
+                {
+                    conn.Close();
+                }
+
+            }
+            return dt;
+        }
+    }
+}
+//public void Button1_Click(object sender, EventArgs e)
+        //{
+        //    DataTable dt = new DataTable();
+        //    try
+        //    {
+        //        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["connection_data"].ConnectionString);
+
+//        SqlCommand cmd = con.CreateCommand();
+//        cmd.CommandText = "getLoginData";
+//        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+//        SqlDataAdapter objDataReader = new SqlDataAdapter(cmd);
+//        objDataReader.Fill(dt);
+//        foreach (DataRow dr in dt.Rows)
+//        {
+//            var userId = dr["userId"].ToString();
+//            var Password = dr["Password"].ToString();
+//            var roleid = dr["role"].ToString();
+//              
+
+//            var useridinp = txtPhone.Value.ToString();
+//            var userpassword = loginPswd.Value.ToString();
+//            if (useridinp == userId && userpassword == Password)
+//            {
+//                if (roleid == "Admin")
+//                {
+//                    Response.Redirect("../Admin/Admin.aspx");
+
+//                }
+
+//                else if (roleid == "user")
+//                {
+//                    Response.Redirect("../UserHome/UserHomePage.aspx");
+//                }
+
+//                txtPhone.Value = String.Empty;
+//                loginPswd.Value = String.Empty;
+//            }
+//            else
+//            {
+//                ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Invalid UserId or Password');", true);
+//            }
+//        }
+//    }
+//    catch(Exception ex) 
+//    { 
+//        Console.WriteLine(ex.Message);
+//    }
+
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function loginValidation()
+{
+    var phone = $("#txtPhone").val();
+
+    if (phone == null || phone === "") {
+        alert("Please enter Phone Number");
+        $("#txtPhone").focus();
+        return false;
+    }
+    else if (phone.length !== 10) {
+        alert("Mobile Number should be exactly 10 digits.");
+        $("#txtPhone").focus();
+        return false;
+    }
+    else if (!phone.match(/^[9|8|7|6]\d/)) {
+        alert("Phone number should start with 9,8,7 or 6.");
+        $("#txtPhone").focus();
+        return false;
+    }
+    else if (!phone.match(/^\d+$/)) {
+        alert("Mobile number should only contain digits.");
+        $("#txtPhone").focus();
+        return false;
+    }
+    //$.ajax({
+    //    type: "POST",
+    //    data:"",
+    //    dataType: "JSON",
+    //    url: "LoginPage.aspx/getLoginData",
+    //    async: false,
+    //    contentType: "application/json",
+    //    success: function (res) {
+    //        var 
+    //        alert("Welcome");
+    //    },
+    //    error: function (err) {
+    //        alert("Something went Wrong");
+    //    }
+    //});
+}
+function onlyNumbers(evt) {
+    var charcode = (evt.which) ? evt.which : evt.keyCode;
+    if (charcode > 31 && (charcode < 48 || charcode > 57)) {
+        evt.preventDefault();
+    }
+    return true;
+}

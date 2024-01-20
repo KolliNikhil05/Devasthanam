@@ -1,0 +1,451 @@
+<%@ Page Title="" Language="C#" MasterPageFile="~/views/MasterPages/MainMaster.Master" AutoEventWireup="true" CodeBehind="RoleOptions.aspx.cs" Inherits="Devasthanam.views.UserHome.RoleOptions" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <link href="../../StyleSheets/RoleOptions.css" rel="stylesheet" />
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div class="container">
+        <div class="container1">
+            <div class="name">
+                <asp:Label AssociatedControlID="txtName" ID="lblName" runat="server">Name:</asp:Label><br />
+                <asp:TextBox ID="txtName" runat="server" MaxLength="15" MinLength="3" placeholder="Enter Your Name"></asp:TextBox>
+            </div>
+            <div class="surname">
+                <asp:Label AssociatedControlID="txtSurName" ID="lblSurName" runat="server">SurName:</asp:Label><br />
+                <asp:TextBox ID="txtSurName" runat="server" MaxLength="15" MinLength="3" placeholder="Enter Your SurName"></asp:TextBox>
+            </div>
+        </div>
+        <div class="container2">
+            <div class="district">
+                <asp:Label AssociatedControlID="ddlDistrict" ID="lblDistrict" runat="server">District:</asp:Label><br />
+<%--                <asp:DropDownList ID="ddlDistrict" runat="server"></asp:DropDownList>--%>
+                <asp:DropDownList ID="ddlDistrict" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlDistrict_SelectedIndexChanged"></asp:DropDownList>
+
+            </div>
+            <div class="mandal">
+                <asp:Label AssociatedControlID="ddlMandal" ID="lblMandal" runat="server">Mandal:</asp:Label><br />
+                <asp:DropDownList ID="ddlMandal" runat="server"></asp:DropDownList><br />
+            </div>
+        </div>
+
+        <div class="gender">
+            <asp:Label AssociatedControlID="rdbGender" ID="lblGender" runat="server">Gender:</asp:Label>
+            <asp:RadioButtonList ID="rdbGender" runat="server" RepeatDirection="Horizontal">
+                <asp:ListItem Text="Male" Value="Male"></asp:ListItem>
+                <asp:ListItem Text="Female" Value="Female"></asp:ListItem>
+                <asp:ListItem Text="Others" Value="Others"></asp:ListItem>
+            </asp:RadioButtonList><br />
+        </div>
+        <div class="Dob">
+            <%--<asp:label AssociatedControlID="calDOB" id="lblDOB" runat="server">DOB:</asp:label>--%>
+            <%-- <asp:Calendar ID="calDOB" class="dob" runat="server"></asp:Calendar>--%>
+            <%-- <asp:Calendar ID="calDOB" runat="server" OnSelectionChanged="calDOB_SelectionChanged" CssClass="dob"></asp:Calendar>--%>
+        </div>
+
+
+        <asp:Label AssociatedControlID="Upload" ID="lblUpload" runat="server">CMM:</asp:Label>
+        <asp:FileUpload ID="Upload" runat="server" /><br />
+        <asp:Label AssociatedControlID="lstSkills" ID="lblSkills" runat="server">Choose Your Skills If You are 100% Sure:</asp:Label><br />
+        <asp:CheckBoxList ID="lstSkills" runat="server"></asp:CheckBoxList>
+        <asp:Button ID="btnSubmit" class="btn" runat="server" Text="Submit" />
+
+
+    </div>
+</asp:Content>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using BAL;
+using System;
+using System.Web.UI.WebControls;
+namespace Devasthanam.views.UserHome
+{
+    public partial class RoleOptions : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+                RoleOptionsBAL bal = new RoleOptionsBAL();
+                ddlDistrict.DataSource = bal.GetDistricts();
+                ddlDistrict.DataTextField = "District";
+                ddlDistrict.DataValueField = "DistrictId";
+                ddlDistrict.DataBind();
+
+                // Add an initial item for better user experience
+                ddlDistrict.Items.Insert(0, new ListItem("Select District", "0"));
+            }
+        }
+        protected void ddlDistrict_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selectedDistrictId = ddlDistrict.SelectedValue;
+
+            if (selectedDistrictId != "0")
+            {
+                RoleOptionsBAL bal = new RoleOptionsBAL();
+                ddlMandal.DataSource = bal.GetMandals(selectedDistrictId);
+                ddlMandal.DataTextField = "Mandal";
+                ddlMandal.DataValueField = "MandalId";
+                ddlMandal.DataBind();
+            }
+            else
+            {
+                // Clear the mandal dropdown if "Select District" is chosen
+                ddlMandal.Items.Clear();
+            }
+
+            // Add an initial item for better user experience
+            ddlMandal.Items.Insert(0, new ListItem("Select Mandal", "0"));
+        }
+
+
+        
+
+
+
+
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using DAL;
+using System.Data;
+
+namespace BAL
+{
+    public class RoleOptionsBAL
+    {
+        private RoleOptionsDAL dal = new RoleOptionsDAL();
+
+        public DataTable GetDistricts()
+        {
+            return dal.GetDistricts();
+        }
+
+        public DataTable GetMandals(string districtId)
+        {
+            return dal.GetMandals(districtId);
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using System;
+using System.Data;
+using System.Data.SqlClient;
+using System.Configuration;
+
+namespace DAL
+{
+    public class RoleOptionsDAL
+    {
+        public DataTable GetDistricts()
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["connection_data"].ConnectionString;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("Districts_Get", connection))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    connection.Open();
+                    DataTable dt = new DataTable();
+                    dt.Load(cmd.ExecuteReader());
+                    return dt;
+                }
+            }
+        }
+
+        public DataTable GetMandals(string districtId)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["connection_data"].ConnectionString;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("Mandals_Get", connection))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@DistrictId", districtId);
+                    connection.Open();
+                    DataTable dt = new DataTable();
+                    dt.Load(cmd.ExecuteReader());
+                    return dt;
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.container
+{
+    margin-top:100px;
+    margin-left:150px;
+    font-size:19px;
+    background-color:white;
+    border-top:20px solid lightsalmon;
+    border-radius:10px;
+    width:28%;
+    padding:20px;
+}
+.container1 {
+    display: flex;
+    flex-direction: row;
+}
+.container2 {
+    display: flex;
+    flex-direction: row;
+}
+.surname
+{
+    margin-left:10px;
+}
+.mandal
+{
+    margin-left:71px;
+}
+.gender
+{
+    display:flex;
+    flex-direction:row;
+}
+.dob
+{
+    width:2px;
+    height:2px;
+}
+.Dob {
+    display: flex;
+    flex-direction: row;
+}
+.btn {
+    width: 80px;
+    height: 25px;
+    background-color: lightsalmon;
+    border-radius: 5px;
+}
+#calDOB {
+    font-size: 12px;
+    width: 50px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+create table Mandal
+(
+DistrictId varchar(25),
+MandalId varchar(25),
+Mandal varchar(25),
+);
+insert into Mandal values('3','4','Gudlavalleru');
+1	1	Gopalapatnam
+1	2	Madhurawada
+1	3	Gajuwaka
+1	4	Pendurthi
+1	5	Sabbavaram
+1	6	Anakapalli
+1	7	Chodavaram
+1	8	Araku
+2	1	Renigunta
+2	2	Putur
+2	3	NarayanaVanam
+2	4	Chilakur
+2	5	SriKalaHasti
+3	1	Machilipatnam
+3	2	Gannavaram
+3	3	Avanigadda
+3	4	Gudlavalleru
+
+
+create PROCEDURE Mandals_Get 
+@DistrictId varchar(25)
+AS      
+BEGIN      
+    SELECT DistrictId, MandalId,Mandal     
+    FROM Mandal  
+	WHERE DistrictId=@DistrictId
+END
+
+exec Mandals_Get '3'
+
+
+
+
+CREATE PROCEDURE Districts_Get    
+AS        
+BEGIN        
+    SELECT DistrictId, District       
+    FROM Districts        
+END
+
+1	Visakhapatnam
+2	Tirupathi
+3	Vijayawada
+
+
+
+
+create table Roles
+(
+SkillId varchar(25),
+RoleId varchar(25),
+Role varchar(35)
+);
+select * from Roles
+insert into Roles values('9','3','PrasadamCounterManager')
+
+update  Roles
+set Role = 'QueueTimeManager'
+where SkillId = '2'
+
+
+
+
+
+1	1	HelpLine
+1	2	RouteAdvicer
+2	1	QueueTimeManager
+3	1	WorkersManager
+4	1	ComplaintsManager
+5	1	SponsorManager
+6	1	Manager
+7	1	QueueMovementManager
+8	1	EventManager
+9	1	ParkingManager
+9	2	TicketCounterManager
+9	3	PrasadamCounterManager
+
+
+
+
+1	Communication
+2	TimeManagement
+3	LeaderShip
+4	ActiveListening
+5	Colloboration
+6	RealtimeProblemSolving
+7	Patience
+8	ProjectManagement
+9	Others
+
+
+
+CREATE PROCEDURE Skills_Get    
+AS        
+BEGIN        
+    SELECT SkillId, Skill       
+    FROM Skills        
+END
+
+
+CREATE PROCEDURE Role_Get   
+@SkillId varchar(25)  
+AS        
+BEGIN        
+    SELECT SkillId, RoleId,Role       
+    FROM Roles    
+ WHERE SkillId=@SkillId  
+END
+
+exec Role_Get '2'
+
+

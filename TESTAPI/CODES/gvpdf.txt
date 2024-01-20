@@ -1,0 +1,184 @@
+<%@ Page Title="" Language="C#" MasterPageFile="~/views/MasterPages/Test.Master" AutoEventWireup="true" CodeBehind="RecruiteeDetailsPDF.aspx.cs" Inherits="Devasthanam.views.Test.RecruiteeDetailsPDF" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <link href="../../StyleSheets/RecruiteeDetailsPDF.css" rel="stylesheet" />
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <div class="container">
+        <div class="container1">
+            <div class="city">
+                <asp:Label runat="server" Text="Select City:" AssociatedControlID="ddlCities"></asp:Label>
+                <asp:DropDownList ID="ddlCities" runat="server" DataTextField="City" DataValueField="id">
+                </asp:DropDownList>
+            </div>
+            <div class="phone">
+                <asp:Label runat="server" Text="Enter Phone Number:" AssociatedControlID="txtPhone"></asp:Label>
+                <asp:TextBox runat="server" ID="txtPhone" placeholder="Enter Phone Number" MaxLength="10"></asp:TextBox>
+            </div>
+            <asp:Button runat="server" ID="btnDetails" Text="Get Details" />
+        </div>
+        <div class="container2">
+            <div class="cons1">
+                <div class="name">
+                    <asp:Label runat="server" ID="lblName" Text="Name:"></asp:Label>
+                </div>
+                <div class="surname">
+                     <asp:Label runat="server" ID="lblSurName" Text="SurName:"></asp:Label>
+                </div>
+            </div>
+        </div>
+    </div>
+</asp:Content>
+
+
+
+
+
+
+
+
+
+
+.container
+{
+    margin-left:70px;
+    margin-top:100px;
+}
+.container1{
+    display:flex;
+    flex-direction:row;
+}
+.city
+{
+    margin-left:50px;
+}
+.phone
+{
+    margin-left:50px;
+    margin-right:50px;
+}
+.cons1 {
+    width: 60%;
+    border:double;
+    background-color: antiquewhite;
+    display: flex;
+    flex-direction: row;
+}
+.name{
+    margin-left:100px;
+}
+.surname{
+    margin-left:150px;
+}
+
+
+
+
+
+
+
+
+
+
+using DAL;
+using DevasthanamDAL;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BAL
+{
+    public class RecruiteeDetailsPDFBAL
+    {
+        RecruiteeDetailsPDFDAL objDal = new RecruiteeDetailsPDFDAL();
+        public DataTable GetCity()
+        {
+            return objDal.GetCity();
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+using DevasthanamDAL;
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Configuration;
+
+namespace DAL
+{
+    public class RecruiteeDetailsPDFDAL
+    {
+        public DataTable GetCity()
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["connection_data"].ConnectionString;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("getExCity", connection))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    connection.Open();
+                    DataTable dt = new DataTable();
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                    {
+                        adapter.Fill(dt);
+                    }
+                    return dt;
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+using BAL;
+using System;
+using System.Web.UI.WebControls;
+
+namespace Devasthanam.views.Test
+{
+    public partial class RecruiteeDetailsPDF : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+                LoadCityDropDown();
+            }
+        }
+        public void LoadCityDropDown()
+        {
+            RecruiteeDetailsPDFBAL objCity = new RecruiteeDetailsPDFBAL();
+            ddlCities.DataSource = objCity.GetCity();
+            ddlCities.DataTextField = "City";
+            ddlCities.DataValueField = "id";
+            ddlCities.DataBind();
+            ddlCities.Items.Insert(0, new ListItem("Select City", "0"));
+        }
+    }
+}

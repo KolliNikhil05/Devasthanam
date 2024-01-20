@@ -1,0 +1,204 @@
+ 
+ 
+<asp:ScriptManager runat="server"></asp:ScriptManager>
+ <asp:UpdatePanel runat="server">
+     <ContentTemplate>
+         <asp:GridView ID="grdEmployee" CssClass="Grid" runat="server" AutoGenerateColumns="false" ShowFooter="true" OnRowDataBound="grdEmployee_RowDataBound">
+             <Columns>
+                 <asp:TemplateField HeaderText="Name" ItemStyle-HorizontalAlign="Center">
+                     <ItemTemplate>
+                         <asp:Label ID="lblname" Text='<% # Bind("Name") %>' runat="server"></asp:Label>
+                     </ItemTemplate>
+                     <FooterTemplate>
+                         <asp:TextBox ID="txtName" runat="server" />
+                     </FooterTemplate>
+                 </asp:TemplateField>
+                 <asp:TemplateField HeaderText="FatherName" ItemStyle-HorizontalAlign="Center">
+                     <ItemTemplate>
+                         <asp:Label ID="lblfname" Text='<% # Bind("FatherName") %>' runat="server"></asp:Label>
+                     </ItemTemplate>
+                     <FooterTemplate>
+                         <asp:TextBox ID="txtFatherName" runat="server" />
+                     </FooterTemplate>
+                 </asp:TemplateField>
+                 <asp:TemplateField HeaderText="MotherName" ItemStyle-HorizontalAlign="Center">
+                     <ItemTemplate>
+                         <asp:Label ID="lblmname" Text='<% # Bind("MotherName") %>' runat="server"></asp:Label>
+                     </ItemTemplate>
+                     <FooterTemplate>
+                         <asp:TextBox ID="txtMotherName" runat="server" />
+                     </FooterTemplate>
+                 </asp:TemplateField>
+                 <asp:TemplateField HeaderText="MobileNumbber" ItemStyle-HorizontalAlign="Center">
+                     <ItemTemplate>
+                         <asp:Label ID="lblmobile" Text='<% # Bind("MobileNumber") %>' runat="server"></asp:Label>
+                     </ItemTemplate>
+                     <FooterTemplate>
+                         <asp:TextBox ID="txtMobileNumber" runat="server" />
+                     </FooterTemplate>
+                 </asp:TemplateField>
+                 <asp:TemplateField HeaderText="button" ItemStyle-HorizontalAlign="Center">
+                     <ItemTemplate>
+                         <asp:Button ID="Button2" runat="server" Text="delete" OnClick="Button2_Click"  />
+                         
+                     </ItemTemplate>
+                     <FooterTemplate>
+                         <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Button" />
+                     </FooterTemplate>
+                 </asp:TemplateField>
+             </Columns>
+         </asp:GridView>
+         <asp:Button ID="Button3" runat="server" OnClick="Button3_Click" Text="Button" />
+     </ContentTemplate>
+ </asp:UpdatePanel>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Data;
+using System.Data.SqlClient;
+using System.Configuration;
+
+namespace TestExamples
+{
+    public partial class BulkInsertion : System.Web.UI.Page
+    {
+        DataTable dt = new DataTable();
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+                
+                    dt.Columns.Add("Name",typeof(string));
+                    dt.Columns.Add("FatherName", typeof(string));
+                    dt.Columns.Add("MotherName", typeof(string));
+                    dt.Columns.Add("MobileNumber", typeof(string));
+                    DataRow dr = dt.NewRow();
+                    
+                    dt.Rows.Add(dr);
+                   
+              
+                    ViewState["Records"] = dt;
+                    grdEmployee.DataSource = dt;
+                    grdEmployee.DataBind();
+             
+                dt.Rows[0].Delete();
+                
+
+
+
+
+
+            }
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            GridViewRow gr = grdEmployee.FooterRow;
+            
+            TextBox name = gr.FindControl("txtName") as TextBox;
+            TextBox fathername = gr.FindControl("txtFatherName") as TextBox;
+            TextBox MotherName = gr.FindControl("txtMotherName") as TextBox;
+            TextBox Mobile = gr.FindControl("txtMobileNumber") as TextBox;
+            DataRow dr = dt.NewRow();
+            DataTable dt1 = ViewState["Records"] as DataTable;
+            
+            dt1.Rows.Add(name.Text,fathername.Text,MotherName.Text,Mobile.Text);
+            grdEmployee.DataSource = dt1;
+            grdEmployee.DataBind();
+
+        }
+
+        protected void grdEmployee_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (!IsPostBack)
+            {
+                if (e.Row.RowType == DataControlRowType.DataRow)
+                {
+                    // Hide the first row
+                    if (e.Row.RowIndex == 0)
+                    {
+                        e.Row.Visible = false;
+                    }
+                }
+            }
+            
+        }
+
+        protected void Button3_Click(object sender, EventArgs e)
+        {
+            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["HireHub_Candidate_Connection"].ConnectionString);
+            con.Open();
+            SqlCommand cmd = con.CreateCommand();
+            cmd.CommandText = "Candidate_Details_sp";
+            cmd.CommandType = CommandType.StoredProcedure;
+            SqlParameter sP = new SqlParameter();
+            sP.ParameterName = "@candidatedet";
+            sP.Value = ViewState["Records"] as DataTable;
+            cmd.Parameters.Add(sP);
+            cmd.ExecuteNonQuery();
+        }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            Button state = sender as Button;
+            GridViewRow gr = state.NamingContainer as GridViewRow;
+            Label name = gr.FindControl("lblname") as Label;
+            Label fname = gr.FindControl("lblfname") as Label;
+            Label maname = gr.FindControl("lblmname") as Label;
+            Label mobile = gr.FindControl("lblmobile") as Label;
+            int rowindex=gr.DataItemIndex;
+            DataTable dt3 = ViewState["Records"] as DataTable;
+            dt3.Rows.RemoveAt(rowindex);
+            ViewState["Records"] = dt3;
+            grdEmployee.DataSource = ViewState["Records"];
+            grdEmployee.DataBind();
+
+        }
+    }
+}
+sql                                                                                                                                                            create table select * from Candidate_Details
+(
+Name varchar(50),
+fathername varchar(50),
+mothername varchar(50),
+mobile varchar(50))
+
+create type Candidate_Details_type as table
+(
+Name varchar(50),
+fathername varchar(50),
+mothername varchar(50),
+mobile varchar(50))
+
+create proc Candidate_Details_sp
+(
+@candidatedet Candidate_Details_type  readonly
+)
+as
+begin
+insert into Candidate_Details
+(Name ,
+fathername ,
+mothername ,
+mobile )
+select * from @candidatedet
+end
+ 
+
+
+
+
+
+CREATE PROCEDURE InsertGridViewData   
+    @GridViewData UT_GridViewData READONLY  
+AS  
+BEGIN  
+    INSERT INTO GridViewData (userId, uName, SurName, Phone)  
+    SELECT userId, uName, SurName, Phone  
+    FROM @GridViewData;  
+END;
+
