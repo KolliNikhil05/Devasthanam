@@ -1,0 +1,15 @@
+E:\TestAPI\Test.Business.Contracts\bin\Debug\net5.0\Test.Business.Contracts.deps.json
+E:\TestAPI\Test.Business.Contracts\bin\Debug\net5.0\Test.Business.Contracts.dll
+E:\TestAPI\Test.Business.Contracts\bin\Debug\net5.0\Test.Business.Contracts.pdb
+E:\TestAPI\Test.Business.Contracts\obj\Debug\net5.0\Test.Business.Contracts.GeneratedMSBuildEditorConfig.editorconfig
+E:\TestAPI\Test.Business.Contracts\obj\Debug\net5.0\Test.Business.Contracts.AssemblyInfoInputs.cache
+E:\TestAPI\Test.Business.Contracts\obj\Debug\net5.0\Test.Business.Contracts.AssemblyInfo.cs
+E:\TestAPI\Test.Business.Contracts\obj\Debug\net5.0\Test.Business.Contracts.csproj.CoreCompileInputs.cache
+E:\TestAPI\Test.Business.Contracts\obj\Debug\net5.0\Test.Business.Contracts.dll
+E:\TestAPI\Test.Business.Contracts\obj\Debug\net5.0\refint\Test.Business.Contracts.dll
+E:\TestAPI\Test.Business.Contracts\obj\Debug\net5.0\Test.Business.Contracts.pdb
+E:\TestAPI\Test.Business.Contracts\obj\Debug\net5.0\ref\Test.Business.Contracts.dll
+E:\TestAPI\Test.Business.Contracts\bin\Debug\net5.0\Test.Business.Contracts.runtimeconfig.json
+E:\TestAPI\Test.Business.Contracts\bin\Debug\net5.0\Test.Business.Contracts.runtimeconfig.dev.json
+E:\TestAPI\Test.Business.Contracts\obj\Debug\net5.0\Test.Business.Contracts.csproj.AssemblyReference.cache
+E:\TestAPI\Test.Business.Contracts\obj\Debug\net5.0\Test.Business.Contracts.genruntimeconfig.cache

@@ -1,0 +1,15 @@
+E:\TestAPI\Test.Repository\bin\Debug\net5.0\Test.Repository.deps.json
+E:\TestAPI\Test.Repository\bin\Debug\net5.0\Test.Repository.dll
+E:\TestAPI\Test.Repository\bin\Debug\net5.0\Test.Repository.pdb
+E:\TestAPI\Test.Repository\obj\Debug\net5.0\Test.Repository.GeneratedMSBuildEditorConfig.editorconfig
+E:\TestAPI\Test.Repository\obj\Debug\net5.0\Test.Repository.AssemblyInfoInputs.cache
+E:\TestAPI\Test.Repository\obj\Debug\net5.0\Test.Repository.AssemblyInfo.cs
+E:\TestAPI\Test.Repository\obj\Debug\net5.0\Test.Repository.csproj.CoreCompileInputs.cache
+E:\TestAPI\Test.Repository\obj\Debug\net5.0\Test.Repository.dll
+E:\TestAPI\Test.Repository\obj\Debug\net5.0\refint\Test.Repository.dll
+E:\TestAPI\Test.Repository\obj\Debug\net5.0\Test.Repository.pdb
+E:\TestAPI\Test.Repository\obj\Debug\net5.0\ref\Test.Repository.dll
+E:\TestAPI\Test.Repository\bin\Debug\net5.0\Test.Repository.runtimeconfig.json
+E:\TestAPI\Test.Repository\bin\Debug\net5.0\Test.Repository.runtimeconfig.dev.json
+E:\TestAPI\Test.Repository\obj\Debug\net5.0\Test.Repository.csproj.AssemblyReference.cache
+E:\TestAPI\Test.Repository\obj\Debug\net5.0\Test.Repository.genruntimeconfig.cache

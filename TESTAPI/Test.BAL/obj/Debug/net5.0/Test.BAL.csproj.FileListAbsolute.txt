@@ -1,0 +1,15 @@
+E:\TestAPI\Test.BAL\bin\Debug\net5.0\Test.BAL.deps.json
+E:\TestAPI\Test.BAL\bin\Debug\net5.0\Test.BAL.dll
+E:\TestAPI\Test.BAL\bin\Debug\net5.0\Test.BAL.pdb
+E:\TestAPI\Test.BAL\obj\Debug\net5.0\Test.BAL.GeneratedMSBuildEditorConfig.editorconfig
+E:\TestAPI\Test.BAL\obj\Debug\net5.0\Test.BAL.AssemblyInfoInputs.cache
+E:\TestAPI\Test.BAL\obj\Debug\net5.0\Test.BAL.AssemblyInfo.cs
+E:\TestAPI\Test.BAL\obj\Debug\net5.0\Test.BAL.csproj.CoreCompileInputs.cache
+E:\TestAPI\Test.BAL\obj\Debug\net5.0\Test.BAL.dll
+E:\TestAPI\Test.BAL\obj\Debug\net5.0\refint\Test.BAL.dll
+E:\TestAPI\Test.BAL\obj\Debug\net5.0\Test.BAL.pdb
+E:\TestAPI\Test.BAL\obj\Debug\net5.0\ref\Test.BAL.dll
+E:\TestAPI\Test.BAL\bin\Debug\net5.0\Test.BAL.runtimeconfig.json
+E:\TestAPI\Test.BAL\bin\Debug\net5.0\Test.BAL.runtimeconfig.dev.json
+E:\TestAPI\Test.BAL\obj\Debug\net5.0\Test.BAL.csproj.AssemblyReference.cache
+E:\TestAPI\Test.BAL\obj\Debug\net5.0\Test.BAL.genruntimeconfig.cache
