@@ -1,0 +1,11 @@
+E:\DemoAPI\Demo.Repository\bin\Debug\net5.0\Demo.Repository.deps.json
+E:\DemoAPI\Demo.Repository\bin\Debug\net5.0\Demo.Repository.dll
+E:\DemoAPI\Demo.Repository\bin\Debug\net5.0\Demo.Repository.pdb
+E:\DemoAPI\Demo.Repository\obj\Debug\net5.0\Demo.Repository.GeneratedMSBuildEditorConfig.editorconfig
+E:\DemoAPI\Demo.Repository\obj\Debug\net5.0\Demo.Repository.AssemblyInfoInputs.cache
+E:\DemoAPI\Demo.Repository\obj\Debug\net5.0\Demo.Repository.AssemblyInfo.cs
+E:\DemoAPI\Demo.Repository\obj\Debug\net5.0\Demo.Repository.csproj.CoreCompileInputs.cache
+E:\DemoAPI\Demo.Repository\obj\Debug\net5.0\Demo.Repository.dll
+E:\DemoAPI\Demo.Repository\obj\Debug\net5.0\refint\Demo.Repository.dll
+E:\DemoAPI\Demo.Repository\obj\Debug\net5.0\Demo.Repository.pdb
+E:\DemoAPI\Demo.Repository\obj\Debug\net5.0\ref\Demo.Repository.dll

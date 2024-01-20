@@ -1,0 +1,92 @@
+{
+  "version": 3,
+  "targets": {
+    "net5.0": {
+      "Demo.Models/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "compile": {
+          "bin/placeholder/Demo.Models.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Demo.Models.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Demo.Models/1.0.0": {
+      "type": "project",
+      "path": "../Demo.Models/Demo.Models.csproj",
+      "msbuildProject": "../Demo.Models/Demo.Models.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net5.0": [
+      "Demo.Models >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\K.Nikhil\\.nuget\\packages\\": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "E:\\DemoAPI\\Demo.Business.Contracts\\Demo.Business.Contracts.csproj",
+      "projectName": "Demo.Business.Contracts",
+      "projectPath": "E:\\DemoAPI\\Demo.Business.Contracts\\Demo.Business.Contracts.csproj",
+      "packagesPath": "C:\\Users\\K.Nikhil\\.nuget\\packages\\",
+      "outputPath": "E:\\DemoAPI\\Demo.Business.Contracts\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\K.Nikhil\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net5.0"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "projectReferences": {
+            "E:\\DemoAPI\\Demo.Models\\Demo.Models.csproj": {
+              "projectPath": "E:\\DemoAPI\\Demo.Models\\Demo.Models.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "net5.0": {
+        "targetAlias": "net5.0",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

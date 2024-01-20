@@ -1,0 +1,15 @@
+E:\DemoAPI\Demo.Business.Contracts\bin\Debug\net5.0\Demo.Business.Contracts.deps.json
+E:\DemoAPI\Demo.Business.Contracts\bin\Debug\net5.0\Demo.Business.Contracts.dll
+E:\DemoAPI\Demo.Business.Contracts\bin\Debug\net5.0\Demo.Business.Contracts.pdb
+E:\DemoAPI\Demo.Business.Contracts\bin\Debug\net5.0\Demo.Models.dll
+E:\DemoAPI\Demo.Business.Contracts\bin\Debug\net5.0\Demo.Models.pdb
+E:\DemoAPI\Demo.Business.Contracts\obj\Debug\net5.0\Demo.Business.Contracts.csproj.AssemblyReference.cache
+E:\DemoAPI\Demo.Business.Contracts\obj\Debug\net5.0\Demo.Business.Contracts.GeneratedMSBuildEditorConfig.editorconfig
+E:\DemoAPI\Demo.Business.Contracts\obj\Debug\net5.0\Demo.Business.Contracts.AssemblyInfoInputs.cache
+E:\DemoAPI\Demo.Business.Contracts\obj\Debug\net5.0\Demo.Business.Contracts.AssemblyInfo.cs
+E:\DemoAPI\Demo.Business.Contracts\obj\Debug\net5.0\Demo.Business.Contracts.csproj.CoreCompileInputs.cache
+E:\DemoAPI\Demo.Business.Contracts\obj\Debug\net5.0\Demo.Business.Contracts.csproj.CopyComplete
+E:\DemoAPI\Demo.Business.Contracts\obj\Debug\net5.0\Demo.Business.Contracts.dll
+E:\DemoAPI\Demo.Business.Contracts\obj\Debug\net5.0\refint\Demo.Business.Contracts.dll
+E:\DemoAPI\Demo.Business.Contracts\obj\Debug\net5.0\Demo.Business.Contracts.pdb
+E:\DemoAPI\Demo.Business.Contracts\obj\Debug\net5.0\ref\Demo.Business.Contracts.dll
