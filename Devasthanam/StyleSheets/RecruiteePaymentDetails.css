@@ -1,0 +1,19 @@
+﻿.container
+{
+    margin-top:80px;
+    margin-left:60px;
+}
+.grid-header {
+    background-image: url('../image/c1.jpg');
+    background-repeat: repeat-x;
+    color: white;
+}
+.grid-pager {
+    background-image: url('../image/c2.jpg');
+    background-repeat: repeat;
+    color: white;
+    text-align: center;
+}
+#ContentPlaceHolder1_GridView1 tr  td {
+    text-align: center;
+}

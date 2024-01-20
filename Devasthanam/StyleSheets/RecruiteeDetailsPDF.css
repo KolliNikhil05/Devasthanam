@@ -1,0 +1,126 @@
+﻿.container
+{
+    margin-left:70px;
+    margin-top:100px;
+}
+.container1{
+    display:flex;
+    flex-direction:row;
+}
+.container2 {
+    border-color: black;
+    background-color: white;
+    border: double;
+    width:70%;
+    margin-top:40px;
+    margin-left:50px;
+}
+.container3
+{
+    border-color:black;
+    border:double;
+    width:53.5%;
+    margin-top:30px;
+    margin-left:50px;
+}
+.container4 {
+    border-color: black;
+    border: double;
+    width: 53.5%;
+    margin-top: 30px;
+    margin-left: 50px;
+}
+.container5
+{
+    margin-top:40px;
+    margin-left:50px;
+   
+}
+.city
+{
+    margin-left:50px;
+}
+.phone
+{
+    margin-left:50px;
+    margin-right:50px;
+}
+ 
+.name{
+    margin-left:50px;
+    display:flex;
+    flex-direction:row;
+}
+.surname {
+    margin-left: 170px;
+    display: flex;
+    flex-direction: row;
+}
+.mobile {
+    margin-left: 50px;
+    display: flex;
+    flex-direction: row;
+}
+.email {
+    margin-left: 170px;
+    display: flex;
+    flex-direction: row;
+}
+.gender {
+    margin-left: 50px;
+    display: flex;
+    flex-direction: row;
+}
+.dob {
+    margin-left: 170px;
+}
+.ucity {
+    margin-left: 50px;
+    display: flex;
+    flex-direction: row;
+}
+.address {
+    margin-left: 170px;
+    display: flex;
+    flex-direction: row;
+}
+.qualification {
+    margin-left: 49px;
+    display: flex;
+    flex-direction: row;
+}
+.percentage {
+    margin-left: 170px;
+    display: flex;
+    flex-direction: row;
+}
+#ContentPlaceHolder1_btnDetails {
+    background-color: lightsalmon;
+    border-radius:5px;
+ 
+
+}
+#ContentPlaceHolder1_btnExport
+{
+    background-color:lightsalmon;
+    border-radius:5px;
+    margin-left:350px;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+    padding: 10px;  
+    background-color:azure;
+}
+table td 
+{
+padding: 8px;  
+}
+ table td div 
+{
+margin-bottom: 5px;  
+}
+ table td div label 
+{
+ margin-right: 5px;  
+}

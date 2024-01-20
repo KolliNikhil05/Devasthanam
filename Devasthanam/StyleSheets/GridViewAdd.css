@@ -1,0 +1,60 @@
+﻿ .container
+ {
+     margin-left:60px;
+     margin-top:70px;
+ }
+
+#ContentPlaceHolder1_gvMultiInsert th {
+
+    background-image: url('../image/c1.jpg');
+}
+#ContentPlaceHolder1_gvMultiInsert
+{
+    width:70%;
+    height:80px;
+    align-items:center;
+}
+#ContentPlaceHolder1_gvMultiInsert_txtuserId
+{
+     margin-left:15px;
+
+}
+#ContentPlaceHolder1_gvMultiInsert_txtName 
+{
+    margin-left: 15px;
+}
+#ContentPlaceHolder1_gvMultiInsert_txtSurName {
+    margin-left: 15px;
+}
+
+#ContentPlaceHolder1_gvMultiInsert_txtPhone {
+    margin-left: 15px;
+}
+#ContentPlaceHolder1_gvMultiInsert_btnAdd
+{
+    margin-left:5px;
+    background-color:white;
+    color:forestgreen;
+    border-color:forestgreen;
+    border-radius:5px;
+}
+.ad {
+    background-color: white;
+    color:red;
+    border-color:red;
+    border-radius:5px;
+}
+#ContentPlaceHolder1_btnSubmit {
+    background-color: white;
+    color: rebeccapurple;
+    border-color: rebeccapurple;
+    border-radius: 5px;
+}
+
+#ContentPlaceHolder1_gvMultiInsert td {
+    background-color: azure;
+}
+#ContentPlaceHolder1_btnSubmit
+{
+    margin-top:25px;
+}

@@ -1,0 +1,87 @@
+﻿ .container
+ {
+     margin-top:110px;
+     margin-left:350px;
+     display:flex;
+     flex-direction:row;
+     font-size:20px;
+ }
+ .con1
+ {
+
+ }
+.img {
+    margin-left: 100px;
+}
+ .email
+ {
+     display:flex;
+     flex-direction:row;
+ }
+ .phone
+ {
+     display:flex;
+     flex-direction:row;
+ }
+ #emailimg
+ {
+     margin-top:18px;
+     width:25px;
+     height:25px;
+ }
+ #txtemail
+ {
+     margin-left:15px;
+ }
+ #phoneimg
+ {
+     margin-top:18px;
+     width:30px;
+     height:30px;
+ }
+ #txtphone
+ {
+     margin-left:15px;
+ }
+nav {
+    width: 90%;
+    height: 30px;
+    margin: auto;
+    margin-top: 83px;
+    align-items: center;
+    padding-left: 7px;
+    padding-right: 6px;
+    background-image: url('../image/hbg.jpeg');
+}
+
+ul {
+    display: flex;
+    justify-content: space-between;
+}
+
+li a {
+    text-decoration: none;
+    padding: 10px;
+    color: black;
+}
+
+li {
+    list-style: none;
+}
+#logout {
+    margin-top: 7px;
+    width: 15px;
+    height: 15px;
+}
+
+#contact {
+    width: 17px;
+    height: 17px;
+    margin-top: 5px;
+}
+
+#home {
+    margin-top: 5px;
+    width: 17px;
+    height: 17px;
+}

@@ -1,0 +1,33 @@
+﻿.container
+{
+    margin-top:100px;
+    margin-left:60px;
+}
+.container1
+{
+    display:flex;
+    flex-direction:row;
+}
+#ContentPlaceHolder1_GridView1 th
+{
+    background-color: lightsalmon;
+}
+#ContentPlaceHolder1_GridView1 td
+{
+    text-align:center;
+}
+.grid-pager {
+    background-image: url('../image/hbg.jpeg');
+    background-repeat: repeat;
+    color: white;
+    text-align: center;
+}
+.container2
+{
+    margin-top:50px;
+}
+.gender
+{
+    display:flex;
+    flex-direction:row;
+}

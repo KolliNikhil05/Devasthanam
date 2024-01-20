@@ -1,0 +1,105 @@
+﻿.container {
+    margin-top: 50px;
+    margin-left: 350px;
+    background-color: white;
+    box-shadow: 0 6px 6px rgba(0.1, 0.1, 0.1, 0.1);
+    width: 500px;
+    height: 400px;
+    border-radius: 20px;
+    border-top: 15px solid lightsalmon;
+    border-bottom: 15px solid lightsalmon;
+}
+nav {
+    width: 90%;
+    height: 30px;
+    margin: auto;
+    margin-top: 83px;
+    align-items: center;
+    padding-left: 7px;
+    padding-right: 6px;
+    background-image: url('../image/hbg.jpeg');
+}
+
+ul {
+    display: flex;
+    justify-content: space-between;
+}
+
+li a {
+    text-decoration: none;
+    padding: 10px;
+    color: black;
+}
+
+li {
+    list-style: none;
+}
+
+#logout {
+    margin-top: 7px;
+    width: 15px;
+    height: 15px;
+}
+
+#contact {
+    width: 17px;
+    height: 17px;
+    margin-top: 5px;
+}
+
+#home {
+    margin-top: 5px;
+    width: 17px;
+    height: 17px;
+}
+.con1{
+    margin-left:40px;
+ 
+}
+.con2 {
+    margin-left: 40px;
+}
+#btnCheck
+{
+    background-color:lightsalmon;
+    border-radius:5px;
+}
+#btnDownload {
+    background-color: lightsalmon;
+    border-radius: 5px;
+}
+.blinking-marquee {
+    display: inline-block;
+    margin-left: 100px;
+    margin-right: 100px;
+    animation: moveAndBlink 7s linear infinite alternate;
+}
+
+@keyframes moveAndBlink {
+    0% {
+        color: red;
+        transform: translateX(0%);
+    }
+
+    50% {
+        color: blue;
+        transform: translateX(25%);
+    }
+
+    100% {
+        color: green;
+        transform: translateX(50%);
+    }
+}
+
+#ContentPlaceHolder1_btnLetter
+{
+    margin-left:100px;
+    background-color:lightsalmon;
+    border-radius:5px;
+}
+
+#lblName
+{
+    margin-bottom:20px;
+}

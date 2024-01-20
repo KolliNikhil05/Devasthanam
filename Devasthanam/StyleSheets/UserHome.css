@@ -1,0 +1,171 @@
+﻿body 
+{
+    background-image: url('../image/av.jpg');
+    background-size:cover;
+    box-sizing:border-box;
+}
+nav {
+    width: 90%;
+    height: 30px;
+    margin: auto;
+    margin-top: 83px;
+    align-items: center;
+    padding-left: 7px;
+    padding-right: 6px;
+    background-image: url('../image/hbg.jpeg');
+}
+ul
+{
+    display:flex;
+    justify-content:space-between;
+}
+li a
+{
+    text-decoration:none;
+    padding:10px;
+    color:black;
+}
+li 
+{
+    list-style: none;
+}
+#masterpage 
+{
+    width: 90%;
+    height: 80px;
+    position: absolute;
+    top: 0;
+    margin-left:60px;   
+}
+.footer {
+    color:black;
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    margin-left: 50px;
+    background-image: url('../image/hbg.jpeg');
+    height:40px;
+}
+/**********class***/
+.data
+{
+    display:flex;
+}
+.container1 {
+    margin-top: 150px;
+    margin-left: 78px;
+    margin-right: 68px;
+    width: 26%;
+    background-image: url('../image/c2.jpg');
+    /*background-color: #FF926A;*/
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    transition: transform 0.3s;   
+}
+.container1 ul
+{
+    display:flex;
+    flex-direction:column;
+}
+.container1 li{
+    padding:10px;
+}
+.container2 {
+    margin-top: 150px;
+    margin-right:68px;
+    width: 26%;
+    background-image: url('../image/c1.jpg');
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    transition: transform 0.2s;
+}
+.container2 ul {
+    display: flex;
+    flex-direction: column;
+}
+.container2 li {
+    padding: 10px;
+}
+.container3 
+{
+    margin-top: 150px;
+    width: 26%;
+    background-image: url('../image/c2.jpg');
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    transition: transform 0.2s;
+}
+.container3 ul {
+    display: flex;
+    flex-direction: column;
+}
+
+.container3 li {
+    padding: 10px;
+}
+.container1:hover, .container2:hover ,.container3:hover
+{
+    transform: scale(1.1);
+}
+/***********id*****/
+#con1Name{
+    margin-left:70px;
+}
+#con2Name {
+    margin-left: 70px;
+}
+#con3Name
+{
+    margin-left: 70px;
+}
+#footer1
+{
+    padding-left:20px;
+}
+#footer2 
+{
+    margin-left: 600px;
+    padding-right:20px;
+}
+#logout {
+    margin-top: 7px;
+    width: 15px;
+    height: 15px;
+}
+
+#contact {
+    width: 17px;
+    height: 17px;
+    margin-top: 5px;
+}
+
+#home {
+    margin-top: 5px;
+    width: 17px;
+    height: 17px;
+}
+#profile {
+    margin-left: 8px;
+    margin-top: 8px;
+    margin-right: 100px;
+}
+
+#profileimg
+{
+    height:17px;
+    width:17px;
+    margin-top:5px;
+}
+#profile-slider {
+    display: none;
+    background-image: url('../image/c1.jpg');
+    padding: 2px;
+}
+.con1
+{
+    display:flex;
+    flex-direction:row;
+}

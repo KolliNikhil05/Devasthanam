@@ -1,0 +1,89 @@
+﻿.container {
+    margin-top: 100px;
+    margin-left: 100px;
+    margin-bottom:50px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 6px 6px rgba(0.1, 0.1, 0.1, 0.1);
+    border-top: 15px solid lightsalmon;
+    width: 30%;
+    height:250px;
+    text-align:center;
+}
+nav {
+    width: 90%;
+    height: 20px;
+    margin: auto;
+    margin-top: 83px;
+    align-items: center;
+    padding-right: 9px;
+    padding-left: 6px;
+    background-image: url('../image/hbg.jpeg');
+}
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align: center;
+}
+ul {
+    display: flex;
+    justify-content: space-between;
+}
+
+li a {
+    text-decoration: none;
+    padding: 10px;
+    color: black;
+}
+
+li {
+    list-style: none;
+}
+#logout {
+    margin-top: 2px;
+    width: 15px;
+    height: 15px;
+} 
+#home {
+    margin-top: 2px;
+    width: 17px;
+    height: 17px;
+}
+#November {
+    margin-left:70px;
+    margin-top:10px;
+    margin-bottom:20px;
+    text-align: center;
+}
+#btnRelease {
+    background-color: lightsalmon;
+    border-radius: 7px;
+    width:100px;
+    height:30px;
+}
+
+
+.blinking-marquee {
+    display: inline-block;
+    margin-left: 60px;  
+    margin-right:50px;
+    animation: moveAndBlink 7s linear infinite alternate;
+}
+
+@keyframes moveAndBlink {
+    0% {
+        color: red;
+        transform: translateX(0%);
+    }
+    50%
+    {
+        color:blue;
+        transform:translateX(25%);
+    }
+
+    100% {
+        color: green;
+        transform: translateX(50%);
+    }
+}
+

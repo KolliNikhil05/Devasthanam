@@ -1,0 +1,12 @@
+﻿ .container
+ {
+     margin-top:100px;
+     margin-left:70px;
+     width:60%;
+     height:200px;
+
+ }
+#ContentPlaceHolder1_gv_Download th
+{
+    background-image: url('../image/c2.jpg');
+}

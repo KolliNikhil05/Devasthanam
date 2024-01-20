@@ -1,0 +1,224 @@
+﻿body {
+    background-image: url('../image/av.jpg');
+    background-size: cover;
+    box-sizing: border-box;
+    
+}
+::placeholder
+{
+    font-size:15px;
+}
+nav {
+    width: 90%;
+    height: 30px;
+    margin: auto;
+    margin-top: 83px;
+    align-items: center;
+    padding-left: 7px;
+    padding-right: 6px;
+    background-image: url('../image/hbg.jpeg');
+}
+
+ul {
+    display: flex;
+    justify-content: space-between;
+}
+
+li a {
+    text-decoration: none;
+    padding: 10px;
+    color: black;
+}
+
+li {
+    list-style: none;
+}
+
+#logout {
+    margin-top: 7px;
+    width: 15px;
+    height: 15px;
+}
+
+#contact {
+    width: 17px;
+    height: 17px;
+    margin-top: 5px;
+}
+
+#home {
+    margin-top: 5px;
+    width: 17px;
+    height: 17px;
+}
+
+#masterpage {
+    width: 90%;
+    height: 80px;
+    position: absolute;
+    top: 0;
+    margin-left: 60px;
+}
+
+.footer {
+    color: black;
+    position: absolute;
+   /* bottom: 0;*/
+    display: flex;
+    margin-left: 50px;
+    margin-top:2px;
+    background-image: url('../image/hbg.jpeg');
+}
+/********class****/
+.container {
+    margin-left: 350px;
+    padding: 10px;
+    font-size: 20px;
+    background-color: white;
+    width: 45%;
+    margin-top: 15px;
+    margin-bottom:10px;
+    border-radius: 20px;
+    border-top: 15px solid lightsalmon;
+    border-bottom :15px solid lightsalmon;
+    box-shadow: 0 6px 6px rgba(0.1, 0.1, 0.1, 0.1);
+}
+.con1 {
+    display: flex;
+    padding: 10px;
+}
+.con2 {
+    display: flex;
+    padding: 10px;
+}
+.con3 {
+    display: flex;
+    padding: 10px;
+}
+.con4 {
+    display: flex;
+    padding: 10px;
+}
+.con5 {
+    display: flex;
+    padding: 10px;
+}
+.con6 {
+    display: flex;
+    padding: 10px;
+}
+.con7 {
+    margin-top:8px;
+    display: flex;
+    padding: 12px;
+}
+.name{
+    margin-left:50px;
+}
+.surname{
+    margin-left:75px;
+}
+.phone {
+    margin-left: 50px;
+}
+.email{
+    margin-left:75px;
+    
+}
+.gender {
+    padding: 5px;
+    padding-left: 5px;
+    margin-left:45px;
+}
+.dob {
+    margin-left: 50px;
+}
+.city{
+    margin-left:75px;
+}
+.address {
+    margin-left: 50px;
+}
+.qualification {
+    margin-left: 50px;
+}
+.percentage
+{
+    margin-left:75px;
+}
+.certificate {
+    margin-left: 50px;
+}
+.submit{
+    padding:20px;
+    margin-left:200px;
+}
+
+/******input*****/
+#txtName{
+    padding:12px;
+}
+#txtSurname{
+    padding:12px;
+}
+#txtPhone{
+    padding:12px;
+}
+#txtEmail{
+    padding:12px;
+}
+#dateDob {
+    width: 190px;  
+    height: 40px;  
+    font-size:18px;
+    text-align:center;
+}
+#ddlCity {
+    width: 200px;
+    height: 42px;
+    font-size: 17px;
+    text-align: center;
+}
+#ddlQualification {
+    width: 200px;
+    height: 40px;
+    font-size: 16px;
+    text-align: center;
+}
+#txtPercentage
+{
+    width:190px;
+    height:33px;
+}
+#fileUpload{
+    padding:12px;
+    padding-top:5px;
+    width:320px;
+    height:20px;
+    border: 1px solid grey;
+    align-items:center;
+    font-size:17px;
+    background-color:white;
+}
+#btnRegister{
+    background-color:lightsalmon;
+    color:white;
+    padding:10px;
+    border-radius:10px;
+    padding-left:25px;
+    padding-right:25px;
+}
+#conname
+{
+    text-align:center;
+}
+ 
+/*****id*****/
+#footer1 {
+    padding-left: 20px;
+}
+
+#footer2 {
+    margin-left: 600px;
+    padding-right: 20px;
+}

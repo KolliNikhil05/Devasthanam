@@ -1,0 +1,208 @@
+﻿#calendar {
+    margin-top: 70px;
+    margin-left: 200px;
+    width: 240px;
+    font-family: Arial, sans-serif;
+}
+
+.header {
+    text-align: center;
+    background-image: url('../image/c1.jpg');
+    border-radius: 4px;
+    color: #fff;
+    padding: 10px;
+    font-size: larger;
+}
+
+.days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background-color: azure;
+    box-shadow: 0 6px 6px rgba(0.1, 0.1, 0.1, 0.5);
+    padding:3px;
+    
+}
+
+.day {
+    border: 1px solid #ccc;
+    padding: 4px;
+    text-align: center;
+    height: 35px;
+    /*border-bottom: 4px solid rgb(14, 96, 23);*/
+    width: 40px;
+    height: 28px;
+
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+}
+.container2 {
+    margin-top: 68px;
+    margin-left: 50px;
+    background-color: azure;
+    width: 320px;
+    height: 300px;
+    box-shadow: 0 6px 6px rgba(0.1, 0.1, 0.1, 0.5);
+    margin-left:200px;
+}
+.header2 {
+    text-align: center;
+    background-image: url('../image/c2.jpg');
+    border-radius: 4px;
+    color: #fff;
+    padding: 10px;
+    font-size: larger;
+    height:20px;
+}
+.date
+{
+    margin-top:25px;
+    margin-left:20px;
+}
+.aadhar {
+    margin-top: 15px;
+    margin-bottom: 35px;
+    margin-left: 20px;
+}
+#txtDate
+{
+    padding:5px;
+    margin-left:38px;
+}
+#txtAadhar {
+    padding: 5px;
+}
+#btnBook
+{
+    width:100px;
+    height:30px;
+    border-radius:5px;
+    margin-left:100px;
+    background-color:lightsalmon;
+ 
+}
+.selected {
+    background-color: yellow;
+}
+.container3
+{
+    display:flex;
+    flex-direction:row;
+}
+.green{
+    margin-left:70px;
+    width:15px;
+    height:15px;
+    background-color:lightgreen;
+    border: 1px solid black;
+}
+#lblgreen
+{
+    margin-left:20px;
+}
+.red {
+    margin-left: 70px;
+    width: 15px;
+    height: 15px;
+    background-color: maroon;
+    margin-right: 20px;
+    border: 1px solid black;
+}
+#lblred {
+    margin-left: 20px;
+    margin-right:50px;
+}
+.yellow {
+    margin-left: 90px;
+    width: 15px;
+    height: 15px;
+    background-color: rgb(246,190,0);
+    border: 1px solid black;
+}
+#lblyellow {
+    margin-left: 20px;
+}
+.blue {
+    margin-left: 80px;
+    width: 15px;
+    height: 15px;
+    background-color: rgb(13, 174, 232);
+    border: 1px solid black;
+}
+#lblblue {
+    margin-left: 20px;
+}
+.gray {
+    margin-left: 50px;
+    width: 15px;
+    height: 15px;
+    background-color: lightgray;
+    border: 1px solid black;
+}
+
+#lblgray {
+    margin-left: 20px;
+}
+.seagreen {
+    margin-left: 70px;
+    width: 15px;
+    height: 15px;
+    background-color: rgb(0, 255, 255);
+    border: 1px solid black;
+}
+#lblseagreen {
+    margin-left: 20px;
+}
+nav {
+    width: 90%;
+    height: 30px;
+    margin: auto;
+    margin-top: 83px;
+    align-items: center;
+    padding-left: 7px;
+    padding-right: 6px;
+    background-image: url('../image/hbg.jpeg');
+}
+
+ul {
+    display: flex;
+    justify-content: space-between;
+}
+
+li a {
+    text-decoration: none;
+    padding: 10px;
+    color: black;
+}
+
+li {
+    list-style: none;
+}
+
+#logout {
+    margin-top: 7px;
+    width: 15px;
+    height: 15px;
+}
+
+#contact {
+    width: 17px;
+    height: 17px;
+    margin-top: 5px;
+}
+
+#home {
+    margin-top: 5px;
+    width: 17px;
+    height: 17px;
+}
+#selectedDateLabel 
+{
+    margin-left:30px;
+}
+.book
+{
+    margin-top:20px;
+}

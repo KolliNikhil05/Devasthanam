@@ -1,0 +1,69 @@
+﻿.data
+{
+    margin-top:20px;
+    margin-left:70px;
+    margin-right:70px;
+
+}
+
+
+#Data1 {
+    width: 100px;
+}
+
+#Data1 th, #Data1 td {
+  
+}
+#colName {
+    
+    background-image: url('../image/c2.jpg');
+}
+.btnselect
+{
+    background-color:aquamarine;
+    border-radius:5px;
+}
+
+nav {
+    width: 90%;
+    height: 20px;
+    margin: auto;
+    margin-top: 83px;
+    align-items: center;
+    padding-left: 7px;
+    padding-right: 6px;
+    background-image: url('../image/hbg.jpeg');
+}
+
+ul {
+    display: flex;
+    justify-content: space-between;
+}
+
+li a {
+    text-decoration: none;
+    padding: 10px;
+    color: black;
+}
+
+li {
+    list-style: none;
+}
+
+#logout {
+    margin-top: 2px;
+    width: 15px;
+    height: 15px;
+}
+
+#contact {
+    width: 17px;
+    height: 17px;
+    margin-top: 1px;
+}
+
+#home {
+    margin-top: 2px;
+    width: 17px;
+    height: 17px;
+}

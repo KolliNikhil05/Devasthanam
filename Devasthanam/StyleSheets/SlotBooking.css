@@ -1,0 +1,156 @@
+﻿.calender {
+    display: flex;
+    flex-direction:column;
+    margin-left: 100px;
+    font-size: 18px;
+}
+.container {
+    margin-right: 80px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 6px 6px rgba(0.1, 0.1, 0.1, 0.1);
+    border-top: 15px solid lightsalmon;
+    width: 30%;
+    margin-top: 20px;
+    text-align: center;
+}
+.container2 {
+    
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 6px 6px rgba(0.1, 0.1, 0.1, 0.1);
+    border-top: 15px solid lightsalmon;
+    width: 30%;
+    margin-top: 20px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.ticket
+{
+    margin-left:20px;
+    margin-top:20px;
+    margin-bottom:20px;
+    display:none;
+}
+.slot
+ {
+     margin-top:1px;
+     display:flex;
+     flex-direction:column;
+ }
+/*.numberTickets 
+{
+    margin-top: 2px;
+    display: flex;
+    flex-direction: column;
+}*/
+.details
+{
+    margin-top:2px;
+    display:flex;
+    flex-direction:column;
+}
+
+#November {
+    margin-left: 30px;
+    margin-bottom: 20px;
+    width: 55%;
+    height: 160px;
+}
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+nav {
+    width: 90%;
+    height: 20px;
+    margin: auto;
+    margin-top: 83px;
+    align-items: center;
+    padding-right: 9px;
+    padding-left: 6px;
+    background-image: url('../image/hbg.jpeg');
+}
+ul {
+    display: flex;
+    justify-content: space-between;
+}
+
+li a {
+    text-decoration: none;
+    padding: 10px;
+    color: black;
+}
+
+li {
+    list-style: none;
+}
+
+#logout {
+    margin-top: 2px;
+    width: 15px;
+    height: 15px;
+}
+
+
+#home {
+    margin-top: 2px;
+    width: 17px;
+    height: 17px;
+}
+#lblslot
+{
+    margin-right:10px;
+    margin-bottom:10px;
+}
+#txtslot
+{
+    width:52%;
+    height:30px;
+    margin-left:2px;
+    margin-bottom:20px;
+
+}
+/*#lblTicket
+{
+    margin-right:98px;
+    margin-bottom:10px;
+}
+#txtTicket
+{
+    width:50%;
+    height:30px;
+    margin-left:10px;
+    margin-bottom:10px;
+}
+#addDetails
+{
+    width:50%;
+    height:30px;
+    background-color:lightsalmon;
+    border-radius:10px;
+    margin-left:8px;
+    margin-left:8px;
+    margin-bottom:20px;
+}*/
+#lblName
+{
+    margin-right:10px;
+    margin-bottom:20px;
+
+}
+#txtName
+{
+    width:50%;
+    height:30px;
+    margin-left:10px;
+    margin-bottom:10px;
+}
+#buy 
+{
+    width: 50%;
+    height: 30px;
+    background-color: lightsalmon;
+    border-radius: 10px;
+    margin-left: 9px;
+}

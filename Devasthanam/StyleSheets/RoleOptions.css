@@ -1,0 +1,113 @@
+﻿.container
+{
+    margin-top:100px;
+    margin-left:150px;
+    font-size:19px;
+    background-color:white;
+    border-top:20px solid lightsalmon;
+    border-radius:10px;
+    width:54%;
+    padding:40px;
+}
+.container1 {
+    display: flex;
+    flex-direction: row;
+    margin-bottom:10px;
+}
+.container2 {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+    background-color:white;
+}
+.container3 {
+    margin-bottom: 10px;
+    background-color: white;
+}
+.container4 {
+    margin-top: 5px;
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+    width: 60%;
+    margin-left:10px;
+}
+.container5 {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+    width: 60%;
+    margin-left: 10px;
+}
+.container6 {
+    background-color: white;
+    width: 60%;
+    margin-left: 10px;
+    text-align:center;
+}
+.surname
+{
+    margin-left:190px;
+}
+.mandal
+{
+    margin-left:251px;
+}
+.gender
+{
+    display:flex;
+    flex-direction:row;
+}
+.upload {
+    margin-top:20px;
+    margin-left: 10px;
+    display: flex;
+    flex-direction: row;
+}
+.Dob {
+    display: flex;
+    flex-direction: column;
+    margin-left:10px;
+}
+.skills
+{ 
+}
+.checkbox
+{
+    margin-top:1px;
+}
+.lstrole {
+    width: 245px;
+    height: 220px;
+}
+.lstgetrole
+{
+    width:200px;
+    height:210px;
+}
+.roles {
+    margin-left: 152px;
+    display:flex;
+    flex-direction:column;
+}
+.getroles
+{
+    display:flex;
+    flex-direction:column;
+}
+.btn {
+    text-align:center;
+    margin-top:25px;
+    width: 80px;
+    height: 25px;
+    background-color: lightsalmon;
+    border-radius: 5px;
+    margin-bottom: 30px;
+}
+.buttons{
+    margin-left:20px;
+    display:flex;
+    flex-direction:column;
+   /* margin-top:25px;*/
+}

@@ -1,0 +1,35 @@
+﻿body 
+{
+    background-image: url('../image/av.jpg');
+    background-size: cover;
+    box-sizing: border-box;
+}
+#masterpage {
+    width: 90%;
+    height: 80px;
+    position:absolute;
+    top: 0;
+    margin-left: 60px;
+}
+
+.footer {
+    width:90%;
+    bottom: 0;
+    color: black;
+    position:fixed;
+    display: flex;
+    margin-left: 60px;
+    background-image: url('../image/hbg.jpeg');
+    height: 40px;
+}
+
+#footer1 {
+   margin-left:100px;
+}
+
+#footer2 {
+    bottom:0;
+     
+    margin-left: 400px;
+    
+}

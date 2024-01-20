@@ -1,0 +1,27 @@
+﻿.container {
+    margin-top: 150px;
+    margin-left: 100px;
+    background-color: azure;
+    height: 300px;
+    width: 500px;
+    box-shadow: 0 6px 6px rgba(0.5, 0.5, 0.5, 0.5);
+    display: flex;
+    flex-direction: column;
+}
+.phone {
+
+    margin-top: 50px;
+    margin-left: 20px;
+}
+.otp
+{
+    margin-top:30px;
+    margin-left:20px;
+}
+#btnOtp
+{
+    background-color:lightsalmon;
+    width:85px;
+    height:30px;
+    border-radius:10px;
+}

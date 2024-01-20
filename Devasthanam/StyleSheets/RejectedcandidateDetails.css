@@ -1,0 +1,61 @@
+﻿nav {
+    width: 90%;
+    height: 20px;
+    margin: auto;
+    margin-top: 83px;
+    align-items: center;
+    padding-right: 9px;
+    padding-left: 6px;
+    background-image: url('../image/hbg.jpeg');
+}
+
+ul {
+    display: flex;
+    justify-content: space-between;
+}
+
+li a {
+    text-decoration: none;
+    padding: 10px;
+    color: black;
+}
+
+li {
+    list-style: none;
+}
+
+#logout {
+    margin-top: 2px;
+    width: 15px;
+    height: 15px;
+}
+
+/*#contact {
+    width: 17px;
+    height: 17px;
+    margin-top: 1px;
+}
+*/
+#home {
+    margin-top: 2px;
+    width: 17px;
+    height: 17px;
+}
+
+#ContentPlaceHolder1_gv_Download th {
+    background-image: url('../image/c2.jpg');
+
+}
+
+.container {
+    margin-top: 20px;
+    margin-left: 100px;
+}
+#ContentPlaceHolder1_btn {
+    margin-top: 20px;
+    border-radius: 5px;
+    background-color: lightsalmon;
+    width: 200px;
+    height: 30px;
+    margin-left: 250px;
+}

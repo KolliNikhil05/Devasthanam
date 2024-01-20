@@ -1,0 +1,86 @@
+﻿.container {
+    width: 350px;
+    height: 330px;
+    background-color: white;
+    background-image: url('../image/namam logo.jpg');
+    background-size: 50%;
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    margin-left: 450px;
+    margin-top: 50px;
+    background-color: rgba(255, 255, 255, 1);
+}
+nav {
+    width: 90%;
+    height: 30px;
+    margin: auto;
+    margin-top: 83px;
+    align-items: center;
+    padding-left: 7px;
+    padding-right: 6px;
+    background-image: url('../image/hbg.jpeg');
+}
+
+ul {
+    display: flex;
+    justify-content: space-between;
+}
+
+li a {
+    text-decoration: none;
+    padding: 10px;
+    color: black;
+}
+
+li {
+    list-style: none;
+}
+
+#logout {
+    margin-top: 7px;
+    width: 15px;
+    height: 15px;
+}
+
+#contact {
+    width: 17px;
+    height: 17px;
+    margin-top: 5px;
+}
+
+#home {
+    margin-top: 5px;
+    width: 17px;
+    height: 17px;
+}
+#thead
+{
+    width:350px;
+    height:50px;
+}
+#namam{
+    width:150px;
+    height:150px;
+    margin-top:50px;
+    margin-left:90px;
+}
+#download
+{
+    margin-top:0px;
+    margin-left:50px;
+    background-color:lightsalmon;
+    border-radius:5px;
+}
+.con1
+{
+    margin-left:20px;
+    padding:5px;
+}
+#ContentPlaceHolder1_btnExport {
+    margin-left:570px;
+    width:100px;
+    height:30px;
+    background-color: lightsalmon;
+    border-radius:5px;
+    margin-top:20px;
+}
